@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-24 Thu 22:26 -->
+<!-- 2020-09-26 Sat 10:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hello World!</title>
@@ -254,6 +254,47 @@ for the JavaScript code in this tag.
 <p>
 第一版完全基于org-mode的publishing功能，采用sitemap作为主页。
 </p>
+
+<p>
+代码非常简单：
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">create a blog quickly</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">eli/create-blogs</span> <span style="color: #a626a4;">()</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span>counsel-find-file <span style="color: #50a14f;">"~/Dropbox/org/blog"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span>spacemacs/set-leader-keys <span style="color: #50a14f;">"obo"</span> 'eli/create-blogs<span style="color: #4078f2;">)</span>
+
+<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">publishing</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">eli/push-to-gitpage</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> UNUSE<span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span>shell-command <span style="color: #50a14f;">"~/shell.sh"</span><span style="color: #a626a4;">)</span>
+  <span style="color: #a626a4;">(</span>message <span style="color: #50a14f;">"blogs deployed successfully!"</span><span style="color: #a626a4;">)</span>
+  <span style="color: #4078f2;">)</span>
+
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-validation-link nil<span style="color: #4078f2;">)</span> <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#21435;&#25481;validation&#26174;&#31034;</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-link-home <span style="color: #50a14f;">"index.html"</span><span style="color: #4078f2;">)</span><span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#35774;&#32622;home&#36229;&#38142;&#25509;</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-link-up <span style="color: #50a14f;">"index.html"</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> eli-blog-base-dir <span style="color: #50a14f;">"~/Dropbox/org/blog"</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> eli-blog-publish-dir <span style="color: #50a14f;">"~/Elilif.github.io"</span><span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-postamble nil<span style="color: #4078f2;">)</span>
+<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-project-alist
+      `<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"eli's blog"</span>
+         <span style="color: #a626a4;">:base-directory</span> ,eli-blog-base-dir
+         <span style="color: #a626a4;">:publishing-directory</span> ,eli-blog-publish-dir
+         <span style="color: #a626a4;">:base-extension</span> <span style="color: #50a14f;">"org"</span>
+         <span style="color: #a626a4;">:recursive</span> nil
+         <span style="color: #a626a4;">:publishing-function</span> org-html-publish-to-html
+         <span style="color: #a626a4;">:auto-sitemap</span> t
+         <span style="color: #a626a4;">:sitemap-filename</span> <span style="color: #50a14f;">"index.org"</span>
+         <span style="color: #a626a4;">:sitemap-title</span> <span style="color: #50a14f;">"Eli's blog"</span>
+         <span style="color: #a626a4;">:sitemap-sort-files</span> anti-chronologically
+         <span style="color: #a626a4;">:html-head</span> <span style="color: #50a14f;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"https://gongzhitaao.org/orgcss/org.css\"/&gt;"</span>
+         <span style="color: #a626a4;">:with-creator</span> nil
+         <span style="color: #a626a4;">:completion-function</span> eli/push-to-gitpage
+         <span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+</pre>
+</div>
 </div>
 </body>
 </html>
