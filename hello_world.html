@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-26 Sat 10:46 -->
+<!-- 2020-10-07 Wed 19:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hello World!</title>
@@ -39,7 +39,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -194,50 +194,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -259,40 +235,40 @@ for the JavaScript code in this tag.
 代码非常简单：
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">create a blog quickly</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">eli/create-blogs</span> <span style="color: #a626a4;">()</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>counsel-find-file <span style="color: #50a14f;">"~/Dropbox/org/blog"</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span>spacemacs/set-leader-keys <span style="color: #50a14f;">"obo"</span> 'eli/create-blogs<span style="color: #4078f2;">)</span>
+<pre class="src src-emacs-lisp">;; create a blog quickly
+(defun eli/create-blogs ()
+  (interactive)
+  (counsel-find-file "~/Dropbox/org/blog"))
+(spacemacs/set-leader-keys "obo" 'eli/create-blogs)
 
-<span style="color: #9ca0a4;">;; </span><span style="color: #9ca0a4;">publishing</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">defun</span> <span style="color: #a626a4;">eli/push-to-gitpage</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">&amp;optional</span> UNUSE<span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span><span style="color: #e45649;">interactive</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>shell-command <span style="color: #50a14f;">"~/shell.sh"</span><span style="color: #a626a4;">)</span>
-  <span style="color: #a626a4;">(</span>message <span style="color: #50a14f;">"blogs deployed successfully!"</span><span style="color: #a626a4;">)</span>
-  <span style="color: #4078f2;">)</span>
+;; publishing
+(defun eli/push-to-gitpage (&amp;optional UNUSE)
+  (interactive)
+  (shell-command "~/shell.sh")
+  (message "blogs deployed successfully!")
+  )
 
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-validation-link nil<span style="color: #4078f2;">)</span> <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#21435;&#25481;validation&#26174;&#31034;</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-link-home <span style="color: #50a14f;">"index.html"</span><span style="color: #4078f2;">)</span><span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#35774;&#32622;home&#36229;&#38142;&#25509;</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-link-up <span style="color: #50a14f;">"index.html"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> eli-blog-base-dir <span style="color: #50a14f;">"~/Dropbox/org/blog"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> eli-blog-publish-dir <span style="color: #50a14f;">"~/Elilif.github.io"</span><span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-html-postamble nil<span style="color: #4078f2;">)</span>
-<span style="color: #4078f2;">(</span><span style="color: #e45649;">setq</span> org-publish-project-alist
-      `<span style="color: #a626a4;">(</span><span style="color: #50a14f;">(</span><span style="color: #50a14f;">"eli's blog"</span>
-         <span style="color: #a626a4;">:base-directory</span> ,eli-blog-base-dir
-         <span style="color: #a626a4;">:publishing-directory</span> ,eli-blog-publish-dir
-         <span style="color: #a626a4;">:base-extension</span> <span style="color: #50a14f;">"org"</span>
-         <span style="color: #a626a4;">:recursive</span> nil
-         <span style="color: #a626a4;">:publishing-function</span> org-html-publish-to-html
-         <span style="color: #a626a4;">:auto-sitemap</span> t
-         <span style="color: #a626a4;">:sitemap-filename</span> <span style="color: #50a14f;">"index.org"</span>
-         <span style="color: #a626a4;">:sitemap-title</span> <span style="color: #50a14f;">"Eli's blog"</span>
-         <span style="color: #a626a4;">:sitemap-sort-files</span> anti-chronologically
-         <span style="color: #a626a4;">:html-head</span> <span style="color: #50a14f;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"https://gongzhitaao.org/orgcss/org.css\"/&gt;"</span>
-         <span style="color: #a626a4;">:with-creator</span> nil
-         <span style="color: #a626a4;">:completion-function</span> eli/push-to-gitpage
-         <span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>
+(setq org-html-validation-link nil) ; 去掉validation显示
+(setq org-html-link-home "index.html"); 设置home超链接
+(setq org-html-link-up "index.html")
+(setq eli-blog-base-dir "~/Dropbox/org/blog")
+(setq eli-blog-publish-dir "~/Elilif.github.io")
+(setq org-html-postamble nil)
+(setq org-publish-project-alist
+      `(("eli's blog"
+	 :base-directory ,eli-blog-base-dir
+	 :publishing-directory ,eli-blog-publish-dir
+	 :base-extension "org"
+	 :recursive nil
+	 :publishing-function org-html-publish-to-html
+	 :auto-sitemap t
+	 :sitemap-filename "index.org"
+	 :sitemap-title "Eli's blog"
+	 :sitemap-sort-files anti-chronologically
+	 :html-head "&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"https://gongzhitaao.org/orgcss/org.css\"/&gt;"
+	 :with-creator nil
+	 :completion-function eli/push-to-gitpage
+	 )))
 </pre>
 </div>
 </div>
