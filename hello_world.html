@@ -6,7 +6,7 @@
 <!-- 2020-10-07 Wed 19:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Eli's blog</title>
+<title>Hello World!</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -222,11 +222,55 @@
  |
  <a accesskey="H" href="index.html"> HOME </a>
 </div><div id="content">
-<h1 class="title">Eli's blog</h1>
-<ul class="org-ul">
-<li><a href="Arch_Installation.html">Arch<sub>Installation</sub></a></li>
-<li><a href="hello_world.html">Hello World!</a></li>
-</ul>
+<h1 class="title">Hello World!</h1>
+<p>
+这是我的第一篇blog, 基于 github pages。
+</p>
+
+<p>
+第一版完全基于org-mode的publishing功能，采用sitemap作为主页。
+</p>
+
+<p>
+代码非常简单：
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; create a blog quickly
+(defun eli/create-blogs ()
+  (interactive)
+  (counsel-find-file "~/Dropbox/org/blog"))
+(spacemacs/set-leader-keys "obo" 'eli/create-blogs)
+
+;; publishing
+(defun eli/push-to-gitpage (&amp;optional UNUSE)
+  (interactive)
+  (shell-command "~/shell.sh")
+  (message "blogs deployed successfully!")
+  )
+
+(setq org-html-validation-link nil) ; 去掉validation显示
+(setq org-html-link-home "index.html"); 设置home超链接
+(setq org-html-link-up "index.html")
+(setq eli-blog-base-dir "~/Dropbox/org/blog")
+(setq eli-blog-publish-dir "~/Elilif.github.io")
+(setq org-html-postamble nil)
+(setq org-publish-project-alist
+      `(("eli's blog"
+	 :base-directory ,eli-blog-base-dir
+	 :publishing-directory ,eli-blog-publish-dir
+	 :base-extension "org"
+	 :recursive nil
+	 :publishing-function org-html-publish-to-html
+	 :auto-sitemap t
+	 :sitemap-filename "index.org"
+	 :sitemap-title "Eli's blog"
+	 :sitemap-sort-files anti-chronologically
+	 :html-head "&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"https://gongzhitaao.org/orgcss/org.css\"/&gt;"
+	 :with-creator nil
+	 :completion-function eli/push-to-gitpage
+	 )))
+</pre>
+</div>
 </div>
 </body>
 </html>
