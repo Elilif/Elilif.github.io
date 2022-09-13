@@ -3,77 +3,54 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-15 Thu 17:26 -->
+<!-- 2022-09-13 Tue 15:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hello World!</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Eli" />
+<meta name="author" content="Eli Qian" />
+<meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
-<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
 </head>
 <body>
 <div id="org-div-home-and-up">
  <a accesskey="h" href="index.html"> UP </a>
  |
  <a accesskey="H" href="index.html"> HOME </a>
-</div><div id="content">
+</div><div id="content" class="content">
 <h1 class="title">Hello World!</h1>
 <p>
-这是我的第一篇blog, 基于 github pages.
+这是我的第一篇blog, 基于 github pages.<br />
 </p>
 
 <p>
-第一版完全基于org-mode的publishing功能，采用sitemap作为主页。
+第一版完全基于org-mode的publishing功能，采用sitemap作为主页。<br />
 </p>
 
 <p>
-代码非常简单：
+代码非常简单：<br />
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">create a blog quickly</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eli/create-blogs</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>counsel-find-file <span class="org-string">"~/Dropbox/org/blog"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>spacemacs/set-leader-keys <span class="org-string">"obo"</span> 'eli/create-blogs<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/create-blogs</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">()</span></span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">interactive</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>counsel-find-file <span class="org-string">"~/Dropbox/org/blog"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>spacemacs/set-leader-keys <span class="org-string">"obo"</span> 'eli/create-blogs<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">publishing</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eli/push-to-gitpage</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;optional</span> UNUSE<span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>shell-command <span class="org-string">"~/shell.sh"</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"blogs deployed successfully!"</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/push-to-gitpage</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-type">&amp;optional</span> UNUSE<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">interactive</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>shell-command <span class="org-string">"~/shell.sh"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>message <span class="org-string">"blogs deployed successfully!"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-html-validation-link nil<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">; </span><span class="org-comment">&#21435;&#25481;validation&#26174;&#31034;</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-html-link-home <span class="org-string">"index.html"</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-comment-delimiter">; </span><span class="org-comment">&#35774;&#32622;home&#36229;&#38142;&#25509;</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-html-link-up <span class="org-string">"index.html"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> eli-blog-base-dir <span class="org-string">"~/Dropbox/org/blog"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> eli-blog-publish-dir <span class="org-string">"~/Elilif.github.io"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-html-postamble nil<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-publish-project-alist
-      `<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"eli's blog"</span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> org-html-validation-link nil<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span> <span class="org-comment-delimiter">; </span><span class="org-comment">&#21435;&#25481;validation&#26174;&#31034;</span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> org-html-link-home <span class="org-string">"index.html"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span><span class="org-comment-delimiter">; </span><span class="org-comment">&#35774;&#32622;home&#36229;&#38142;&#25509;</span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> org-html-link-up <span class="org-string">"index.html"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> eli-blog-base-dir <span class="org-string">"~/Dropbox/org/blog"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> eli-blog-publish-dir <span class="org-string">"~/Elilif.github.io"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> org-html-postamble nil<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> org-publish-project-alist
+      `<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"eli's blog"</span>
          <span class="org-builtin">:base-directory</span> ,eli-blog-base-dir
          <span class="org-builtin">:publishing-directory</span> ,eli-blog-publish-dir
          <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
@@ -86,7 +63,7 @@
          <span class="org-builtin">:html-head</span> <span class="org-string">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"https://gongzhitaao.org/orgcss/org.css\"/&gt;"</span>
          <span class="org-builtin">:with-creator</span> nil
          <span class="org-builtin">:completion-function</span> eli/push-to-gitpage
-         <span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </pre>
 </div>
 </div>

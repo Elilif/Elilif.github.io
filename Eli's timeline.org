@@ -1,0 +1,28 @@
+#+TITLE: Eli's timeline
+#+OPTIONS: toc:nil H:2 num:2
+#+DESCRIPTION: Recording events I meet
+#+TIMELINE_HEADER: <div id="org-div-home-and-up"><a accesskey="h" href="Eli's timeline.html"> UP </a>
+#+TIMELINE_HEADER: | <a accesskey="H" href="index.html"> HOME </a> </div>
+#+TIMELINE_MODE:  vertical
+#+TIMELINE_FORCE_VERTICAL_MODE: 800
+#+TIMELINE_VISIBLE_ITEMS: 4
+
+
+* 2022-07-21
+** 国家网信办就数据安全问题对滴滴处 80.26 亿元罚款
+* 2022-07-19
+** test
+* 2022-07-18
+** yyqx 阴阳词条
+* 2021-08-01
+吴亦凡因涉嫌强奸罪被刑拘
+* 2021-07-23
+东京奥运会开幕
+* 2021-07-21
+1. 河南暴雨
+2. 贝索斯完成太空旅行
+* 2021-07-19
+:PROPERTIES:
+:ID:       c3cde031-8f50-47aa-878a-b50ba0eb2e4c
+:END:
+吴亦凡、都美竹事件
