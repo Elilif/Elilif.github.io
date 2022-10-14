@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-14 Fri 22:39 -->
+<!-- 2022-10-14 Fri 22:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>在 org-mode 和 latex-mode 中美化公式预览</title>
@@ -37,7 +37,7 @@
 先上效果图
 </p>
 
-<div id="orga1b7882" class="figure">
+<div id="org3d448f8" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB10AAAQhCAIAAADphwG+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAg
 AElEQVR4nOzdZ1xTVxsA8OfeJCSBsPcU2XsJggruvffArXXU7mG1ttbW2vZtrd21w9patVrr3oqi
 gCiy9957bwIkJPe+H0BFhQxGEH3+Pz9gcnPuc9YleTg5l+Dz+YAQQgghhBBCCCGEEELohUEOdAAI
@@ -4118,7 +4118,7 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 <h2 id="org4d1e3ae"><span class="section-number-2">1.</span> 对齐 `org-latex-preview` 预览图中的水平基线</h2>
 <div class="outline-text-2" id="text-1">
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/xenops-preview-align-baseline</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>element <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/xenops-preview-align-baseline</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>element <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
   <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov-beg <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get element <span class="org-builtin">:begin</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov-end <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get element <span class="org-builtin">:end</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlays-at <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>/ <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>+ ov-beg ov-end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span> 2<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span> t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -4136,7 +4136,7 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 <h2 id="org58559c7"><span class="section-number-2">2.</span> 图片居中或右对齐</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>plist-put org-format-latex-options <span class="org-builtin">:justify</span> 'right<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>plist-put org-format-latex-options <span class="org-builtin">:justify</span> 'right<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/xenops-justify-fragment-overlay</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>element <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
   <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov-beg <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get element <span class="org-builtin">:begin</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov-end <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get element <span class="org-builtin">:end</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -4172,7 +4172,7 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 <h2 id="org495b284"><span class="section-number-2">3.</span> 公式编号</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/xenops-renumber-environment</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>orig-func element latex colors
+<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/xenops-renumber-environment</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>orig-func element latex colors
                                                   cache-file display-image<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
   <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>results '<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">()</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span> 
         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>counter -1<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -4225,7 +4225,7 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 <h2 id="org7032875"><span class="section-number-2">4.</span> 预览时显示标签</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">show `#+name:' while in latex preview.</span>
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">show `#+name:' while in latex preview.</span>
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/org-preview-show-label</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>orig-fun beg end <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
   <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>beg <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">save-excursion</span>
                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>goto-char beg<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
@@ -4252,7 +4252,7 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 如果不用 xenops 而是用 org-fragtop 或 org 自带的 org-latex-preview ，可以用下面的代码：
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Vertically align LaTeX preview in org mode</span>
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Vertically align LaTeX preview in org mode</span>
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">my-org-latex-preview-advice</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>beg end <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
   <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlays-at <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>/ <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>+ beg end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span> 2<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span> t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>img <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>cdr <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlay-get ov 'display<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -4345,7 +4345,7 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 <hr class="Solid">
 <p class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</p>
 <p class="date">Create Date: 2022-10-14</p>
-<p class="date">Last modified: 2022-10-14 Fri 22:32</p>
+<p class="date">Last modified: 2022-10-14 Fri 22:41</p>
 <p>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.0.50 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
 
 <p style="text-align:center;">
