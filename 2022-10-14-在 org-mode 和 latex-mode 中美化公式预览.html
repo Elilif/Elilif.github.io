@@ -3,13 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-14 Fri 22:41 -->
+<!-- 2022-10-22 Sat 14:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>在 org-mode 和 latex-mode 中美化公式预览</title>
 <meta name="author" content="Eli Qian" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+<style> .figure p {text-align: center;}</style>
 </head>
 <body>
 <div id="org-div-home-and-up">
@@ -29,7 +30,6 @@
 <li><a href="#org58559c7">2. 图片居中或右对齐</a></li>
 <li><a href="#org495b284">3. 公式编号</a></li>
 <li><a href="#org7032875">4. 预览时显示标签</a></li>
-<li><a href="#orgeaac4d7">5. 非 xenops 用户</a></li>
 </ul>
 </div>
 </div>
@@ -37,7 +37,7 @@
 先上效果图
 </p>
 
-<div id="org3d448f8" class="figure">
+<div id="orgecf6e39" class="figure">
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB10AAAQhCAIAAADphwG+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAg
 AElEQVR4nOzdZ1xTVxsA8OfeJCSBsPcU2XsJggruvffArXXU7mG1ttbW2vZtrd21w9patVrr3oqi
 gCiy9957bwIkJPe+H0BFhQxGEH3+Pz9gcnPuc9YleTg5l+Dz+YAQQgghhBBCCCGEEELohUEOdAAI
@@ -4107,27 +4107,299 @@ S30dBSUEapHsAQAAAAAAAAAAAOC/xc/IBMG8Ry189aHJSVSStXz5xjLX+W8UAAAAAAAAAAAAAFww
 Z59fGAAAAAAAAAAAAAD+m2HlOAAAAAAAAAAAAIArC+LCAAAAAAAAAAAAAFcWxIUBAAAAAAAAAAAA
 riyICwMAAAAAAAAAAABcWRAXBgAAAAAAAAAAALiyIC4MAAAAAAAAAAAAcGVBXBgAAAAAAAAAAADg
 yoK4MAAAAAAAAAAAAMCVBXFhAAAAAAAAAAAAgCsL4sIAAAAAAAAAAAAAVxbEhQEAAAAAAAAAAACu
-LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
+LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="latex-preview.png" alt="latex-preview.png" />
 </p>
 </div>
 
 <p>
 预览用的是 xenops ，其优点是异步渲染图片，不会卡; 而且两个模式都能用。 代码主要借鉴自 John Kitchin 的网站：<a href="https://kitchingroup.cheme.cmu.edu/blog/archive/">The Kitchin Research Group</a> 。
 </p>
+
 <div id="outline-container-org4d1e3ae" class="outline-2">
 <h2 id="org4d1e3ae"><span class="section-number-2">1.</span> 对齐 `org-latex-preview` 预览图中的水平基线</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+首先需要了解下 LaTeX 中的 "text box" 是什么：
+</p>
+
+<div id="org5e801af" class="figure">
+<p><img src="data:image/png;base64,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"latex-text-box.png" alt="latex-text-box.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>text box</p>
+</div>
+
+<p>
+明确什么是水平基线后，下一个问题就是如何计算。 所采用的方法源自 <a href="https://list.orgmode.org/874k9oxy48.fsf@gmail.com/#Z32lisp:org.el">emacs-orgmode</a> 邮件组，其原理是利用 <a href="https://ctan.org/pkg/preview?lang=en">preview</a> 这个宏包，在编译的过程中向 dvi 文件传入 height 和
+depth 等数据，生成 svg 图片后，分析 svg 图片中的 viewbox 参数来计算水平基线的纵向坐标。（描述可能不太准确，如有错误，欢迎指正。）
+</p>
+
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/xenops-preview-align-baseline</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>element <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
-  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov-beg <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get element <span class="org-builtin">:begin</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/change-xenops-latex-header</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>orig <span class="org-builtin">&amp;rest</span> args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>org-format-latex-header <span class="org-string">"\\documentclass[dvisvgm,preview]{standalone}\n\\usepackage{arev}\n\\usepackage{color}\n[PACKAGES]\n[DEFAULT-PACKAGES]"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>apply orig args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>advice-add 'xenops-math-latex-make-latex-document <span class="org-builtin">:around</span> #'eli/change-xenops-latex-header<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>advice-add 'xenops-math-file-name-static-hash-data <span class="org-builtin">:around</span> #'eli/change-xenops-latex-header<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span> xenops-math-latex-process-alist
+      '<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>dvisvgm <span class="org-builtin">:programs</span>
+                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-string">"latex"</span> <span class="org-string">"dvisvgm"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+                 <span class="org-builtin">:description</span> <span class="org-string">"dvi &gt; svg"</span> <span class="org-builtin">:message</span> <span class="org-string">"you need to install the programs: latex and dvisvgm."</span> <span class="org-builtin">:image-input-type</span> <span class="org-string">"dvi"</span> <span class="org-builtin">:image-output-type</span> <span class="org-string">"svg"</span> <span class="org-builtin">:image-size-adjust</span>
+                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>1.7 . 1.5<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+                 <span class="org-builtin">:latex-compiler</span>
+                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-string">"latex -interaction nonstopmode -shell-escape -output-format dvi -output-directory %o %f"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+                 <span class="org-builtin">:image-converter</span>
+                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-string">"dvisvgm %f -n -e -b 1 -c %S -o %O"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/org--match-text-baseline-ascent</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>imagefile<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-doc">"Set `</span><span class="org-doc"><span class="org-constant">:ascent</span></span><span class="org-doc">' to match the text baseline of an image to the surrounding text.</span>
+<span class="org-doc">Compute `</span><span class="org-doc"><span class="org-constant">ascent</span></span><span class="org-doc">' with the data collected in IMAGEFILE."</span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>viewbox <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>split-string
+                   <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>xml-get-attribute <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>xml-parse-file imagefile<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span> 'viewBox<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>min-y <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>string-to-number <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>nth 1 viewbox<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>height <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>string-to-number <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>nth 3 viewbox<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ascent <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>round <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>* -100 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>/ min-y height<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">if</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">or</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>&lt; ascent 0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>&gt; ascent 100<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+        'center
+      ascent<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/xenops-preview-align-baseline</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>element <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+  <span class="org-doc">"Redisplay SVG image resulting from successful LaTeX compilation of ELEMENT.</span>
+
+<span class="org-doc">Use the data in log file (e.g. \"! Preview: Snippet 1 ended.(368640+1505299x1347810).\")</span>
+<span class="org-doc">to calculate the decent value of `</span><span class="org-doc"><span class="org-constant">:ascent</span></span><span class="org-doc">'. "</span>
+  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>inline-p <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>eq 'inline-math <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>plist-get element <span class="org-builtin">:type</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov-beg <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get element <span class="org-builtin">:begin</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov-end <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get element <span class="org-builtin">:end</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>cache-file <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>last _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlays-at <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>/ <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>+ ov-beg ov-end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span> 2<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span> t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-         img new-img<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
-    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">when</span> ov
+         img new-img ascent<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">when</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">and</span> ov inline-p<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">setq</span> ascent <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>+ 1 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>eli/org--match-text-baseline-ascent cache-file<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
       <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">setq</span> img <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>cdr <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlay-get ov 'display<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">setq</span> new-img <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-put img <span class="org-builtin">:ascent</span> 90<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">setq</span> new-img <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-put img <span class="org-builtin">:ascent</span> ascent<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
       <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>overlay-put ov 'display <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>cons 'image new-img<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>advice-add 'xenops-math-display-image <span class="org-builtin">:after</span> #'eli/xenops-preview-align-baseline<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>advice-add 'xenops-math-display-image <span class="org-builtin">:after</span>
+            #'eli/xenops-preview-align-baseline<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </pre>
 </div>
 </div>
@@ -4239,105 +4511,9 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 </pre>
 </div>
 
-
 <p>
 这样预览效果就和导出的 pdf 结果差不多了。
 </p>
-</div>
-</div>
-<div id="outline-container-orgeaac4d7" class="outline-2">
-<h2 id="orgeaac4d7"><span class="section-number-2">5.</span> 非 xenops 用户</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-如果不用 xenops 而是用 org-fragtop 或 org 自带的 org-latex-preview ，可以用下面的代码：
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Vertically align LaTeX preview in org mode</span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">my-org-latex-preview-advice</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>beg end <span class="org-builtin">&amp;rest</span> _args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
-  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlays-at <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>/ <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>+ beg end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span> 2<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span> t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>img <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>cdr <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlay-get ov 'display<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>new-img <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-put img <span class="org-builtin">:ascent</span> 95<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
-    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>overlay-put ov 'display <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>cons 'image new-img<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>advice-add 'org--make-preview-overlay
-            <span class="org-builtin">:after</span> #'my-org-latex-preview-advice<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-
-<span class="org-comment-delimiter">;; </span><span class="org-comment">from: https://kitchingroup.cheme.cmu.edu/blog/2016/11/06/</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Justifying-LaTeX-preview-fragments-in-org-mode/</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">specify the justification you want</span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>plist-put org-format-latex-options <span class="org-builtin">:justify</span> 'right<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">eli/org-justify-fragment-overlay</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>beg end image imagetype<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
-  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>position <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get org-format-latex-options <span class="org-builtin">:justify</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>img <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>create-image image 'svg t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>ov <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>overlays-at <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>/ <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>+ beg end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span> 2<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span> t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-         <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>width <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>image-display-size <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>overlay-get ov 'display<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-         offset<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
-    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">cond</span>
-     <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">and</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>eq 'center position<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span> 
-           <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>= beg <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>line-beginning-position<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">setq</span> offset <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>floor <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>- <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>/ fill-column 2<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>/ width 2<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">if</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>&lt; offset 0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
-          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">setq</span> offset 0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>overlay-put ov 'before-string <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>make-string offset ? <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-     <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">and</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>eq 'right position<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span> 
-           <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>= beg <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>line-beginning-position<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">setq</span> offset <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>floor <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>- fill-column
-                             width<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">if</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>&lt; offset 0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
-          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">setq</span> offset 0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>overlay-put ov 'before-string <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>make-string offset ? <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>advice-add 'org--make-preview-overlay
-            <span class="org-builtin">:after</span> 'eli/org-justify-fragment-overlay<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-
-<span class="org-comment-delimiter">;; </span><span class="org-comment">from: https://kitchingroup.cheme.cmu.edu/blog/2016/11/07/</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Better-equation-numbering-in-LaTeX-fragments-in-org-mode/</span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span> <span class="org-function-name">org-renumber-environment</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>orig-func <span class="org-builtin">&amp;rest</span> args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
-  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>results '<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">()</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span> 
-        <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>counter -1<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-        <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>numberp<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
-    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">setq</span> results <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">cl-loop</span> for <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>begin .  env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span> in 
-                           <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-element-map <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>org-element-parse-buffer<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
-                               'latex-environment
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">lambda</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
-                               <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>cons
-                                <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>org-element-property <span class="org-builtin">:begin</span> env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>
-                                <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>org-element-property <span class="org-builtin">:value</span> env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-                           collect
-                           <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">cond</span>
-                            <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">and</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>string-match <span class="org-string">"\\\\begin{equation}"</span> env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>
-                                  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>not <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>string-match <span class="org-string">"\\\\tag{"</span> env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">cl-incf</span> counter<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>cons begin counter<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
-                            <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">and</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>string-match <span class="org-string">"\\\\begin{align}"</span> env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>
-                                  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>string-match <span class="org-string">"\\\\notag"</span> env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">cl-incf</span> counter<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>cons begin counter<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
-                            <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>string-match <span class="org-string">"\\\\begin{align}"</span> env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">prog2</span>
-                                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span><span class="org-keyword">cl-incf</span> counter<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>
-                                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>cons begin counter<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>                          
-                               <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span><span class="org-keyword">with-temp-buffer</span>
-                                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>insert env<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span>
-                                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>goto-char <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>point-min<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span>
-                                 <span class="org-comment-delimiter">;; </span><span class="org-comment">\\ is used for a new line. Each one leads</span>
-                                 <span class="org-comment-delimiter">;; </span><span class="org-comment">to a number</span>
-                                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span><span class="org-keyword">cl-incf</span> counter <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>count-matches <span class="org-string">"\\\\$"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span>
-                                 <span class="org-comment-delimiter">;; </span><span class="org-comment">unless there are nonumbers.</span>
-                                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>goto-char <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>point-min<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span>
-                                 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span><span class="org-keyword">cl-decf</span> counter
-                                          <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>count-matches <span class="org-string">"\\nonumber"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
-                            <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>t
-                             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>cons begin nil<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
-    <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">when</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">setq</span> numberp <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>cdr <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>assoc <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>point<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span> results<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-      <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">setf</span> <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-            <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>concat
-             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>format <span class="org-string">"\\setcounter{equation}{%s}\n"</span> numberp<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
-             <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>car args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
-  <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>apply orig-func args<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>advice-add 'org-create-formula-image <span class="org-builtin">:around</span> #'org-renumber-environment<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-</pre>
-</div>
 </div>
 </div>
 </div>
@@ -4345,7 +4521,7 @@ LIgLAwAAAAAAAAAAAFxZ/g+At2+ENBTwoAAAAABJRU5ErkJggg=="2022-10-13-20-42.png />
 <hr class="Solid">
 <p class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</p>
 <p class="date">Create Date: 2022-10-14</p>
-<p class="date">Last modified: 2022-10-14 Fri 22:41</p>
+<p class="date">Last modified: 2022-10-22 Sat 14:24</p>
 <p>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.0.50 (<a href="https://orgmode.org">Org</a> mode 9.5.5)</p>
 
 <p style="text-align:center;">
