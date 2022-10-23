@@ -10,18 +10,18 @@
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
      xmlns:media="http://search.yahoo.com/mrss/"><channel>
   <title>Eli's blog</title>
-  <atom:link href="index.html/index.xml" rel="self" type="application/rss+xml" />
-  <link>index.html</link>
+  <atom:link href="https://elilif.github.io/index.xml" rel="self" type="application/rss+xml" />
+  <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 23 Oct 2022 12:32:19 +0800</pubDate>
-  <lastBuildDate>Sun, 23 Oct 2022 12:32:19 +0800</lastBuildDate>
+  <pubDate>Sun, 23 Oct 2022 12:51:10 +0800</pubDate>
+  <lastBuildDate>Sun, 23 Oct 2022 12:51:10 +0800</lastBuildDate>
   <generator>Emacs 29.0 Org-mode 9.5.5</generator>
   <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
     <title>Eli's blog</title>
-    <link>index.html</link>
+    <link>https://elilif.github.io/</link>
   </image>
 
   <ul class="org-ul">
