@@ -14,8 +14,8 @@
   <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 23 Oct 2022 13:40:53 +0800</pubDate>
-  <lastBuildDate>Sun, 23 Oct 2022 13:40:53 +0800</lastBuildDate>
+  <pubDate>Sun, 23 Oct 2022 15:47:32 +0800</pubDate>
+  <lastBuildDate>Sun, 23 Oct 2022 15:47:32 +0800</lastBuildDate>
   <generator>Emacs 29.0 Org-mode 9.5.5</generator>
   <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
   <image>
@@ -32,7 +32,10 @@
     <guid isPermaLink="false">https://elilif.github.io/2022-10-14-在 org-mode 和 latex-mode 中美化公式预览.html</guid>
     <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
 
-    <description><![CDATA[]]></description>
+    <description><![CDATA[<p>
+    预览用的是 xenops ，其优点是异步渲染图片，不会卡; 而且两个模式都能用。 代码主要借鉴自 John Kitchin 的网站：<a href="https://kitchingroup.cheme.cmu.edu/blog/archive/">The Kitchin Research Group</a> 。
+    </p>
+    ]]></description>
   </item>
   <item>
     <title>用 org-anki 来快速制作 anki 卡片</title>
