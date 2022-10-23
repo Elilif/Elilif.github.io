@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+	 xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	 xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:atom="http://www.w3.org/2005/Atom"
+	 xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	 xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	 xmlns:georss="http://www.georss.org/georss"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:media="http://search.yahoo.com/mrss/"><channel>
+  <title>Eli's blog</title>
+  <atom:link href="https://elilif.github.io/rss.xml" rel="self" type="application/rss+xml" />
+  <link>https://elilif.github.io/</link>
+  <description><![CDATA[]]></description>
+  <language>en</language>
+  <pubDate>Sun, 23 Oct 2022 13:40:53 +0800</pubDate>
+  <lastBuildDate>Sun, 23 Oct 2022 13:40:53 +0800</lastBuildDate>
+  <generator>Emacs 29.0 Org-mode 9.5.5</generator>
+  <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
+  <image>
+    <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
+    <title>Eli's blog</title>
+    <link>https://elilif.github.io/</link>
+  </image>
+
+
+  <item>
+    <title>在 org-mode 和 latex-mode 中美化公式预览</title>
+    <link>https://elilif.github.io/2022-10-14-在 org-mode 和 latex-mode 中美化公式预览.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/2022-10-14-在 org-mode 和 latex-mode 中美化公式预览.html</guid>
+    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[]]></description>
+  </item>
+  <item>
+    <title>用 org-anki 来快速制作 anki 卡片</title>
+    <link>https://elilif.github.io/用 org-anki 来快速制作 anki 卡片.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/用 org-anki 来快速制作 anki 卡片.html</guid>
+    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[]]></description>
+  </item>
+  <item>
+    <title>Hello World!</title>
+    <link>https://elilif.github.io/hello_world.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/hello_world.html</guid>
+    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[]]></description>
+  </item>
+  <item>
+    <title>Emacs 中的缩进</title>
+    <link>https://elilif.github.io/2022-10-23-indentations in emacs.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/2022-10-23-indentations in emacs.html</guid>
+    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[]]></description>
+  </item>
+  <item>
+    <title>安装 Arch</title>
+    <link>https://elilif.github.io/安装Arch.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/安装Arch.html</guid>
+    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[]]></description>
+  </item>
+  <item>
+    <title>优化 Emacs 启动时间</title>
+    <link>https://elilif.github.io/2022-10-15-优化 Emacs 启动时间.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/2022-10-15-优化 Emacs 启动时间.html</guid>
+    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[]]></description>
+  </item>
+</channel>
+</rss>
