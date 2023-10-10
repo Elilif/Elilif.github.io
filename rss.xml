@@ -9,95 +9,35 @@
 	 xmlns:georss="http://www.georss.org/georss"
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
      xmlns:media="http://search.yahoo.com/mrss/"><channel>
-  <title>Eli's blog</title>
+  <title>Eli's Blog</title>
   <atom:link href="https://elilif.github.io/rss.xml" rel="self" type="application/rss+xml" />
   <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 23 Oct 2022 16:28:11 +0800</pubDate>
-  <lastBuildDate>Sun, 23 Oct 2022 16:28:11 +0800</lastBuildDate>
-  <generator>Emacs 29.0 Org-mode 9.5.5</generator>
+  <pubDate>Tue, 10 Oct 2023 19:16:49 +0800</pubDate>
+  <lastBuildDate>Tue, 10 Oct 2023 19:16:49 +0800</lastBuildDate>
+  <generator>Emacs 29.1 Org-mode 9.6.6</generator>
   <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
-    <title>Eli's blog</title>
+    <title>Eli's Blog</title>
     <link>https://elilif.github.io/</link>
   </image>
 
 
   <item>
-    <title>在 org-mode 和 latex-mode 中美化公式预览</title>
-    <link>https://elilif.github.io/2022-10-14-在 org-mode 和 latex-mode 中美化公式预览.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
-    <guid isPermaLink="false">https://elilif.github.io/2022-10-14-在 org-mode 和 latex-mode 中美化公式预览.html</guid>
-    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
-
-    <description><![CDATA[<p>
-    预览用的是 xenops ，其优点是异步渲染图片，不会卡; 而且两个模式都能用。 代码主要借鉴自 John Kitchin 的网站：<a href="https://kitchingroup.cheme.cmu.edu/blog/archive/">The Kitchin Research Group</a> 。
-    </p>
-
-    <p>
-    <a href="https://elilif.github.io/2022-10-14-%E5%9C%A8%20org-mode%20%E5%92%8C%20latex-mode%20%E4%B8%AD%E7%BE%8E%E5%8C%96%E5%85%AC%E5%BC%8F%E9%A2%84%E8%A7%88.html">Read More</a>
-    </p>
-    ]]></description>
-  </item>
-  <item>
-    <title>用 org-anki 来快速制作 anki 卡片</title>
-    <link>https://elilif.github.io/用 org-anki 来快速制作 anki 卡片.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
-    <guid isPermaLink="false">https://elilif.github.io/用 org-anki 来快速制作 anki 卡片.html</guid>
-    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
-
-    <description><![CDATA[<p>
-    <a href="https://elilif.github.io/%E7%94%A8%20org-anki%20%E6%9D%A5%E5%BF%AB%E9%80%9F%E5%88%B6%E4%BD%9C%20anki%20%E5%8D%A1%E7%89%87.html">Read More</a>
-    </p>
-    ]]></description>
-  </item>
-  <item>
     <title>Hello World!</title>
     <link>https://elilif.github.io/hello_world.html</link>
     <author>eli.q.qian@gmail.com (Eli Qian)</author>
     <guid isPermaLink="false">https://elilif.github.io/hello_world.html</guid>
-    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
+    <pubDate>Sun, 23 Oct 2022 13:35:00 +0800</pubDate>
 
     <description><![CDATA[<p>
+    你好，这是我的第一篇 blog 。
+    </p>
+
+    <p>
     <a href="https://elilif.github.io/hello_world.html">Read More</a>
-    </p>
-    ]]></description>
-  </item>
-  <item>
-    <title>Emacs 中的缩进</title>
-    <link>https://elilif.github.io/2022-10-23-indentations in emacs.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
-    <guid isPermaLink="false">https://elilif.github.io/2022-10-23-indentations in emacs.html</guid>
-    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
-
-    <description><![CDATA[<p>
-    <a href="https://elilif.github.io/2022-10-23-indentations%20in%20emacs.html">Read More</a>
-    </p>
-    ]]></description>
-  </item>
-  <item>
-    <title>安装 Arch</title>
-    <link>https://elilif.github.io/安装Arch.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
-    <guid isPermaLink="false">https://elilif.github.io/安装Arch.html</guid>
-    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
-
-    <description><![CDATA[<p>
-    <a href="https://elilif.github.io/%E5%AE%89%E8%A3%85Arch.html">Read More</a>
-    </p>
-    ]]></description>
-  </item>
-  <item>
-    <title>优化 Emacs 启动时间</title>
-    <link>https://elilif.github.io/2022-10-15-优化 Emacs 启动时间.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
-    <guid isPermaLink="false">https://elilif.github.io/2022-10-15-优化 Emacs 启动时间.html</guid>
-    <pubDate>Sun, 23 Oct 2022 00:00:00 +0800</pubDate>
-
-    <description><![CDATA[<p>
-    <a href="https://elilif.github.io/2022-10-15-%E4%BC%98%E5%8C%96%20Emacs%20%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4.html">Read More</a>
     </p>
     ]]></description>
   </item>
