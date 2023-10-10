@@ -14,8 +14,8 @@
   <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Wed, 11 Oct 2023 00:27:51 +0800</pubDate>
-  <lastBuildDate>Wed, 11 Oct 2023 00:27:51 +0800</lastBuildDate>
+  <pubDate>Wed, 11 Oct 2023 01:03:14 +0800</pubDate>
+  <lastBuildDate>Wed, 11 Oct 2023 01:03:14 +0800</lastBuildDate>
   <generator>Emacs 29.1 Org-mode 9.6.6</generator>
   <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
   <image>
@@ -30,10 +30,10 @@
     <link>https://elilif.github.io/articles/hello_world.html</link>
     <author>eli.q.qian@gmail.com (Eli Qian)</author>
     <guid isPermaLink="false">https://elilif.github.io/articles/hello_world.html</guid>
-    <pubDate>Tue, 10 Oct 2023 22:25:00 +0800</pubDate>
+    <pubDate>Wed, 11 Oct 2023 01:03:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    本文简要介绍了一种使用 org-publish 来生成博客的方案。
+    本文简要介绍了一种使用 org-publish.el 来生成博客的方案。
     </p>
 
     <p>

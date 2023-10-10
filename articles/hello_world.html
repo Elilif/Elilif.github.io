@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-10-11 Wed 00:27 -->
+<!-- 2023-10-11 Wed 01:03 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hello World!</title>
@@ -20,19 +20,37 @@
 <div id="content" class="content">
 <header>
 <h1 class="title">Hello World!</h1>
-</header><div class="preview" id="orgbcac179">
-本文简要介绍了一种使用 org-publish 来生成博客的方案。
+</header><div class="preview" id="org1dc8d3a">
+本文简要介绍了一种使用 org-publish.el 来生成博客的方案。
 
 
 </div>
 
-<p>
-第一版完全基于 org-publish ，采用 sitemap 作为主页。
+<div id="outline-container-org2434777" class="outline-2">
+<h2 id="org2434777"><span class="section-number-2">1.</span> 为什么选择 org-publish.el</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li><p>
+内置
 </p>
 
 <p>
-代码非常简单：
+org-publish.el 是内置的，而且从名字就能看出来它是 org-mode 的一个模块。这就意味着它可以完美的支持 org 文件，不想 hugo 那样有时会解析出错。内置的另一个好处是我不用担心这个项目后续的发展，不会有用着用着作者弃坑了的情况出现。
+</p></li>
+
+<li><p>
+简单
 </p>
+
+<p>
+org-publish.el 的配置几乎只用一个变量​<code>org-publish-project-alist</code>​就能完成，而且扩展性极强，网站好不好看完全取决于自己的 js/css 水平。我正好有意向学这两样东西，于是打算边用边学，看看我最终能把这个网站打造成什么样。
+</p></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org351015f" class="outline-2">
+<h2 id="org351015f"><span class="section-number-2">2.</span> 基本配置</h2>
+<div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/filter-org-html--format-image</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>orig<span class="org-whitespace-space"> </span>source<span class="org-whitespace-space"> </span>attributes<span class="org-whitespace-space"> </span>info<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Use</span><span class="org-whitespace-space"> </span><span class="org-doc">base64</span><span class="org-whitespace-space"> </span><span class="org-doc">string</span><span class="org-whitespace-space"> </span><span class="org-doc">instead</span><span class="org-whitespace-space"> </span><span class="org-doc">of</span><span class="org-whitespace-space"> </span><span class="org-doc">url</span><span class="org-whitespace-space"> </span><span class="org-doc">to</span><span class="org-whitespace-space"> </span><span class="org-doc">display</span><span class="org-whitespace-space"> </span><span class="org-doc">images.</span>
@@ -233,11 +251,13 @@
 </pre>
 </div>
 </div>
+</div>
+</div>
 <div id="postamble" class="status">
 <hr class="Solid">
 <p class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</p>
 <p class="date">Create Date: 2023-10-10</p>
-<p class="date">Last modified: 2023-10-11 Wed 00:27</p>
+<p class="date">Last modified: 2023-10-11 Wed 01:03</p>
 <p>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.1 (<a href="https://orgmode.org">Org</a> mode 9.6.6)</p>
 
 <p style="text-align:center;">
