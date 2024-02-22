@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-02-22 Thu 13:45 -->
+<!-- 2024-02-22 Thu 19:48 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （序）</title>
@@ -9,6 +9,11 @@
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
                   <script src="/scripts/script.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/lisp.min.js"></script>
+
+<script>hljs.highlightAll();</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -58,14 +63,14 @@
 目前的方案是提供一个展开代码块中的 noweb 的按钮，比如说有如下代码：
 </p>
 
-<div class="multilang" id="org7272942">
+<div class="multilang" id="org2fe95e8">
 <div class="org-src-container">
-<div class="org-src-name"><span class="listing-number">Label:  </span>test-divider</div><pre class="src src-emacs-lisp" id="test-divider"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-</pre>
+<div class="org-src-name"><span class="listing-number">Label:  </span>test-divider</div><pre class="src src-emacs-lisp" id="test-divider"><code>(message "--------------------------------")
+</code></pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-</pre>
+<pre class="src src-emacs-lisp"><code>(message "--------------------------------")
+</code></pre>
 </div>
 
 </div>
@@ -73,18 +78,18 @@
 <p>
 在下面的代码块中按展开按钮可以展开 <a href="#test-divider">&lt;&lt;test-divider&gt;&gt;</a> 。
 </p>
-<div class="multilang" id="org1d79ee6">
+<div class="multilang" id="org69f87ac">
 <div class="org-src-container">
-<div class="org-src-name"><span class="listing-number">Label:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example">&lt;&lt;test-divider&gt;&gt;
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<div class="org-src-name"><span class="listing-number">Label:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example"><code>&lt;&lt;test-divider&gt;&gt;
+(message "This is a test.")
 &lt;&lt;test-divider&gt;&gt;
-</pre>
+</code></pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-</pre>
+<pre class="src src-emacs-lisp"><code>(message "--------------------------------")
+(message "This is a test.")
+(message "--------------------------------")
+</code></pre>
 </div>
 
 </div>
@@ -96,9 +101,14 @@
 <div class="info">
   <span class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</span>
   <span class="date">Create Date: 2024-02-20</span>
-  <span class="date">Last modified: 2024-02-22 Thu 13:45</span>
+  <span class="date">Last modified: 2024-02-22 Thu 19:48</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
 </div>
 </div>
-</body>
+<script>window.klipse_settings = {selector_eval_html: '.src-html',
+                             selector_eval_js: '.src-js',
+                             selector_eval_python_client: '.src-python',
+                             selector_eval_scheme: '.src-scheme',
+                             selector: '.src-clojure',
+                             selector_eval_ruby: '.src-ruby'};</script><script src="https://storage.googleapis.com/app.klipse.tech/plugin_prod/js/klipse_plugin.min.js"></script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css"/></body>
 </html>
