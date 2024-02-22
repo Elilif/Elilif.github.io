@@ -74,7 +74,7 @@ function addButtons() {
     //   pres.forEach((pre) => {
     //     pre.hidden = true;
     //   });
-    switchButton.hidden = true;
+    // switchButton.hidden = true;
 
     hideButton.addEventListener('click', () => {
       let pres = parent.querySelectorAll('.src');
