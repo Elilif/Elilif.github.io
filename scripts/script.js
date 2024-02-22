@@ -66,14 +66,14 @@ function addButtons() {
 
     // hide button
     let hideButton = document.createElement('button');
-    hideButton.innerText = 'Show Code';
+    hideButton.innerText = 'Hide Code';
     hideButton.classList.add('hide-code');
     buttons.append(hideButton);
 
-    let pres = parent.querySelectorAll('.src');
-      pres.forEach((pre) => {
-        pre.hidden = true;
-      });
+    // let pres = parent.querySelectorAll('.src');
+    //   pres.forEach((pre) => {
+    //     pre.hidden = true;
+    //   });
     switchButton.hidden = true;
 
     hideButton.addEventListener('click', () => {
