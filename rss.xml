@@ -14,9 +14,9 @@
   <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Wed, 11 Oct 2023 01:07:02 +0800</pubDate>
-  <lastBuildDate>Wed, 11 Oct 2023 01:07:02 +0800</lastBuildDate>
-  <generator>Emacs 29.1 Org-mode 9.6.6</generator>
+  <pubDate>Thu, 22 Feb 2024 13:45:35 +0800</pubDate>
+  <lastBuildDate>Thu, 22 Feb 2024 13:45:35 +0800</lastBuildDate>
+  <generator>Emacs 29.2 Org-mode 9.6.15</generator>
   <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
@@ -26,18 +26,44 @@
 
 
   <item>
-    <title>Hello World!</title>
-    <link>https://elilif.github.io/articles/hello_world.html</link>
+    <title>百般武艺，此乃 Emacs （一）：用 Emacs 写博客</title>
+    <link>https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html</link>
     <author>eli.q.qian@gmail.com (Eli Qian)</author>
-    <guid isPermaLink="false">https://elilif.github.io/articles/hello_world.html</guid>
-    <pubDate>Wed, 11 Oct 2023 01:03:00 +0800</pubDate>
+    <guid isPermaLink="false">https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html</guid>
+    <pubDate>Wed, 21 Feb 2024 00:00:00 +0800</pubDate>
 
     <description><![CDATA[<p>
-    本文简要介绍了一种使用 org-publish.el 来生成博客的方案。
+    本文简要介绍了如何使用 Emacs 来生成静态博客网站。主要分为三个模块：
     </p>
-
+    <div id="outline-container-org3b88b6d" class="outline-3">
+    <h3 id="org3b88b6d"><span class="section-number-3">1.1.</span> 博客生成</h3>
+    <div class="outline-text-3" id="text-1-1">
+    </div>
+    </div>
+    <div id="outline-container-org8c6a96a" class="outline-3">
+    <h3 id="org8c6a96a"><span class="section-number-3">1.2.</span> RSS 生成</h3>
+    <div class="outline-text-3" id="text-1-2">
+    </div>
+    </div>
+    <div id="outline-container-org92377e0" class="outline-3">
+    <h3 id="org92377e0"><span class="section-number-3">1.3.</span> 文学编程网页导出</h3>
+    <div class="outline-text-3" id="text-1-3">
     <p>
-    <a href="https://elilif.github.io/articles/hello_world.html">Read More</a>
+    <a href="https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html">Read More</a>
+    </p>
+    </div>
+    </div>
+    ]]></description>
+  </item>
+  <item>
+    <title>百般武艺，此乃 Emacs （序）</title>
+    <link>https://elilif.github.io/articles/2024-02-20-all-in-emacs-preface.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/articles/2024-02-20-all-in-emacs-preface.html</guid>
+    <pubDate>Tue, 20 Feb 2024 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://elilif.github.io/articles/2024-02-20-all-in-emacs-preface.html">Read More</a>
     </p>
     ]]></description>
   </item>

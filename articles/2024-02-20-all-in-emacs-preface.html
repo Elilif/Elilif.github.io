@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-02-22 Thu 13:45 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>百般武艺，此乃 Emacs （序）</title>
+<meta name="author" content="Eli Qian" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+                  <script src="/scripts/script.js"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+  <a href="/index.html" class="button">Home</a>
+  <a href="/rss.xml" class="button">RSS</a>
+  <a href="/config.html" class="button">Literate Emacs Config</a>
+</nav>
+<hr>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">百般武艺，此乃 Emacs （序）</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgad2ccda">1. 这是什么?</a></li>
+<li><a href="#org1f759e8">2. 注意事项</a></li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-orgad2ccda" class="outline-2">
+<h2 id="orgad2ccda"><span class="section-number-2">1.</span> 这是什么?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这是一个系列文章，主要介绍了我目前用 Emacs 做的各种事情。
+</p>
+
+<p>
+写这个系列的出衷是因为我最近打算实践一下文学编程，用文学编程的方式重写我的 Emacs
+配置文件，希望最终能像 <a href="https://tecosaur.github.io/emacs-config/config.html#language-configuration">tecosaur's Doom Emacs Configuration</a> 那样发布成一个网页。但是重写配置是一个十分麻烦且枯燥的工作，所以我希望能将其分解成一系列更小的模块慢慢写，同时尝试发布在网页上看看效果，于是此系列就应运而生。
+</p>
+</div>
+</div>
+<div id="outline-container-org1f759e8" class="outline-2">
+<h2 id="org1f759e8"><span class="section-number-2">2.</span> 注意事项</h2>
+<div class="outline-text-2" id="text-2">
+<ol class="org-ol">
+<li>此站点还在施工中，在 UI 、交互等方面还有很多不完善的地方。</li>
+<li>我还在探索文学编程的最佳实践，目前发布的文章中的代码块的展示方式也还没有确定，其中的内容也可能比较混乱。</li>
+</ol>
+
+
+<p>
+目前的方案是提供一个展开代码块中的 noweb 的按钮，比如说有如下代码：
+</p>
+
+<div class="multilang" id="org7272942">
+<div class="org-src-container">
+<div class="org-src-name"><span class="listing-number">Label:  </span>test-divider</div><pre class="src src-emacs-lisp" id="test-divider"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+
+</div>
+
+<p>
+在下面的代码块中按展开按钮可以展开 <a href="#test-divider">&lt;&lt;test-divider&gt;&gt;</a> 。
+</p>
+<div class="multilang" id="org1d79ee6">
+<div class="org-src-container">
+<div class="org-src-name"><span class="listing-number">Label:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example">&lt;&lt;test-divider&gt;&gt;
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+&lt;&lt;test-divider&gt;&gt;
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr class="Solid">
+<div class="info">
+  <span class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</span>
+  <span class="date">Create Date: 2024-02-20</span>
+  <span class="date">Last modified: 2024-02-22 Thu 13:45</span>
+  <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
+</div>
+</div>
+</body>
+</html>
