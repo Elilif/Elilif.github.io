@@ -1,5 +1,14 @@
 // based on https://www.roboleary.net/2022/01/13/copy-code-to-clipboard-blog.html
-const copyLabel = 'Copy code';
+const copyIcon = "<i class='bx bx-copy-alt' ></i>";
+const hideIcon = "<i class='bx bx-collapse-vertical' ></i>";
+const showIcon = "<i class='bx bx-expand-vertical' ></i>";
+const expandIcon = "<i class='bx bx-expand-horizontal'></i>";
+const originalIcon = "<i class='bx bx-reset' ></i>";
+const copyTitle = "Copy code";
+const hideTitle = "Hide code";
+const showTitle = "Show code";
+const expandTitle = "Expand code";
+const originalTitle = "Show original code";
 
 async function copyCode(block, button) {
   let code = block.querySelector('.org-src-container:not([hidden])').querySelector('pre.src');
@@ -7,7 +16,7 @@ async function copyCode(block, button) {
   await navigator.clipboard.writeText(text);
   button.innerText = 'Copied';
   setTimeout(() => {
-    button.innerText = copyLabel;
+    button.innerHTML = copyIcon;
   }, 500);
 }
 
@@ -16,13 +25,14 @@ function addButtons() {
   parents.forEach((parent) => {
     let buttons = document.createElement('div');
     buttons.classList.add('src-buttons');
-    parent.append(buttons);
+    parent.prepend(buttons);
 
     // copy button
     let copyButton = document.createElement('button');
-    copyButton.innerText = copyLabel;
+    copyButton.innerHTML = copyIcon;
+    copyButton.setAttribute('title', copyTitle);
     copyButton.classList.add('copy-code');
-    buttons.append(copyButton);
+    buttons.prepend(copyButton);
     copyButton.addEventListener('click', async() => {
       await copyCode(parent, copyButton);
     });
@@ -40,9 +50,10 @@ function addButtons() {
       expanded.prepend(label.cloneNode(true));
     }
 
-    switchButton.innerText = 'Expand Code';
+    switchButton.innerHTML = expandIcon;
+    switchButton.setAttribute('title', expandTitle);
     switchButton.classList.add('code-switcher');
-    buttons.append(switchButton);
+    buttons.prepend(switchButton);
 
     expanded.hidden = true;
 
@@ -52,23 +63,26 @@ function addButtons() {
         expandedPre.id = id;
         origPre.removeAttribute('id');
         expanded.removeAttribute('hidden');
-        switchButton.innerText = 'Orignal Code';
+        switchButton.innerHTML = originalIcon;
+        switchButton.setAttribute('title', originalTitle);
         orig.hidden = true;
       } else {
         let id = expandedPre.id;
         origPre.id = id;
         expandedPre.removeAttribute('id');
         orig.removeAttribute('hidden');
-        switchButton.innerText = 'Expand Code';
+        switchButton.innerHTML = expandIcon;
+        switchButton.setAttribute('title', expandTitle);
         expanded.hidden = true;
       }
     });
 
     // hide button
     let hideButton = document.createElement('button');
-    hideButton.innerText = 'Hide Code';
+    hideButton.innerHTML = hideIcon;
+    hideButton.setAttribute('title', hideTitle);
     hideButton.classList.add('hide-code');
-    buttons.append(hideButton);
+    buttons.prepend(hideButton);
 
     // let pres = parent.querySelectorAll('.src');
     //   pres.forEach((pre) => {
@@ -83,18 +97,34 @@ function addButtons() {
           pre.hidden = true;
         });
         switchButton.hidden = true;
-        hideButton.innerText = 'Show Code';
+        hideButton.innerHTML = showIcon;
+        hideButton.setAttribute('title', showTitle);
       } else {
         pres.forEach((pre) => {
           pre.removeAttribute('hidden');
         });
         switchButton.removeAttribute('hidden');
-        hideButton.innerText = 'Hide Code';
+        hideButton.innerHTML = hideIcon;
+        hideButton.setAttribute('title', hideTitle);
       }
     });
   });
 }
 
+function addSidenotes() {
+  let references = document.querySelectorAll('.footref');
+  references.forEach((ref) => {
+    let sidenote = document.createElement('aside');
+    let footdef = document.querySelector("#fn\\." + ref.innerText).closest('.footdef');
+    let footnoteText = footdef.firstElementChild.innerText + ". " +
+        footdef.lastElementChild.innerText;
+    sidenote.classList.add('sidenote');
+    sidenote.innerHTML = footnoteText.replace("\n", "");
+    ref.parentElement.nextElementSibling.after(sidenote);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   addButtons();
+  addSidenotes();
 });
