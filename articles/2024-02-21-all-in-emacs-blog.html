@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-02-27 Tue 22:51 -->
+<!-- 2024-02-27 Tue 23:22 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （一）：用 Emacs 写博客</title>
@@ -42,18 +42,18 @@
 <li><a href="#orge85df55">1.3.1. 杂项部分</a></li>
 <li><a href="#org8fc4aa5">1.3.2. HTML 部分</a></li>
 <li><a href="#org4a94332">1.3.3. sitemap 部分</a></li>
-<li><a href="#orgcdee4fd">1.3.4. 总结</a></li>
+<li><a href="#orgdb96af7">1.3.4. 总结</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#org07ca46b">2. RSS 生成</a></li>
 <li><a href="#org0428cd8">3. Org 文学编程网页导出</a></li>
-<li><a href="#orgdb96af7">4. 总结</a></li>
+<li><a href="#org74d33d8">4. 总结</a></li>
 </ul>
 </div>
 </nav>
-<div class="preview" id="orge67c4fe">
+<div class="preview" id="org6d16d90">
 本文简要介绍了如何使用 Emacs 来生成静态博客网站。主要分为三个模块：
 
 <ol class="org-ol">
@@ -101,7 +101,7 @@ ox-publish.el 就能用。
 首先介绍一下博客的基本结构
 </p>
 
-<pre class="example" id="orgab81ef9">
+<pre class="example" id="org67b58e9">
 ├── articles/
 ├── config.html
 ├── css/
@@ -135,7 +135,7 @@ Manual)</a> ，本文将侧重于分享我的个人配置。
 property list 组成。如：<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox">
 </p>
 
-<div class="multilang" id="org6d04b42">
+<div class="multilang" id="org0bf65a6">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>my-blog</div><pre class="src src-emacs-lisp" id="my-blog"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog"</span>
 <span class="org-whitespace-space"> </span>&lt;&lt;misc&gt;&gt;
@@ -165,11 +165,23 @@ property list 组成。如：<sup><label for="fnr.2" class="footref">2</label></
 <span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-function</span><span class="org-whitespace-space"> </span>eli/org-publish-sitemap
 <span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-format-entry</span><span class="org-whitespace-space"> </span>eli/sitemap-dated-entry-format
 
-<span class="org-whitespace-space"> </span><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span>&lt;&lt;head&gt;&gt;
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;link</span><span class="org-whitespace-space"> </span><span class="org-string">rel=\"stylesheet\"</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"text/css\"</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/css/style.css\"</span><span class="org-whitespace-space"> </span><span class="org-string">/&gt;</span>
+<span class="org-whitespace-space">  </span><span class="org-string">&lt;script</span><span class="org-whitespace-space"> </span><span class="org-string">src=\"/scripts/script.js\"&gt;&lt;/script&gt;"</span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
-<span class="org-whitespace-space"> </span><span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;preamble&gt;&gt;
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/rss.xml\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;RSS&lt;/a&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/config.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Literate</span><span class="org-whitespace-space"> </span><span class="org-string">Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">Config&lt;/a&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;/nav&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;hr&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:html-postamble</span><span class="org-whitespace-space"> </span>t
-<span class="org-whitespace-space"> </span><span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;postamble&gt;&gt;
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"author\"&gt;Author:</span><span class="org-whitespace-space"> </span><span class="org-string">%a</span><span class="org-whitespace-space"> </span><span class="org-string">(%e)&lt;/span&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Create</span><span class="org-whitespace-space"> </span><span class="org-string">Date:</span><span class="org-whitespace-space"> </span><span class="org-string">%d&lt;/span&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Last</span><span class="org-whitespace-space"> </span><span class="org-string">modified:</span><span class="org-whitespace-space"> </span><span class="org-string">%C&lt;/span&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span&gt;Creator:</span><span class="org-whitespace-space"> </span><span class="org-string">%c&lt;/span&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;/div&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:with-creator</span><span class="org-whitespace-space"> </span>nil
 <span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
@@ -191,7 +203,7 @@ property list 组成。如：<sup><label for="fnr.2" class="footref">2</label></
 <code>caption</code>的时候用代码块的 <code>name</code> 属性来作为代码块的标签。
 </p>
 
-<div class="multilang" id="orgcd58c29">
+<div class="multilang" id="orgfefeb29">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>backend</div><pre class="src src-emacs-lisp" id="backend"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>org-export-define-derived-backend<span class="org-whitespace-space"> </span>'blog<span class="org-whitespace-space"> </span>'html
 <span class="org-whitespace-space">  </span><span class="org-builtin">:translate-alist</span><span class="org-whitespace-space"> </span>'<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>src-block<span class="org-whitespace-space"> </span>.<span class="org-whitespace-space"> </span>eli/org-blog-src-block<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
@@ -206,7 +218,7 @@ property list 组成。如：<sup><label for="fnr.2" class="footref">2</label></
 </div>
 
 
-<div class="multilang" id="org6575968">
+<div class="multilang" id="orgce2b881">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-blog-src-block</div><pre class="src src-emacs-lisp" id="eli/org-blog-src-block"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-blog-src-block</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>src-block<span class="org-whitespace-space"> </span>_contents<span class="org-whitespace-space"> </span>info<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Transcode</span><span class="org-whitespace-space"> </span><span class="org-doc">a</span><span class="org-whitespace-space"> </span><span class="org-doc">SRC-BLOCK</span><span class="org-whitespace-space"> </span><span class="org-doc">element</span><span class="org-whitespace-space"> </span><span class="org-doc">from</span><span class="org-whitespace-space"> </span><span class="org-doc">Org</span><span class="org-whitespace-space"> </span><span class="org-doc">to</span><span class="org-whitespace-space"> </span><span class="org-doc">HTML.</span>
@@ -295,7 +307,7 @@ property list 组成。如：<sup><label for="fnr.2" class="footref">2</label></
 接下来我们需要为 ox-publish 定义一个导出后端为 <code>blog</code> 的发布函数：
 </p>
 
-<div class="multilang" id="org84d5dff">
+<div class="multilang" id="org2789cf1">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-blog-publish-to-html</div><pre class="src src-emacs-lisp" id="eli/org-blog-publish-to-html"><code><span class="org-comment-delimiter">;;;</span><span class="org-comment">###</span><span class="org-comment"><span class="org-warning">autoload</span></span>
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-blog-publish-to-html</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>plist<span class="org-whitespace-space"> </span>filename<span class="org-whitespace-space"> </span>pub-dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
@@ -340,7 +352,7 @@ property list 组成。如：<sup><label for="fnr.2" class="footref">2</label></
 为了方便后续的编辑，我们定义如下几个变量：
 </p>
 
-<div class="multilang" id="org48e753c">
+<div class="multilang" id="orge619afc">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>blog-variables</div><pre class="src src-emacs-lisp" id="blog-variables"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span><span class="org-whitespace-space"> </span>eli/blog-base-dir<span class="org-whitespace-space"> </span><span class="org-string">"path-to/blog/"</span>
 <span class="org-whitespace-space">      </span>eli/blog-publish-dir<span class="org-whitespace-space"> </span><span class="org-string">"your-blog-site-dir"</span>
@@ -361,7 +373,7 @@ property list 组成。如：<sup><label for="fnr.2" class="footref">2</label></
 至此，property list 中的杂项部分就完成了，下面这些未指出的属性读者可以查阅
 <a href="https://orgmode.org/manual/Publishing.html">Publishing (The Org Manual)</a> 等文档，这里就不一一说明了。
 </p>
-<div class="multilang" id="org8582d3c">
+<div class="multilang" id="org29d7c15">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>misc</div><pre class="src src-emacs-lisp" id="misc"><code><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,eli/blog-base-dir
 <span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>expand-file-name<span class="org-whitespace-space"> </span><span class="org-string">"articles"</span><span class="org-whitespace-space"> </span>eli/blog-publish-dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
@@ -398,7 +410,7 @@ org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</co
 <p>
 导航栏是几个很简单的标签（具体可以查阅变量 <code>org-html-preamble-format</code> 的文档）：
 </p>
-<div class="multilang" id="org186e0d9">
+<div class="multilang" id="orgdbacda7">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>preamble</div><pre class="src src-emacs-lisp" id="preamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
 <span class="org-whitespace-space">  </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
@@ -425,7 +437,7 @@ org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</co
 postamble 则提供了作者、创建时间和修改时间等信息（具体可以查阅变量
 <code>org-html-postamble-format</code> 的文档）：
 </p>
-<div class="multilang" id="orgfac282c">
+<div class="multilang" id="org953d6d5">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>postamble</div><pre class="src src-emacs-lisp" id="postamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
 <span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
@@ -453,7 +465,7 @@ postamble 则提供了作者、创建时间和修改时间等信息（具体可�
 <p>
 此外，我们还可以为导出的 HTML 提供 CSS 和 JS 文件，以获取更舒适的浏览体验（具体可以查阅变量 <code>org-html-head</code> 的文档）：
 </p>
-<div class="multilang" id="org5363c81">
+<div class="multilang" id="org8e730db">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>head</div><pre class="src src-emacs-lisp" id="head"><code><span class="org-string">"&lt;link</span><span class="org-whitespace-space"> </span><span class="org-string">rel=\"stylesheet\"</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"text/css\"</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/css/style.css\"</span><span class="org-whitespace-space"> </span><span class="org-string">/&gt;</span>
 <span class="org-whitespace-space"> </span><span class="org-string">&lt;script</span><span class="org-whitespace-space"> </span><span class="org-string">src=\"/scripts/script.js\"&gt;&lt;/script&gt;"</span>
@@ -472,7 +484,7 @@ postamble 则提供了作者、创建时间和修改时间等信息（具体可�
 至此，property list 中的 HTML 部分就大致完成了：<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">
 </p>
 
-<div class="multilang" id="orgcb275ff">
+<div class="multilang" id="org1f1c8e3">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>html</div><pre class="src src-emacs-lisp" id="html"><code><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span>&lt;&lt;head&gt;&gt;
 <span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
@@ -519,7 +531,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 首先我们为博客主页固定一个创建时间：
 </p>
 
-<div class="multilang" id="org0de3748">
+<div class="multilang" id="orga7f703e">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-sitemap</div><pre class="src src-emacs-lisp" id="eli/org-publish-sitemap"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-sitemap</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>title<span class="org-whitespace-space"> </span>list<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Generate</span><span class="org-whitespace-space"> </span><span class="org-doc">the</span><span class="org-whitespace-space"> </span><span class="org-doc">sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">with</span><span class="org-whitespace-space"> </span><span class="org-doc">title."</span>
@@ -548,7 +560,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 其次我们可以为 sitemap 中的每一个 entry 添加时间前缀：
 </p>
 
-<div class="multilang" id="org1ab40c4">
+<div class="multilang" id="org699f05e">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/sitemap-dated-entry-format</div><pre class="src src-emacs-lisp" id="eli/sitemap-dated-entry-format"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/sitemap-dated-entry-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>entry<span class="org-whitespace-space"> </span>_style<span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">PROJECT</span><span class="org-whitespace-space"> </span><span class="org-doc">ENTRY</span><span class="org-whitespace-space"> </span><span class="org-doc">STYLE</span><span class="org-whitespace-space"> </span><span class="org-doc">format</span><span class="org-whitespace-space"> </span><span class="org-doc">that</span><span class="org-whitespace-space"> </span><span class="org-doc">includes</span><span class="org-whitespace-space"> </span><span class="org-doc">date."</span>
@@ -595,7 +607,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 注意 <code>eli/sitemap-dated-entry-format</code> 里的 <code>{{{timestamp(%s)}}}</code> 是一个导出宏：
 </p>
 
-<div class="multilang" id="orgbf7e034">
+<div class="multilang" id="org6e4fbf3">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>timestamp-macro</div><pre class="src src-emacs-lisp" id="timestamp-macro"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>add-to-list<span class="org-whitespace-space"> </span>'org-export-global-macros
 <span class="org-whitespace-space">             </span>'<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"timestamp"</span><span class="org-whitespace-space"> </span>.<span class="org-whitespace-space"> </span><span class="org-string">"@@html:&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"timestamp\"&gt;[$1]&lt;/span&gt;@@"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
@@ -616,7 +628,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 sitemap 移到根目录
 </p>
 
-<div class="multilang" id="org5f55f0f">
+<div class="multilang" id="org1b90cd3">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/blog-publish-completion</div><pre class="src src-emacs-lisp" id="eli/blog-publish-completion"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/blog-publish-completion</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>publishing-directory<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get<span class="org-whitespace-space"> </span>project<span class="org-whitespace-space"> </span><span class="org-builtin">:publishing-directory</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -648,7 +660,7 @@ sitemap 移到根目录
 sitemap 是自动生成的，我们也不需要修改。
 </p>
 
-<div class="multilang" id="org4e760c3">
+<div class="multilang" id="orgf1154eb">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/kill-sitemap-buffer</div><pre class="src src-emacs-lisp" id="eli/kill-sitemap-buffer"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/kill-sitemap-buffer</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>sitemap-filename<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get<span class="org-whitespace-space"> </span>project<span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-filename</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -674,7 +686,7 @@ sitemap 是自动生成的，我们也不需要修改。
 <p>
 至此，一个基本的博客主页就完成了，下面是相应的属性：
 </p>
-<div class="multilang" id="orgc2f1e22">
+<div class="multilang" id="org4bd7366">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>sitemap</div><pre class="src src-emacs-lisp" id="sitemap"><code><span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
 <span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
@@ -702,13 +714,13 @@ sitemap 是自动生成的，我们也不需要修改。
 </div>
 </div>
 
-<div id="outline-container-orgcdee4fd" class="outline-4">
-<h4 id="orgcdee4fd"><span class="section-number-4">1.3.4.</span> 总结</h4>
+<div id="outline-container-orgdb96af7" class="outline-4">
+<h4 id="orgdb96af7"><span class="section-number-4">1.3.4.</span> 总结</h4>
 <div class="outline-text-4" id="text-1-3-4">
 <p>
 现在我们已经介绍完了所有需要的属性，接下来让我们让我们把这些属性合到一起，加上名字组成一个完整的 project 。至此，一个简单的博客导出工具就完成了：<sup><label for="fnr.4" class="footref">4</label></sup><input id="fnr.4" class="footref-toggle" type="checkbox">
 </p>
-<div class="multilang" id="org415b189">
+<div class="multilang" id="org19adb0b">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><code>&lt;&lt;blog-helper-functions&gt;&gt;
 
@@ -913,11 +925,41 @@ sitemap 是自动生成的，我们也不需要修改。
 
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span><span class="org-whitespace-space"> </span>org-publish-project-alist<span class="org-whitespace-space"> </span>`<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>
 <span class="org-whitespace-space">                                  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog"</span>
-<span class="org-whitespace-space">                                   </span>&lt;&lt;misc&gt;&gt;
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,eli/blog-base-dir
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>expand-file-name<span class="org-whitespace-space"> </span><span class="org-string">"articles"</span><span class="org-whitespace-space"> </span>eli/blog-publish-dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:base-extension</span><span class="org-whitespace-space"> </span><span class="org-string">"org"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:recursive</span><span class="org-whitespace-space"> </span>nil
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:htmlized-source</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-blog-publish-to-html
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:exclude</span><span class="org-whitespace-space"> </span><span class="org-string">"rss.org"</span>
 
-<span class="org-whitespace-space">                                   </span>&lt;&lt;sitemap&gt;&gt;
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:completion-function</span><span class="org-whitespace-space"> </span>eli/blog-publish-completion
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-filename</span><span class="org-whitespace-space"> </span>,eli/blog-sitamap
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-title</span><span class="org-whitespace-space"> </span><span class="org-string">"Eli's</span><span class="org-whitespace-space"> </span><span class="org-string">Blog"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-sort-files</span><span class="org-whitespace-space"> </span>anti-chronologically
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-function</span><span class="org-whitespace-space"> </span>eli/org-publish-sitemap
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-format-entry</span><span class="org-whitespace-space"> </span>eli/sitemap-dated-entry-format
 
-<span class="org-whitespace-space">                                   </span>&lt;&lt;html&gt;&gt;
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;link</span><span class="org-whitespace-space"> </span><span class="org-string">rel=\"stylesheet\"</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"text/css\"</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/css/style.css\"</span><span class="org-whitespace-space"> </span><span class="org-string">/&gt;</span>
+<span class="org-whitespace-space">                                    </span><span class="org-string">&lt;script</span><span class="org-whitespace-space"> </span><span class="org-string">src=\"/scripts/script.js\"&gt;&lt;/script&gt;"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/rss.xml\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;RSS&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/config.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Literate</span><span class="org-whitespace-space"> </span><span class="org-string">Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">Config&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;/nav&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;hr&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-postamble</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"author\"&gt;Author:</span><span class="org-whitespace-space"> </span><span class="org-string">%a</span><span class="org-whitespace-space"> </span><span class="org-string">(%e)&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Create</span><span class="org-whitespace-space"> </span><span class="org-string">Date:</span><span class="org-whitespace-space"> </span><span class="org-string">%d&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Last</span><span class="org-whitespace-space"> </span><span class="org-string">modified:</span><span class="org-whitespace-space"> </span><span class="org-string">%C&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span&gt;Creator:</span><span class="org-whitespace-space"> </span><span class="org-string">%c&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;/div&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:with-creator</span><span class="org-whitespace-space"> </span>nil
 <span class="org-whitespace-space">                                   </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
 <span class="org-whitespace-space">                                  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
@@ -938,7 +980,7 @@ headlines 。因此我们需要曲线救国，新建一个 publish 项目，使�
 entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </p>
 
-<div class="multilang" id="orgc703335">
+<div class="multilang" id="org5a3d83e">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-rss-entry</div><pre class="src src-emacs-lisp" id="eli/org-publish-rss-entry"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-rss-entry</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>entry<span class="org-whitespace-space"> </span>_style<span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Format</span><span class="org-whitespace-space"> </span><span class="org-doc">ENTRY</span><span class="org-whitespace-space"> </span><span class="org-doc">for</span><span class="org-whitespace-space"> </span><span class="org-doc">the</span><span class="org-whitespace-space"> </span><span class="org-doc">posts</span><span class="org-whitespace-space"> </span><span class="org-doc">RSS</span><span class="org-whitespace-space"> </span><span class="org-doc">feed</span><span class="org-whitespace-space"> </span><span class="org-doc">in</span><span class="org-whitespace-space"> </span><span class="org-doc">PROJECT."</span>
@@ -1005,7 +1047,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 
 
-<div class="multilang" id="org6f091a2">
+<div class="multilang" id="orgbe93a68">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-rss-sitemap</div><pre class="src src-emacs-lisp" id="eli/org-publish-rss-sitemap"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-rss-sitemap</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>title<span class="org-whitespace-space"> </span>list<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Generate</span><span class="org-whitespace-space"> </span><span class="org-doc">a</span><span class="org-whitespace-space"> </span><span class="org-doc">sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">of</span><span class="org-whitespace-space"> </span><span class="org-doc">posts</span><span class="org-whitespace-space"> </span><span class="org-doc">that</span><span class="org-whitespace-space"> </span><span class="org-doc">is</span><span class="org-whitespace-space"> </span><span class="org-doc">exported</span><span class="org-whitespace-space"> </span><span class="org-doc">as</span><span class="org-whitespace-space"> </span><span class="org-doc">a</span><span class="org-whitespace-space"> </span><span class="org-doc">RSS</span><span class="org-whitespace-space"> </span><span class="org-doc">feed.</span>
@@ -1034,7 +1076,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 
 
-<div class="multilang" id="orgccd9209">
+<div class="multilang" id="orge8d6846">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-rss-feed</div><pre class="src src-emacs-lisp" id="eli/org-publish-rss-feed"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-rss-feed</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>plist<span class="org-whitespace-space"> </span>filename<span class="org-whitespace-space"> </span>dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Publish</span><span class="org-whitespace-space"> </span><span class="org-doc">PLIST</span><span class="org-whitespace-space"> </span><span class="org-doc">to</span><span class="org-whitespace-space"> </span><span class="org-doc">Rss</span><span class="org-whitespace-space"> </span><span class="org-doc">when</span><span class="org-whitespace-space"> </span><span class="org-doc">FILENAME</span><span class="org-whitespace-space"> </span><span class="org-doc">is</span><span class="org-whitespace-space"> </span><span class="org-doc">rss.org.</span>
@@ -1055,7 +1097,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 
 
-<div class="multilang" id="org922bc7f">
+<div class="multilang" id="orgd2002c0">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>rss-sitemap</div><pre class="src src-emacs-lisp" id="rss-sitemap"><code><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-feed
 <span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
@@ -1089,7 +1131,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 <p>
 剩余的属性如下：
 </p>
-<div class="multilang" id="orgc4d633b">
+<div class="multilang" id="org0648416">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>rss-misc</div><pre class="src src-emacs-lisp" id="rss-misc"><code><span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
 <span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,eli/blog-publish-dir
@@ -1123,7 +1165,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 <p>
 现在整个 rss 项目就完成了。
 </p>
-<div class="multilang" id="org6dd0b18">
+<div class="multilang" id="org0bef01e">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>rss</div><pre class="src src-emacs-lisp" id="rss"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog</span><span class="org-whitespace-space"> </span><span class="org-string">rss"</span>
 <span class="org-whitespace-space"> </span>&lt;&lt;rss-sitemap&gt;&gt;
@@ -1158,7 +1200,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 <p>
 下面是完整的代码：
 </p>
-<div class="multilang" id="org106550e">
+<div class="multilang" id="org6157a9b">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><code>&lt;&lt;rss-helper-functions&gt;&gt;
 
@@ -1252,8 +1294,23 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 <span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>org-rss-publish-to-rss<span class="org-whitespace-space"> </span>plist<span class="org-whitespace-space"> </span>filename<span class="org-whitespace-space"> </span>dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog</span><span class="org-whitespace-space"> </span><span class="org-string">rss"</span>
-<span class="org-whitespace-space"> </span>&lt;&lt;rss-sitemap&gt;&gt;
-<span class="org-whitespace-space"> </span>&lt;&lt;rss-misc&gt;&gt;<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-whitespace-space"> </span><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-feed
+<span class="org-whitespace-space"> </span><span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-function</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-sitemap
+<span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-title</span><span class="org-whitespace-space"> </span><span class="org-string">"Eli's</span><span class="org-whitespace-space"> </span><span class="org-string">Blog"</span>
+<span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-filename</span><span class="org-whitespace-space"> </span><span class="org-string">"rss.org"</span>
+<span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-sort-files</span><span class="org-whitespace-space"> </span>anti-chronologically
+<span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-format-entry</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-entry
+<span class="org-whitespace-space"> </span><span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
+<span class="org-whitespace-space"> </span><span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,eli/blog-publish-dir
+<span class="org-whitespace-space"> </span><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,eli/blog-base-dir
+<span class="org-whitespace-space"> </span><span class="org-builtin">:rss-extension</span><span class="org-whitespace-space"> </span><span class="org-string">"xml"</span>
+<span class="org-whitespace-space"> </span><span class="org-builtin">:base-extension</span><span class="org-whitespace-space"> </span><span class="org-string">"org"</span>
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-link-home</span><span class="org-whitespace-space"> </span><span class="org-string">"https://elilif.github.io/"</span>
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-link-use-abs-url</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-link-org-files-as-html</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space"> </span><span class="org-builtin">:include</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"rss.org"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="org-whitespace-space"> </span><span class="org-builtin">:exclude</span><span class="org-whitespace-space"> </span><span class="org-string">"index.org"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
 </div>
 
@@ -1275,7 +1332,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 js 添加一个按钮，实现不同版本间的切换。
 </p>
 
-<div class="multilang" id="org9f37315">
+<div class="multilang" id="org2cfb992">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-export-src-babel-duplicate</div><pre class="src src-emacs-lisp" id="eli/org-export-src-babel-duplicate"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-export-src-babel-duplicate</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>backend<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Duplicate</span><span class="org-whitespace-space"> </span><span class="org-doc">every</span><span class="org-whitespace-space"> </span><span class="org-doc">src</span><span class="org-whitespace-space"> </span><span class="org-doc">babels</span><span class="org-whitespace-space"> </span><span class="org-doc">in</span><span class="org-whitespace-space"> </span><span class="org-doc">the</span><span class="org-whitespace-space"> </span><span class="org-doc">current</span><span class="org-whitespace-space"> </span><span class="org-doc">buffer.</span>
@@ -1339,7 +1396,7 @@ js 添加一个按钮，实现不同版本间的切换。
 <p>
 Emacs 配置部分的 project 如下：
 </p>
-<div class="multilang" id="orgb4b55f3">
+<div class="multilang" id="orgcdd4b10">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>emacs-config</div><pre class="src src-emacs-lisp" id="emacs-config"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-string">"Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">config"</span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,eli/blog-publish-dir
@@ -1355,11 +1412,23 @@ Emacs 配置部分的 project 如下：
 <span class="org-whitespace-space"> </span><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,user-emacs-directory
 <span class="org-whitespace-space"> </span><span class="org-builtin">:include</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"config.org"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-blog-publish-to-html
-<span class="org-whitespace-space"> </span><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span>&lt;&lt;head&gt;&gt;
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;link</span><span class="org-whitespace-space"> </span><span class="org-string">rel=\"stylesheet\"</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"text/css\"</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/css/style.css\"</span><span class="org-whitespace-space"> </span><span class="org-string">/&gt;</span>
+<span class="org-whitespace-space">  </span><span class="org-string">&lt;script</span><span class="org-whitespace-space"> </span><span class="org-string">src=\"/scripts/script.js\"&gt;&lt;/script&gt;"</span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
-<span class="org-whitespace-space"> </span><span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;preamble&gt;&gt;
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/rss.xml\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;RSS&lt;/a&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/config.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Literate</span><span class="org-whitespace-space"> </span><span class="org-string">Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">Config&lt;/a&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;/nav&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;hr&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:html-postamble</span><span class="org-whitespace-space"> </span>t
-<span class="org-whitespace-space"> </span><span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;postamble&gt;&gt;
+<span class="org-whitespace-space"> </span><span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"author\"&gt;Author:</span><span class="org-whitespace-space"> </span><span class="org-string">%a</span><span class="org-whitespace-space"> </span><span class="org-string">(%e)&lt;/span&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Create</span><span class="org-whitespace-space"> </span><span class="org-string">Date:</span><span class="org-whitespace-space"> </span><span class="org-string">%d&lt;/span&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Last</span><span class="org-whitespace-space"> </span><span class="org-string">modified:</span><span class="org-whitespace-space"> </span><span class="org-string">%C&lt;/span&gt;</span>
+<span class="org-whitespace-space">   </span><span class="org-string">&lt;span&gt;Creator:</span><span class="org-whitespace-space"> </span><span class="org-string">%c&lt;/span&gt;</span>
+<span class="org-whitespace-space"> </span><span class="org-string">&lt;/div&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:with-creator</span><span class="org-whitespace-space"> </span>nil<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
 </div>
@@ -1368,13 +1437,13 @@ Emacs 配置部分的 project 如下：
 </div>
 </div>
 
-<div id="outline-container-orgdb96af7" class="outline-2">
-<h2 id="orgdb96af7"><span class="section-number-2">4.</span> 总结</h2>
+<div id="outline-container-org74d33d8" class="outline-2">
+<h2 id="org74d33d8"><span class="section-number-2">4.</span> 总结</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 以下代码完整地包括了前文提到的内容：
 </p>
-<div class="multilang" id="org46dfad5">
+<div class="multilang" id="org9086602">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>result</div><pre class="src src-emacs-lisp" id="result"><code>&lt;&lt;blog-helper-functions&gt;&gt;
 
@@ -1721,21 +1790,83 @@ Emacs 配置部分的 project 如下：
 
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span><span class="org-whitespace-space"> </span>org-publish-project-alist<span class="org-whitespace-space"> </span>`<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>
 <span class="org-whitespace-space">                                  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog"</span>
-<span class="org-whitespace-space">                                   </span>&lt;&lt;misc&gt;&gt;
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,eli/blog-base-dir
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>expand-file-name<span class="org-whitespace-space"> </span><span class="org-string">"articles"</span><span class="org-whitespace-space"> </span>eli/blog-publish-dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:base-extension</span><span class="org-whitespace-space"> </span><span class="org-string">"org"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:recursive</span><span class="org-whitespace-space"> </span>nil
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:htmlized-source</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-blog-publish-to-html
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:exclude</span><span class="org-whitespace-space"> </span><span class="org-string">"rss.org"</span>
 
-<span class="org-whitespace-space">                                   </span>&lt;&lt;sitemap&gt;&gt;
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:completion-function</span><span class="org-whitespace-space"> </span>eli/blog-publish-completion
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-filename</span><span class="org-whitespace-space"> </span>,eli/blog-sitamap
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-title</span><span class="org-whitespace-space"> </span><span class="org-string">"Eli's</span><span class="org-whitespace-space"> </span><span class="org-string">Blog"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-sort-files</span><span class="org-whitespace-space"> </span>anti-chronologically
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-function</span><span class="org-whitespace-space"> </span>eli/org-publish-sitemap
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-format-entry</span><span class="org-whitespace-space"> </span>eli/sitemap-dated-entry-format
 
-<span class="org-whitespace-space">                                   </span>&lt;&lt;html&gt;&gt;
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;link</span><span class="org-whitespace-space"> </span><span class="org-string">rel=\"stylesheet\"</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"text/css\"</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/css/style.css\"</span><span class="org-whitespace-space"> </span><span class="org-string">/&gt;</span>
+<span class="org-whitespace-space">                                    </span><span class="org-string">&lt;script</span><span class="org-whitespace-space"> </span><span class="org-string">src=\"/scripts/script.js\"&gt;&lt;/script&gt;"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/rss.xml\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;RSS&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/config.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Literate</span><span class="org-whitespace-space"> </span><span class="org-string">Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">Config&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;/nav&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;hr&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-postamble</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"author\"&gt;Author:</span><span class="org-whitespace-space"> </span><span class="org-string">%a</span><span class="org-whitespace-space"> </span><span class="org-string">(%e)&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Create</span><span class="org-whitespace-space"> </span><span class="org-string">Date:</span><span class="org-whitespace-space"> </span><span class="org-string">%d&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Last</span><span class="org-whitespace-space"> </span><span class="org-string">modified:</span><span class="org-whitespace-space"> </span><span class="org-string">%C&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span&gt;Creator:</span><span class="org-whitespace-space"> </span><span class="org-string">%c&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;/div&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:with-creator</span><span class="org-whitespace-space"> </span>nil
 <span class="org-whitespace-space">                                   </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
 <span class="org-whitespace-space">                                  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog</span><span class="org-whitespace-space"> </span><span class="org-string">rss"</span>
-<span class="org-whitespace-space">                                   </span>&lt;&lt;rss-sitemap&gt;&gt;
-<span class="org-whitespace-space">                                   </span>&lt;&lt;rss-misc&gt;&gt;<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-feed
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-function</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-sitemap
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-title</span><span class="org-whitespace-space"> </span><span class="org-string">"Eli's</span><span class="org-whitespace-space"> </span><span class="org-string">Blog"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-filename</span><span class="org-whitespace-space"> </span><span class="org-string">"rss.org"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-sort-files</span><span class="org-whitespace-space"> </span>anti-chronologically
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:sitemap-format-entry</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-entry
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,eli/blog-publish-dir
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,eli/blog-base-dir
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:rss-extension</span><span class="org-whitespace-space"> </span><span class="org-string">"xml"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:base-extension</span><span class="org-whitespace-space"> </span><span class="org-string">"org"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-link-home</span><span class="org-whitespace-space"> </span><span class="org-string">"https://elilif.github.io/"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-link-use-abs-url</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-link-org-files-as-html</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:include</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-string">"rss.org"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:exclude</span><span class="org-whitespace-space"> </span><span class="org-string">"index.org"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
 <span class="org-whitespace-space">                                  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-string">"Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">config"</span>
 <span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,eli/blog-publish-dir
 <span class="org-whitespace-space">                                   </span><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,user-emacs-directory
 <span class="org-whitespace-space">                                   </span><span class="org-builtin">:include</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-string">"config.org"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
 <span class="org-whitespace-space">                                   </span><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-blog-publish-to-html
-<span class="org-whitespace-space">                                   </span>&lt;&lt;html&gt;&gt;<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;link</span><span class="org-whitespace-space"> </span><span class="org-string">rel=\"stylesheet\"</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"text/css\"</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/css/style.css\"</span><span class="org-whitespace-space"> </span><span class="org-string">/&gt;</span>
+<span class="org-whitespace-space">                                    </span><span class="org-string">&lt;script</span><span class="org-whitespace-space"> </span><span class="org-string">src=\"/scripts/script.js\"&gt;&lt;/script&gt;"</span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/rss.xml\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;RSS&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/config.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Literate</span><span class="org-whitespace-space"> </span><span class="org-string">Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">Config&lt;/a&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;/nav&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;hr&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-postamble</span><span class="org-whitespace-space"> </span>t
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"author\"&gt;Author:</span><span class="org-whitespace-space"> </span><span class="org-string">%a</span><span class="org-whitespace-space"> </span><span class="org-string">(%e)&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Create</span><span class="org-whitespace-space"> </span><span class="org-string">Date:</span><span class="org-whitespace-space"> </span><span class="org-string">%d&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Last</span><span class="org-whitespace-space"> </span><span class="org-string">modified:</span><span class="org-whitespace-space"> </span><span class="org-string">%C&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                     </span><span class="org-string">&lt;span&gt;Creator:</span><span class="org-whitespace-space"> </span><span class="org-string">%c&lt;/span&gt;</span>
+<span class="org-whitespace-space">                                   </span><span class="org-string">&lt;/div&gt;"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="org-whitespace-space">                                   </span><span class="org-builtin">:with-creator</span><span class="org-whitespace-space"> </span>nil<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
 <span class="org-whitespace-space">                                  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
 </div>
