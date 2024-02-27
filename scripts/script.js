@@ -1,3 +1,30 @@
+const copyLabel = "<i class='bx bx-copy-alt' ></i>";
+
+async function copyCode(block, button) {
+  let code = block.querySelector('pre.src');
+  let text = code.innerText;
+  await navigator.clipboard.writeText(text);
+  button.innerText = 'Copied';
+  setTimeout(() => {
+    button.innerHTML = copyLabel;
+  }, 500);
+}
+
+function addCopyCodeButtons() {
+  if (!navigator.clipboard) return;
+  let blocks = document.querySelectorAll('.org-src-container');
+  blocks.forEach((block) => {
+    let button = document.createElement('button');
+    button.innerHTML = copyLabel;
+    button.classList.add('copy-code');
+    block.append(button);
+    button.addEventListener('click', async() => {
+      await copyCode(block, button);
+    });
+    block.setAttribute('tabindex', 0);
+  });
+}
+
 function hideExpandedCode() {
   let parents = document.querySelectorAll('.multilang');
   parents.forEach((parent) => {
@@ -50,7 +77,7 @@ function addSidenotes() {
     let sidenote = document.createElement('aside');
     let footdef = document.querySelector("#fn\\." + ref.innerText).closest('.footdef');
     let footnoteText = footdef.firstElementChild.innerText + ". " +
-        footdef.lastElementChild.innerText;
+        footdef.lastElementChild.innerHTML;
     sidenote.classList.add('sidenote');
     sidenote.innerHTML = footnoteText.replace("\n", "");
     ref.parentElement.nextElementSibling.after(sidenote);
@@ -60,5 +87,6 @@ function addSidenotes() {
 document.addEventListener("DOMContentLoaded", function() {
   hideExpandedCode();
   addExpandButton();
+  addCopyCodeButtons();
   addSidenotes();
 });

@@ -137,6 +137,10 @@ a:hover {
   font-size: 0.8rem;
   margin-top: 1em;
   margin-bottom: 1em;
+
+  p {
+    display: inline;
+  }
 }
 
 #postamble {
@@ -228,6 +232,16 @@ label.footref {
 .org-src-container {
   margin-bottom: 2em;
 
+  .copy-code {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
   .org-src-name {
     font-size: 0.8rem;
     color: gray;
@@ -240,11 +254,17 @@ label.footref {
     text-align: center;
   }
 }
+
+.multilang:hover {
+  .copy-code {
+    display: inline-block;
+  }
+}
 /* .org-src-name { */
 /* } */
 
 .src {
-  padding-left: 0.5em;
+  padding: 0.5em;
 }
 
 .src-buttons {

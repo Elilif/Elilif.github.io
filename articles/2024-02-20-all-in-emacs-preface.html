@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-02-27 Tue 22:01 -->
+<!-- 2024-02-27 Tue 22:51 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （序）</title>
@@ -52,19 +52,15 @@
 <h2 id="org1f759e8"><span class="section-number-2">2.</span> 注意事项</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
-<li>此站点还在施工中，<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox">在 UI 、交互等方面还有很多不完善的地方。</li>
-<li>我还在探索文学编程的最佳实践，目前发布的文章中的代码块的展示方式也还没有确定，其中的内容也可能比较混乱。<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"></li>
+<li>此站点还在施工中，在 UI 、交互等方面还有很多不完善的地方。</li>
+<li>我还在探索文学编程的最佳实践，目前发布的文章中的代码块的展示方式也还没有确定，其中的内容也可能比较混乱。</li>
 </ol>
 
 <p>
 目前的方案是提供一个展开代码块中的 noweb 的按钮，比如说有如下代码：
 </p>
-<aside id="orgd8b5148">
-test
 
-</aside>
-
-<div class="multilang" id="org482c7f5">
+<div class="multilang" id="org3873ead">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>test-divider</div><pre class="src src-emacs-lisp" id="test-divider"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
@@ -78,57 +74,32 @@ test
 
 
 <p>
-在下面的代码块中按展开按钮可以展开 <a href="#test-divider">&lt;&lt;test-divider&gt;&gt;</a> 。<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">
+在下面的代码块中按展开按钮可以展开 <a href="#test-divider">&lt;&lt;test-divider&gt;&gt;</a> 。
 </p>
-<div class="multilang" id="orge5c2378">
+<div class="multilang" id="org63325a8">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example"><code>&lt;&lt;test-divider&gt;&gt;
-<span id="coderef-test-ref" class="coderef-off"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span><span class="org-whitespace-space">                                   </span><span class="org-comment-delimiter">;;</span> (test-ref)</span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 &lt;&lt;test-divider&gt;&gt;
 </code></pre>
 </div>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-<span id="coderef-test-ref" class="coderef-off"><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span><span class="org-whitespace-space">                                   </span><span class="org-comment-delimiter">;;</span> (test-ref)</span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
 </div>
 
 </div>
-
-
-<p>
-<a href="#coderef-test-ref" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-test-ref');" onmouseout="CodeHighlightOff(this, 'coderef-test-ref');">test-ref</a>
-</p>
 </div>
 </div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-I can, for example, mark a section as a draft and not have it exported as
-soon as it hits the server even though the rest of the article is published.
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">inline test</p></div></div>
-
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-I can, for example, mark a section as a draft and not have it exported as
-soon as it hits the server even though the rest of the article is published.I
-can, for example, mark a section as a draft and not have it exported as soon as
-it hits the server even though the rest of the article is published.
-</p></div></div>
-
-
 </div>
-</div></div>
 <div id="postamble" class="status">
 <hr class="Solid">
 <div class="info">
   <span class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</span>
   <span class="date">Create Date: 2024-02-20</span>
-  <span class="date">Last modified: 2024-02-27 Tue 13:59</span>
+  <span class="date">Last modified: 2024-02-27 Tue 22:51</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
 </div>
 </div>
