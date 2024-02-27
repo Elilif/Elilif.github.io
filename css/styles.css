@@ -44,9 +44,12 @@ a:hover {
 }
 
 @media screen and (min-width: 780px) {
+  .toc-marker {
+    display: block;
+  }
   #table-of-contents {
     position: fixed;
-    width: 20vw;
+    width: 23vw;
     right: 1em;
 
     h2 {
@@ -66,7 +69,7 @@ a:hover {
       transition: all 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000);
     }
 
-    li.visible>a {
+    li.visible > a {
       color: #111;
       transform: translate( 5px );
     }
@@ -94,11 +97,23 @@ a:hover {
   margin: 1em auto;
 }
 
+@media screen and (max-width: 780px) {
+  .content {
+    width: 80vw;
+  }
+}
+
 #postamble .info,
 #preamble nav {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+@media screen and (max-width: 780px) {
+  #postamble .info {
+    flex-direction: column;
+  }
 }
 
 .timestamp {
@@ -132,8 +147,6 @@ sup:hover ~ .sidenote {
   background-color: #eceff1;
 }
 
-
-
 .footref-toggle {
   display: none;
 }
@@ -143,8 +156,9 @@ sup:hover ~ .sidenote {
 }
 
 label.footref {
-    text-decoration: none;
-    border-bottom: 0.0625rem dotted;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 0.0625rem dotted;
 }
 
 @media (min-width: 780px) {
@@ -176,19 +190,58 @@ label.footref {
   min-height: 2em;
 }
 
-.org-src-container {
+.multilang {
+  pre {
+    margin-top: 0;
+  }
+  .src-expand-section {
+    font-family: monospace;
+    border: 2px solid lightgray;
+    border-radius: 0.8em 0.8em 0 0;
+    border-bottom: none;
+    background-color: #eceff1;
+    padding-left: 0.5em;
+    min-height: 3em;
+    display:flex;
+    align-items:center;
+
+    .selected {
+      border: 2px solid black;
+      border-radius: 1em;
+    }
+    span {
+      color: gray;
+      cursor: pointer;
+      margin-right: 1em;
+      padding: 0.2em 0.8em;
+    }
+  }
+}
+
+.org-src-container pre{
   overflow: auto;
   border: 2px solid lightgray;
-  border-radius: 0.8em;
+  border-radius: 0 0 0.8em 0.8em;
   background-color: #eceff1;
 }
 
-.org-src-name {
-  padding-left: 0.5em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-bottom: 1px solid gray;
+.org-src-container {
+  margin-bottom: 2em;
+
+  .org-src-name {
+    font-size: 0.8rem;
+    color: gray;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: -2em;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
 }
+/* .org-src-name { */
+/* } */
 
 .src {
   padding-left: 0.5em;
@@ -200,18 +253,18 @@ label.footref {
   top: 0.5em
 }
 
-@media screen and (max-width: 425px) {
-  .org-src-name {
-    padding-bottom: 2.5em;
-    padding-top: 0.5em;
-  }
+/* @media screen and (max-width: 425px) { */
+/*   .org-src-name { */
+/*     padding-bottom: 2.5em; */
+/*     padding-top: 0.5em; */
+/*   } */
 
-  .src-buttons {
-    position: absolute;
-    left: 0.1em;
-    top: 2.5em;
-}
-}
+/*   .src-buttons { */
+/*     position: absolute; */
+/*     left: 0.1em; */
+/*     top: 2.5em; */
+/* } */
+/* } */
 
 .multilang .src-buttons button {
   border: none;
