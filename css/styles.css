@@ -190,13 +190,12 @@ label.footref {
   margin: 1em;
 }
 
-.multilang, .org-src-container {
-  min-height: 2em;
-}
 
 .multilang {
   pre {
     margin-top: 0;
+    max-height: 20em;
+    min-height: 2em;
   }
   .src-expand-section {
     font-family: monospace;
