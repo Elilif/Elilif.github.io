@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-02-28 Wed 11:56 -->
+<!-- 2024-02-28 Wed 17:37 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （序）</title>
@@ -28,15 +28,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgad2ccda">1. 这是什么?</a></li>
-<li><a href="#org1f759e8">2. 注意事项</a></li>
+<li><a href="#这是什么?">1. 这是什么?</a></li>
+<li><a href="#注意事项">2. 注意事项</a></li>
 </ul>
 </div>
 </nav>
 
-<div id="outline-container-orgad2ccda" class="outline-2">
-<h2 id="orgad2ccda"><span class="section-number-2">1.</span> 这是什么?</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-这是什么?" class="outline-2">
+<h2 id="这是什么?"><span class="section-number-2">1.</span> 这是什么?</h2>
+<div class="outline-text-2" id="text-这是什么?">
 <p>
 这是一个系列文章，主要介绍了我目前用 Emacs 做的各种事情。
 </p>
@@ -48,9 +48,9 @@
 </div>
 </div>
 
-<div id="outline-container-org1f759e8" class="outline-2">
-<h2 id="org1f759e8"><span class="section-number-2">2.</span> 注意事项</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-注意事项" class="outline-2">
+<h2 id="注意事项"><span class="section-number-2">2.</span> 注意事项</h2>
+<div class="outline-text-2" id="text-注意事项">
 <ol class="org-ol">
 <li>此站点还在施工中，在 UI 、交互等方面还有很多不完善的地方。</li>
 <li>我还在探索文学编程的最佳实践，目前发布的文章中的代码块的展示方式也还没有确定，其中的内容也可能比较混乱。</li>
@@ -60,7 +60,7 @@
 目前的方案是提供一个展开代码块中的 noweb 的按钮，比如说有如下代码：
 </p>
 
-<div class="multilang" id="org46230d6">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>test-divider</div><pre class="src src-emacs-lisp" id="test-divider"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
@@ -76,7 +76,7 @@
 <p>
 在下面的代码块中按展开按钮可以展开 <a href="#test-divider">&lt;&lt;test-divider&gt;&gt;</a> 。
 </p>
-<div class="multilang" id="org8ebf5e7">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example"><code>&lt;&lt;<a href="#test-divider">test-divider</a>&gt;&gt;
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
