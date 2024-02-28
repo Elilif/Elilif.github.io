@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-02-28 Wed 19:48 -->
+<!-- 2024-02-28 Wed 20:20 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （一）：用 Emacs 写博客</title>
@@ -559,7 +559,7 @@ org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</co
 </p>
 <div class="multilang">
 <div class="org-src-container">
-<div class="org-src-name"><span class="listing-number">Listing:  </span>preamble</div><pre class="src src-emacs-lisp" id="preamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
+<div class="org-src-name"><span class="listing-number">Listing:  </span>blog-preamble</div><pre class="src src-emacs-lisp" id="blog-preamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
 <span class="org-whitespace-space">  </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
 <span class="org-whitespace-space">  </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/rss.xml\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;RSS&lt;/a&gt;</span>
 <span class="org-whitespace-space">  </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/config.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Literate</span><span class="org-whitespace-space"> </span><span class="org-string">Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">Config&lt;/a&gt;</span>
@@ -583,9 +583,10 @@ org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</co
 <p>
 postamble 则提供了作者、创建时间和修改时间等信息<sup><label for="fnr.4" class="footref">4</label></sup><input id="fnr.4" class="footref-toggle" type="checkbox">：
 </p>
+
 <div class="multilang">
 <div class="org-src-container">
-<div class="org-src-name"><span class="listing-number">Listing:  </span>postamble</div><pre class="src src-emacs-lisp" id="postamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
+<div class="org-src-name"><span class="listing-number">Listing:  </span>blog-postamble</div><pre class="src src-emacs-lisp" id="blog-postamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
 <span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
 <span class="org-whitespace-space">  </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"author\"&gt;Author:</span><span class="org-whitespace-space"> </span><span class="org-string">%a</span><span class="org-whitespace-space"> </span><span class="org-string">(%e)&lt;/span&gt;</span>
 <span class="org-whitespace-space">  </span><span class="org-string">&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"date\"&gt;Create</span><span class="org-whitespace-space"> </span><span class="org-string">Date:</span><span class="org-whitespace-space"> </span><span class="org-string">%d&lt;/span&gt;</span>
@@ -636,9 +637,9 @@ postamble 则提供了作者、创建时间和修改时间等信息<sup><label f
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>html</div><pre class="src src-emacs-lisp" id="html"><code><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span>&lt;&lt;<a href="#head">head</a>&gt;&gt;
 <span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
-<span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;<a href="#preamble">preamble</a>&gt;&gt;
+<span class="org-builtin">:html-preamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;<a href="#blog-preamble">blog-preamble</a>&gt;&gt;
 <span class="org-builtin">:html-postamble</span><span class="org-whitespace-space"> </span>t
-<span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;<a href="#postamble">postamble</a>&gt;&gt;
+<span class="org-builtin">:html-postamble-format</span><span class="org-whitespace-space"> </span>&lt;&lt;<a href="#blog-postamble">blog-postamble</a>&gt;&gt;
 <span class="org-builtin">:with-creator</span><span class="org-whitespace-space"> </span>nil
 </code></pre>
 </div>
@@ -1885,7 +1886,7 @@ rule.
 <div class="info">
   <span class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</span>
   <span class="date">Create Date: 2024-02-21</span>
-  <span class="date">Last modified: 2024-02-28 Wed 19:46</span>
+  <span class="date">Last modified: 2024-02-28 Wed 20:20</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
 </div>
 </div>
