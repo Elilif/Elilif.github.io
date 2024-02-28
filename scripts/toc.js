@@ -11,8 +11,10 @@ let lastPathStart, lastPathEnd, lastItem;
 
 function setTocInfo () {
   toc = document.querySelector('#text-table-of-contents');
-  toc.innerHTML += "<svg class=\"toc-marker\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"#444\" stroke-width=\"3\" fill=\"transparent\" stroke-dasharray=\"0, 0, 0, 1000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(-0.5, -0.5)\" /> </svg>";
-  tocPath = document.querySelector( '.toc-marker path' );
+  if (toc) {
+    toc.innerHTML += "<svg class=\"toc-marker\" width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"#444\" stroke-width=\"3\" fill=\"transparent\" stroke-dasharray=\"0, 0, 0, 1000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(-0.5, -0.5)\" /> </svg>";
+    tocPath = document.querySelector( '.toc-marker path' );
+  }
 }
 
 function drawPath() {
@@ -128,8 +130,10 @@ function sync() {
 
 document.addEventListener("DOMContentLoaded", function() {
   setTocInfo();
-  window.addEventListener( 'resize', drawPath, false );
-  window.addEventListener( 'scroll', sync, false );
+  if (toc) {
+    window.addEventListener( 'resize', drawPath, false );
+    window.addEventListener( 'scroll', sync, false );
 
-  drawPath();
+    drawPath();
+  }
 });

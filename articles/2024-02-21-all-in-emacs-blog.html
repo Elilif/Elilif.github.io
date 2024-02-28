@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-02-28 Wed 11:56 -->
+<!-- 2024-02-28 Wed 14:21 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （一）：用 Emacs 写博客</title>
@@ -43,18 +43,18 @@
 <li><a href="#orge85df55">1.3.1. 杂项部分</a></li>
 <li><a href="#org8fc4aa5">1.3.2. HTML 部分</a></li>
 <li><a href="#org4a94332">1.3.3. sitemap 部分</a></li>
-<li><a href="#orga992aa8">1.3.4. 总结</a></li>
+<li><a href="#orga3c832b">1.3.4. 总结</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#org07ca46b">2. RSS 生成</a></li>
 <li><a href="#org0428cd8">3. Org 文学编程网页导出</a></li>
-<li><a href="#orga3c832b">4. 总结</a></li>
+<li><a href="#org369b22c">4. 总结</a></li>
 </ul>
 </div>
 </nav>
-<div class="preview" id="org4fe2a29">
+<div class="preview">
 本文简要介绍了如何使用 Emacs 来生成静态博客网站。主要分为三个模块：
 
 <ol class="org-ol">
@@ -65,28 +65,28 @@
 
 </div>
 
-<div id="outline-container-org4086214" class="outline-2">
-<h2 id="org4086214"><span class="section-number-2">1.</span> 使用 ox-publish.el 来生成博客</h2>
+<div class="outline-2">
+<h2><span class="section-number-2">1.</span> 使用 ox-publish.el 来生成博客</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org886384a" class="outline-3">
-<h3 id="org886384a"><span class="section-number-3">1.1.</span> 为什么选择 ox-publish.el</h3>
+<div class="outline-3">
+<h3><span class="section-number-3">1.1.</span> 为什么选择 ox-publish.el</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 在 Emacs 里写博客的方案有很多，比如说 Org + Hugo 、Markdown/Org + Jekyll 等等。它们各有各的优点，但这不是本文的讨论重点，有兴趣的读者可以自行查阅。我之所以使用
 ox-publish.el ，主要有以下几点原因：
 </p>
 </div>
-<div id="outline-container-org905d8a6" class="outline-4">
-<h4 id="org905d8a6"><span class="section-number-4">1.1.1.</span> 兼容性</h4>
+<div class="outline-4">
+<h4><span class="section-number-4">1.1.1.</span> 兼容性</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 我基本上所有的写作活动都是在 Org-mode 里完成的，对 Org-mode 有着比较深度的自定义配置，因此希望能直接基于 org 文件来生成博客。Hugo 虽然号称能够解析 org 格式，但是对于自定义的格式就无能为力了<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox">，比如说<a href="https://orgmode.org/manual/Adding-Hyperlink-Types.html">自定义的链接格式</a>。而 ox-publish.el 采用的是 Org-mode 自带的导出功能，只需要你自己写好相关格式的导出方式，便可以完美地支持任何 org 文件。
 </p>
 </div>
 </div>
-<div id="outline-container-orgbfce007" class="outline-4">
-<h4 id="orgbfce007"><span class="section-number-4">1.1.2.</span> 内置</h4>
+<div class="outline-4">
+<h4><span class="section-number-4">1.1.2.</span> 内置</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 ox-publish.el 中的 <code>ox</code> 是 <code>org-export</code> 的缩写，从名字就能看出来它是 Org-mode 导出功能的一个模块。因此可以和 Org-mode 的其他功能功能无缝整合，任何需求都能较为简单地实现。内置的另一个好处是我不用担心这个项目后续的发展，只要 Org-mode 还能用，
@@ -94,8 +94,8 @@ ox-publish.el 就能用。
 </p>
 </div>
 </div>
-<div id="outline-container-org808432b" class="outline-4">
-<h4 id="org808432b"><span class="section-number-4">1.1.3.</span> 可拓展性</h4>
+<div class="outline-4">
+<h4><span class="section-number-4">1.1.3.</span> 可拓展性</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <p>
 Org-mode 的 <code>ox</code> 模块提供了很多 hook ，比如能够分别在导出前后修改原始文本（的复制）和导出文本。这基本上满足我的绝大部分个性化需求，实在不行我也可以通过 <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html">advice</a> 来修改原有函数，总之可扩展性非常好强。
@@ -103,14 +103,14 @@ Org-mode 的 <code>ox</code> 模块提供了很多 hook ，比如能够分别在
 </div>
 </div>
 </div>
-<div id="outline-container-org2bffcbf" class="outline-3">
-<h3 id="org2bffcbf"><span class="section-number-3">1.2.</span> 博客结构</h3>
+<div class="outline-3">
+<h3><span class="section-number-3">1.2.</span> 博客结构</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 首先介绍一下博客的基本结构
 </p>
 
-<pre class="example" id="org2fb117f">
+<pre class="example">
 ├── articles/
 ├── config.html
 ├── css/
@@ -131,8 +131,8 @@ Org-mode 的 <code>ox</code> 模块提供了很多 hook ，比如能够分别在
 </dl>
 </div>
 </div>
-<div id="outline-container-org7f7d257" class="outline-3">
-<h3 id="org7f7d257"><span class="section-number-3">1.3.</span> 基本配置</h3>
+<div class="outline-3">
+<h3><span class="section-number-3">1.3.</span> 基本配置</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 ox-publish.el 的配置几乎只用一个变量 <code>org-publish-project-alist</code> 就能完成，非常简单。相关语法和用法请查阅 <code>org-publish-project-alist</code> 的文档和 <a href="https://orgmode.org/manual/Publishing.html">Publishing (The Org
@@ -144,7 +144,7 @@ Manual)</a> ，本文将侧重于分享我的个人配置。
 property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox">：
 </p>
 
-<div class="multilang" id="orgf2eb30e">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>my-blog</div><pre class="src src-emacs-lisp" id="my-blog"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog"</span>
 <span class="org-whitespace-space"> </span>&lt;&lt;<a href="#misc">misc</a>&gt;&gt;
@@ -204,14 +204,14 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 </p>
 </div>
 
-<div id="outline-container-orge85df55" class="outline-4">
-<h4 id="orge85df55"><span class="section-number-4">1.3.1.</span> 杂项部分</h4>
+<div class="outline-4">
+<h4><span class="section-number-4">1.3.1.</span> 杂项部分</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <p>
 首先我们来定义一些辅助函数：
 </p>
 
-<div class="multilang" id="org1fad5cc">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>blog-helper-functions</div><pre class="src src-emacs-lisp" id="blog-helper-functions"><code>&lt;&lt;<a href="#backend">backend</a>&gt;&gt;
 &lt;&lt;<a href="#eli/org-blog-src-block">eli/org-blog-src-block</a>&gt;&gt;
@@ -332,7 +332,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 <code>caption</code>的时候用代码块的 <code>name</code> 属性来作为代码块的标签。
 </p>
 
-<div class="multilang" id="orgb2f22ec">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>backend</div><pre class="src src-emacs-lisp" id="backend"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>org-export-define-derived-backend<span class="org-whitespace-space"> </span>'blog<span class="org-whitespace-space"> </span>'html
 <span class="org-whitespace-space">  </span><span class="org-builtin">:translate-alist</span><span class="org-whitespace-space"> </span>'<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>src-block<span class="org-whitespace-space"> </span>.<span class="org-whitespace-space"> </span>eli/org-blog-src-block<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
@@ -347,7 +347,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 </div>
 
 
-<div class="multilang" id="org5a26dd9">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-blog-src-block</div><pre class="src src-emacs-lisp" id="eli/org-blog-src-block"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-blog-src-block</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>src-block<span class="org-whitespace-space"> </span>_contents<span class="org-whitespace-space"> </span>info<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Transcode</span><span class="org-whitespace-space"> </span><span class="org-doc">a</span><span class="org-whitespace-space"> </span><span class="org-doc">SRC-BLOCK</span><span class="org-whitespace-space"> </span><span class="org-doc">element</span><span class="org-whitespace-space"> </span><span class="org-doc">from</span><span class="org-whitespace-space"> </span><span class="org-doc">Org</span><span class="org-whitespace-space"> </span><span class="org-doc">to</span><span class="org-whitespace-space"> </span><span class="org-doc">HTML.</span>
@@ -436,7 +436,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 接下来我们需要为 ox-publish 定义一个导出后端为 <code>blog</code> 的发布函数：
 </p>
 
-<div class="multilang" id="orgfa3aa75">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-blog-publish-to-html</div><pre class="src src-emacs-lisp" id="eli/org-blog-publish-to-html"><code><span class="org-comment-delimiter">;;;</span><span class="org-comment">###</span><span class="org-comment"><span class="org-warning">autoload</span></span>
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-blog-publish-to-html</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>plist<span class="org-whitespace-space"> </span>filename<span class="org-whitespace-space"> </span>pub-dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
@@ -481,7 +481,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 为了方便后续的编辑，我们定义如下几个变量：
 </p>
 
-<div class="multilang" id="org19bccb2">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>blog-variables</div><pre class="src src-emacs-lisp" id="blog-variables"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">setq</span><span class="org-whitespace-space"> </span>eli/blog-base-dir<span class="org-whitespace-space"> </span><span class="org-string">"path-to/blog/"</span>
 <span class="org-whitespace-space">      </span>eli/blog-publish-dir<span class="org-whitespace-space"> </span><span class="org-string">"your-blog-site-dir"</span>
@@ -502,7 +502,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 至此，property list 中的杂项部分就完成了，下面这些未指出的属性读者可以查阅
 <a href="https://orgmode.org/manual/Publishing.html">Publishing (The Org Manual)</a> 等文档，这里就不一一说明了。
 </p>
-<div class="multilang" id="org6ab642b">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>misc</div><pre class="src src-emacs-lisp" id="misc"><code><span class="org-builtin">:base-directory</span><span class="org-whitespace-space"> </span>,eli/blog-base-dir
 <span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>expand-file-name<span class="org-whitespace-space"> </span><span class="org-string">"articles"</span><span class="org-whitespace-space"> </span>eli/blog-publish-dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
@@ -528,8 +528,8 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 </div>
 </div>
 
-<div id="outline-container-org8fc4aa5" class="outline-4">
-<h4 id="org8fc4aa5"><span class="section-number-4">1.3.2.</span> HTML 部分</h4>
+<div class="outline-4">
+<h4><span class="section-number-4">1.3.2.</span> HTML 部分</h4>
 <div class="outline-text-4" id="text-1-3-2">
 <p>
 org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</code> 和 <code>postamble</code> 三个部分组成，我们的文章内容填充的是 <code>content</code> 部分，其他两个部分由变量 <code>org-html-preamble</code> 、
@@ -539,7 +539,7 @@ org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</co
 <p>
 导航栏是几个很简单的标签<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">：
 </p>
-<div class="multilang" id="org1ef0cf8">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>preamble</div><pre class="src src-emacs-lisp" id="preamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;nav</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"nav\"&gt;</span>
 <span class="org-whitespace-space">  </span><span class="org-string">&lt;a</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/index.html\"</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"button\"&gt;Home&lt;/a&gt;</span>
@@ -565,7 +565,7 @@ org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</co
 <p>
 postamble 则提供了作者、创建时间和修改时间等信息<sup><label for="fnr.4" class="footref">4</label></sup><input id="fnr.4" class="footref-toggle" type="checkbox">：
 </p>
-<div class="multilang" id="orgcbbfafe">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>postamble</div><pre class="src src-emacs-lisp" id="postamble"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"en"</span><span class="org-whitespace-space"> </span><span class="org-string">"&lt;hr</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"Solid\"&gt;</span>
 <span class="org-string">&lt;div</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"info\"&gt;</span>
@@ -593,7 +593,7 @@ postamble 则提供了作者、创建时间和修改时间等信息<sup><label f
 <p>
 此外，我们还可以为导出的 HTML 提供 CSS 和 JS 文件，以获取更舒适的浏览体验<sup><label for="fnr.5" class="footref">5</label></sup><input id="fnr.5" class="footref-toggle" type="checkbox">：
 </p>
-<div class="multilang" id="org4919850">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>head</div><pre class="src src-emacs-lisp" id="head"><code><span class="org-string">"&lt;link</span><span class="org-whitespace-space"> </span><span class="org-string">rel=\"stylesheet\"</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"text/css\"</span><span class="org-whitespace-space"> </span><span class="org-string">href=\"/css/style.css\"</span><span class="org-whitespace-space"> </span><span class="org-string">/&gt;</span>
 <span class="org-whitespace-space"> </span><span class="org-string">&lt;script</span><span class="org-whitespace-space"> </span><span class="org-string">src=\"/scripts/script.js\"&gt;&lt;/script&gt;"</span>
@@ -612,7 +612,7 @@ postamble 则提供了作者、创建时间和修改时间等信息<sup><label f
 至此，property list 中的 HTML 部分就大致完成了：
 </p>
 
-<div class="multilang" id="orgc6d4b77">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>html</div><pre class="src src-emacs-lisp" id="html"><code><span class="org-builtin">:html-head</span><span class="org-whitespace-space"> </span>&lt;&lt;<a href="#head">head</a>&gt;&gt;
 <span class="org-builtin">:html-preamble</span><span class="org-whitespace-space"> </span>t
@@ -648,8 +648,8 @@ postamble 则提供了作者、创建时间和修改时间等信息<sup><label f
 </div>
 </div>
 
-<div id="outline-container-org4a94332" class="outline-4">
-<h4 id="org4a94332"><span class="section-number-4">1.3.3.</span> sitemap 部分</h4>
+<div class="outline-4">
+<h4><span class="section-number-4">1.3.3.</span> sitemap 部分</h4>
 <div class="outline-text-4" id="text-1-3-3">
 <p>
 sitemap 就是站点地图，其中列举了项目中的所有文章链接，这样通过 sitemap 就可以访问全部的文章内容。因此我们可以把 sitemap 稍作修改，用作我们博客的主页。
@@ -659,7 +659,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 首先我们为博客主页固定一个创建时间：
 </p>
 
-<div class="multilang" id="org1bfeaa0">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-sitemap</div><pre class="src src-emacs-lisp" id="eli/org-publish-sitemap"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-sitemap</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>title<span class="org-whitespace-space"> </span>list<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Generate</span><span class="org-whitespace-space"> </span><span class="org-doc">the</span><span class="org-whitespace-space"> </span><span class="org-doc">sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">with</span><span class="org-whitespace-space"> </span><span class="org-doc">title."</span>
@@ -688,7 +688,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 其次我们可以为 sitemap 中的每一个 entry 添加时间前缀：
 </p>
 
-<div class="multilang" id="org020af21">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/sitemap-dated-entry-format</div><pre class="src src-emacs-lisp" id="eli/sitemap-dated-entry-format"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/sitemap-dated-entry-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>entry<span class="org-whitespace-space"> </span>_style<span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">PROJECT</span><span class="org-whitespace-space"> </span><span class="org-doc">ENTRY</span><span class="org-whitespace-space"> </span><span class="org-doc">STYLE</span><span class="org-whitespace-space"> </span><span class="org-doc">format</span><span class="org-whitespace-space"> </span><span class="org-doc">that</span><span class="org-whitespace-space"> </span><span class="org-doc">includes</span><span class="org-whitespace-space"> </span><span class="org-doc">date."</span>
@@ -735,7 +735,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 注意 <code>eli/sitemap-dated-entry-format</code> 里的 <code>{{{timestamp(%s)}}}</code> 是一个导出宏：
 </p>
 
-<div class="multilang" id="orgec20692">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>timestamp-macro</div><pre class="src src-emacs-lisp" id="timestamp-macro"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>add-to-list<span class="org-whitespace-space"> </span>'org-export-global-macros
 <span class="org-whitespace-space">             </span>'<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"timestamp"</span><span class="org-whitespace-space"> </span>.<span class="org-whitespace-space"> </span><span class="org-string">"@@html:&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"timestamp\"&gt;[$1]&lt;/span&gt;@@"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
@@ -756,7 +756,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 sitemap 移到根目录
 </p>
 
-<div class="multilang" id="org6c227ad">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/blog-publish-completion</div><pre class="src src-emacs-lisp" id="eli/blog-publish-completion"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/blog-publish-completion</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>publishing-directory<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get<span class="org-whitespace-space"> </span>project<span class="org-whitespace-space"> </span><span class="org-builtin">:publishing-directory</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -788,7 +788,7 @@ sitemap 移到根目录
 sitemap 是自动生成的，我们也不需要修改。
 </p>
 
-<div class="multilang" id="org0e729a5">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/kill-sitemap-buffer</div><pre class="src src-emacs-lisp" id="eli/kill-sitemap-buffer"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/kill-sitemap-buffer</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>sitemap-filename<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>plist-get<span class="org-whitespace-space"> </span>project<span class="org-whitespace-space"> </span><span class="org-builtin">:sitemap-filename</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
@@ -814,7 +814,7 @@ sitemap 是自动生成的，我们也不需要修改。
 <p>
 至此，一个基本的博客主页就完成了，下面是相应的属性：
 </p>
-<div class="multilang" id="org1dd3615">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>sitemap</div><pre class="src src-emacs-lisp" id="sitemap"><code><span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
 <span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
@@ -842,13 +842,13 @@ sitemap 是自动生成的，我们也不需要修改。
 </div>
 </div>
 
-<div id="outline-container-orga992aa8" class="outline-4">
-<h4 id="orga992aa8"><span class="section-number-4">1.3.4.</span> 总结</h4>
+<div class="outline-4">
+<h4><span class="section-number-4">1.3.4.</span> 总结</h4>
 <div class="outline-text-4" id="text-1-3-4">
 <p>
 现在我们已经介绍完了所有需要的属性，接下来让我们让我们把这些属性合到一起，加上名字组成一个完整的 project 。至此，一个简单的博客导出工具就完成了：
 </p>
-<div class="multilang" id="org3015794">
+<div class="multilang">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><code>&lt;&lt;<a href="#blog-helper-functions">blog-helper-functions</a>&gt;&gt;
 
@@ -1003,8 +1003,8 @@ sitemap 是自动生成的，我们也不需要修改。
 </div>
 </div>
 
-<div id="outline-container-org07ca46b" class="outline-2">
-<h2 id="org07ca46b"><span class="section-number-2">2.</span> RSS 生成</h2>
+<div class="outline-2">
+<h2><span class="section-number-2">2.</span> RSS 生成</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 RSS 对于一个博客来说是比较重要的，可惜的是 ox-publish.el 没有原生功能支持。不过好在有 <a href="https://github.com/BenedictHW/ox-rss">GitHub - BenedictHW/ox-rss</a> 。然而 ox-rss 也有缺点，它只能用于单个文件里的
@@ -1012,7 +1012,7 @@ headlines 。因此我们需要曲线救国，新建一个 publish 项目，使�
 entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </p>
 
-<div class="multilang" id="orge3bb504">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-rss-entry</div><pre class="src src-emacs-lisp" id="eli/org-publish-rss-entry"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-rss-entry</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>entry<span class="org-whitespace-space"> </span>_style<span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Format</span><span class="org-whitespace-space"> </span><span class="org-doc">ENTRY</span><span class="org-whitespace-space"> </span><span class="org-doc">for</span><span class="org-whitespace-space"> </span><span class="org-doc">the</span><span class="org-whitespace-space"> </span><span class="org-doc">posts</span><span class="org-whitespace-space"> </span><span class="org-doc">RSS</span><span class="org-whitespace-space"> </span><span class="org-doc">feed</span><span class="org-whitespace-space"> </span><span class="org-doc">in</span><span class="org-whitespace-space"> </span><span class="org-doc">PROJECT."</span>
@@ -1079,7 +1079,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 
 
-<div class="multilang" id="orgdd6f3e3">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-rss-sitemap</div><pre class="src src-emacs-lisp" id="eli/org-publish-rss-sitemap"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-rss-sitemap</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>title<span class="org-whitespace-space"> </span>list<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Generate</span><span class="org-whitespace-space"> </span><span class="org-doc">a</span><span class="org-whitespace-space"> </span><span class="org-doc">sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">of</span><span class="org-whitespace-space"> </span><span class="org-doc">posts</span><span class="org-whitespace-space"> </span><span class="org-doc">that</span><span class="org-whitespace-space"> </span><span class="org-doc">is</span><span class="org-whitespace-space"> </span><span class="org-doc">exported</span><span class="org-whitespace-space"> </span><span class="org-doc">as</span><span class="org-whitespace-space"> </span><span class="org-doc">a</span><span class="org-whitespace-space"> </span><span class="org-doc">RSS</span><span class="org-whitespace-space"> </span><span class="org-doc">feed.</span>
@@ -1108,7 +1108,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 
 
-<div class="multilang" id="org0401dac">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-publish-rss-feed</div><pre class="src src-emacs-lisp" id="eli/org-publish-rss-feed"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-rss-feed</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>plist<span class="org-whitespace-space"> </span>filename<span class="org-whitespace-space"> </span>dir<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Publish</span><span class="org-whitespace-space"> </span><span class="org-doc">PLIST</span><span class="org-whitespace-space"> </span><span class="org-doc">to</span><span class="org-whitespace-space"> </span><span class="org-doc">Rss</span><span class="org-whitespace-space"> </span><span class="org-doc">when</span><span class="org-whitespace-space"> </span><span class="org-doc">FILENAME</span><span class="org-whitespace-space"> </span><span class="org-doc">is</span><span class="org-whitespace-space"> </span><span class="org-doc">rss.org.</span>
@@ -1129,7 +1129,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 
 
-<div class="multilang" id="org3262491">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>rss-sitemap</div><pre class="src src-emacs-lisp" id="rss-sitemap"><code><span class="org-builtin">:publishing-function</span><span class="org-whitespace-space"> </span>eli/org-publish-rss-feed
 <span class="org-builtin">:auto-sitemap</span><span class="org-whitespace-space"> </span>t
@@ -1163,7 +1163,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 <p>
 剩余的属性如下：
 </p>
-<div class="multilang" id="org5a76258">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>rss-misc</div><pre class="src src-emacs-lisp" id="rss-misc"><code><span class="org-builtin">:preparation-function</span><span class="org-whitespace-space"> </span>eli/kill-sitemap-buffer
 <span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,eli/blog-publish-dir
@@ -1197,7 +1197,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 <p>
 现在整个 rss 项目就完成了。
 </p>
-<div class="multilang" id="org630cc75">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>rss</div><pre class="src src-emacs-lisp" id="rss"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-string">"eli's</span><span class="org-whitespace-space"> </span><span class="org-string">blog</span><span class="org-whitespace-space"> </span><span class="org-string">rss"</span>
 <span class="org-whitespace-space"> </span>&lt;&lt;<a href="#rss-sitemap">rss-sitemap</a>&gt;&gt;
@@ -1232,7 +1232,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 <p>
 下面是完整的代码：
 </p>
-<div class="multilang" id="orgac54934">
+<div class="multilang">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><code>&lt;&lt;<a href="#rss-helper-functions">rss-helper-functions</a>&gt;&gt;
 
@@ -1350,8 +1350,8 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 </div>
 
-<div id="outline-container-org0428cd8" class="outline-2">
-<h2 id="org0428cd8"><span class="section-number-2">3.</span> Org 文学编程网页导出</h2>
+<div class="outline-2">
+<h2><span class="section-number-2">3.</span> Org 文学编程网页导出</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 我希望在导出时能够把代码块中的 noweb 展开，并且在网页中同时提供不展开和展开两种版本。这样就能在保持原汁原味的文学编程的同时又方便读者查看。下面是大致实现思路：
@@ -1364,7 +1364,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 js 添加一个按钮，实现不同版本间的切换。
 </p>
 
-<div class="multilang" id="org8d28955">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>eli/org-export-src-babel-duplicate</div><pre class="src src-emacs-lisp" id="eli/org-export-src-babel-duplicate"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-export-src-babel-duplicate</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>backend<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
 <span class="org-whitespace-space">  </span><span class="org-doc">"Duplicate</span><span class="org-whitespace-space"> </span><span class="org-doc">every</span><span class="org-whitespace-space"> </span><span class="org-doc">src</span><span class="org-whitespace-space"> </span><span class="org-doc">babels</span><span class="org-whitespace-space"> </span><span class="org-doc">in</span><span class="org-whitespace-space"> </span><span class="org-doc">the</span><span class="org-whitespace-space"> </span><span class="org-doc">current</span><span class="org-whitespace-space"> </span><span class="org-doc">buffer.</span>
@@ -1428,7 +1428,7 @@ js 添加一个按钮，实现不同版本间的切换。
 <p>
 Emacs 配置部分的 project 如下：
 </p>
-<div class="multilang" id="org715f6fc">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>emacs-config</div><pre class="src src-emacs-lisp" id="emacs-config"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-string">"Emacs</span><span class="org-whitespace-space"> </span><span class="org-string">config"</span>
 <span class="org-whitespace-space"> </span><span class="org-builtin">:publishing-directory</span><span class="org-whitespace-space"> </span>,eli/blog-publish-dir
@@ -1469,13 +1469,13 @@ Emacs 配置部分的 project 如下：
 </div>
 </div>
 
-<div id="outline-container-orga3c832b" class="outline-2">
-<h2 id="orga3c832b"><span class="section-number-2">4.</span> 总结</h2>
+<div class="outline-2">
+<h2><span class="section-number-2">4.</span> 总结</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 以下代码完整地包括了前文提到的内容：
 </p>
-<div class="multilang" id="orgcbc7b2b">
+<div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>result</div><pre class="src src-emacs-lisp" id="result"><code>&lt;&lt;<a href="#blog-helper-functions">blog-helper-functions</a>&gt;&gt;
 
