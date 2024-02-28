@@ -227,6 +227,11 @@ label.footref {
   border: 2px solid lightgray;
   border-radius: 0 0 0.8em 0.8em;
   background-color: #eceff1;
+
+  a:hover {
+    color: white;
+    background-color: gray;
+  }
 }
 
 .org-src-container {
