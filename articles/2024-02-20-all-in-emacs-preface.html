@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-02-27 Tue 22:51 -->
+<!-- 2024-02-28 Wed 11:56 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （序）</title>
@@ -60,7 +60,7 @@
 目前的方案是提供一个展开代码块中的 noweb 的按钮，比如说有如下代码：
 </p>
 
-<div class="multilang" id="org3873ead">
+<div class="multilang" id="org46230d6">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>test-divider</div><pre class="src src-emacs-lisp" id="test-divider"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </code></pre>
@@ -76,11 +76,11 @@
 <p>
 在下面的代码块中按展开按钮可以展开 <a href="#test-divider">&lt;&lt;test-divider&gt;&gt;</a> 。
 </p>
-<div class="multilang" id="org63325a8">
+<div class="multilang" id="org8ebf5e7">
 <div class="org-src-container">
-<div class="org-src-name"><span class="listing-number">Listing:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example"><code>&lt;&lt;test-divider&gt;&gt;
+<div class="org-src-name"><span class="listing-number">Listing:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example"><code>&lt;&lt;<a href="#test-divider">test-divider</a>&gt;&gt;
 <span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
-&lt;&lt;test-divider&gt;&gt;
+&lt;&lt;<a href="#test-divider">test-divider</a>&gt;&gt;
 </code></pre>
 </div>
 <div class="org-src-container">

@@ -80,7 +80,7 @@ function addSidenotes() {
         footdef.lastElementChild.innerHTML;
     sidenote.classList.add('sidenote');
     sidenote.innerHTML = footnoteText.replace("\n", "");
-    ref.parentElement.nextElementSibling.after(sidenote);
+    ref.parentElement.after(sidenote);
   });
 }
 
