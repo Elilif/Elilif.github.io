@@ -21,7 +21,6 @@ function addCopyCodeButtons() {
     button.addEventListener('click', async() => {
       await copyCode(block, button);
     });
-    block.setAttribute('tabindex', 0);
   });
 }
 
@@ -58,12 +57,15 @@ function addExpandButton() {
     let buttons = expandSection.childNodes;
     let srcContainers = parent.querySelectorAll('.org-src-container');
     buttons[0].classList.add(selectedClass);
+    let id = srcContainers[0].querySelector('pre').id;
     buttons.forEach((button, index) => {
       button.addEventListener('click', (event) => {
         event.currentTarget.classList.add(selectedClass);
         buttons[1 - index].classList.remove(selectedClass);
         srcContainers[1 - index].hidden = true;
         srcContainers[index].hidden = false;
+        srcContainers[1 - index].querySelector('pre').removeAttribute('id');
+        srcContainers[index].querySelector('pre').id = id;
       });
     });
 
