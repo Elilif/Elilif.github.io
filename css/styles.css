@@ -282,7 +282,7 @@ label.footref {
       color: gray;
       cursor: pointer;
       margin-right: 1em;
-      padding: 0.2em 0.8em;
+      padding: 0 0.6em;
     }
   }
 }
