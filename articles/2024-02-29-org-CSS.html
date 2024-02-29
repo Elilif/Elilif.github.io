@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-02-29 Thu 22:16 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CSS for Org-exported HTML(WIP)</title>
+<meta name="author" content="Eli Qian" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/assets/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+  <a href="/index.html" class="button">Home</a>
+  <a href="/config.html" class="button">Literate Emacs Config</a>
+  <a href="/rss.xml" class="button">RSS</a>
+</nav>
+<hr>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">CSS for Org-exported HTML(WIP)</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#Markups[fn:1]">1. Markups</a></li>
+<li><a href="#Lists">2. Lists</a>
+<ul>
+<li><a href="#Todo-List">2.1. Todo List</a>
+<ul>
+<li><a href="#First-todo">2.1.1. <span class="todo TODO">TODO</span> First todo</a></li>
+<li><a href="#First-Done-with-Date">2.1.2. <span class="done DONE">DONE</span> First Done with Date</a></li>
+<li><a href="#Scheduled">2.1.3. Scheduled</a></li>
+<li><a href="#Deadline">2.1.4. Deadline</a></li>
+<li><a href="#Date">2.1.5. Date</a></li>
+</ul>
+</li>
+<li><a href="#Simple-list">2.2. Simple list</a></li>
+<li><a href="#Sorted-List">2.3. Sorted List</a></li>
+<li><a href="#Checkbox[fn:2]">2.4. Checkbox</a></li>
+<li><a href="#Definition-list">2.5. Definition list</a></li>
+</ul>
+</li>
+<li><a href="#Images">3. Images</a></li>
+<li><a href="#Math">4. Math</a></li>
+<li><a href="#Heading-with-tags">5. Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></a></li>
+<li><a href="#H1">6. H1</a>
+<ul>
+<li><a href="#H2">6.1. H2</a>
+<ul>
+<li><a href="#H3">6.1.1. H3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#Table">7. Table</a></li>
+<li><a href="#Blocks">8. Blocks</a>
+<ul>
+<li><a href="#Center">8.1. Center</a></li>
+<li><a href="#Comment">8.2. Comment</a></li>
+<li><a href="#Example">8.3. Example</a></li>
+<li><a href="#Quote">8.4. Quote</a></li>
+<li><a href="#Verse">8.5. Verse</a></li>
+<li><a href="#Source-Blocks">8.6. Source Blocks</a>
+<ul>
+<li><a href="#Elisp">8.6.1. Elisp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-Markups[fn:1]" class="outline-2">
+<h2 id="Markups[fn:1]"><span class="section-number-2">1.</span> Markups<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"></h2>
+<div class="outline-text-2" id="text-Markups[fn:1]">
+<p>
+<b>bold</b>
+<i>italic</i>
+<span class="underline">underline</span>
+<code>verbatim</code>
+<code>code</code>
+<del>strike-through</del>
+</p>
+</div>
+</div>
+<div id="outline-container-Lists" class="outline-2">
+<h2 id="Lists"><span class="section-number-2">2.</span> Lists</h2>
+<div class="outline-text-2" id="text-Lists">
+</div>
+<div id="outline-container-Todo-List" class="outline-3">
+<h3 id="Todo-List"><span class="section-number-3">2.1.</span> Todo List</h3>
+<div class="outline-text-3" id="text-Todo-List">
+</div>
+<div id="outline-container-First-todo" class="outline-4">
+<h4 id="First-todo"><span class="section-number-4">2.1.1.</span> <span class="todo TODO">TODO</span> First todo</h4>
+<div class="outline-text-4" id="text-First-todo">
+</div>
+</div>
+<div id="outline-container-First-Done-with-Date" class="outline-4">
+<h4 id="First-Done-with-Date"><span class="section-number-4">2.1.2.</span> <span class="done DONE">DONE</span> First Done with Date</h4>
+<div class="outline-text-4" id="text-First-Done-with-Date">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2021-02-18 Thu 10:12]</span></span></p>
+</div>
+</div>
+<div id="outline-container-Scheduled" class="outline-4">
+<h4 id="Scheduled"><span class="section-number-4">2.1.3.</span> Scheduled</h4>
+<div class="outline-text-4" id="text-Scheduled">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-Deadline" class="outline-4">
+<h4 id="Deadline"><span class="section-number-4">2.1.4.</span> Deadline</h4>
+<div class="outline-text-4" id="text-Deadline">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-Date" class="outline-4">
+<h4 id="Date"><span class="section-number-4">2.1.5.</span> Date</h4>
+<div class="outline-text-4" id="text-Date">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Simple-list" class="outline-3">
+<h3 id="Simple-list"><span class="section-number-3">2.2.</span> Simple list</h3>
+<div class="outline-text-3" id="text-Simple-list">
+<ul class="org-ul">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-Sorted-List" class="outline-3">
+<h3 id="Sorted-List"><span class="section-number-3">2.3.</span> Sorted List</h3>
+<div class="outline-text-3" id="text-Sorted-List">
+<ol class="org-ol">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-Checkbox[fn:2]" class="outline-3">
+<h3 id="Checkbox[fn:2]"><span class="section-number-3">2.4.</span> Checkbox<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"></h3>
+<div class="outline-text-3" id="text-Checkbox[fn:2]">
+<ul class="org-ul">
+<li class="off"><input type='checkbox'
+onclick="return false;"/> List item</li>
+<li class="on"><input type='checkbox' checked='checked'
+onclick="return false;"/> List item</li>
+<li class="trans"><input type='checkbox'
+onclick="return false;"/> List item</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-Definition-list" class="outline-3">
+<h3 id="Definition-list"><span class="section-number-3">2.5.</span> Definition list</h3>
+<div class="outline-text-3" id="text-Definition-list">
+<dl class="org-dl">
+<dt>Lorem ipsum</dt><dd>dolor sit amet, consectetur adipiscing elit.  Mauris laoreet
+sollicitudin venenatis.  Duis sed consequat dolor.</dd>
+<dt>Etiam feugiat</dt><dd>pharetra sapien et semper.  Nunc ornare lacus sit amet massa
+auctor, vitae aliquam eros interdum.  Mauris arcu ante, imperdiet vel purus
+ac, bibendum faucibus diam.  Ut blandit nec mi at ultricies.  Donec eget
+mattis nisl.  In sed nibh felis.  Cras quis convallis orci.</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-Images" class="outline-2">
+<h2 id="Images"><span class="section-number-2">3.</span> Images</h2>
+<div class="outline-text-2" id="text-Images">
+
+<figure>
+<img src="data:image/png+xml;base64,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"org-mode.png" alt="org-mode.png">
+
+<figcaption><span class="figure-number">Figure 1: </span>org-mode</figcaption>
+</figure>
+</div>
+</div>
+<div id="outline-container-Math" class="outline-2">
+<h2 id="Math"><span class="section-number-2">4.</span> Math</h2>
+<div class="outline-text-2" id="text-Math">
+\begin{align}
+\mathcal{F}(a) &= \frac{1}{2\pi i}\oint_\gamma \frac{f(z)}{z - a}\,dz\\
+\int_D (\nabla\cdot \mathcal{F})\,dV &=\int_{\partial D}\mathcal{F}\cdot n\, dS
+\end{align}
+</div>
+</div>
+
+<div id="outline-container-Heading-with-tags" class="outline-2">
+<h2 id="Heading-with-tags"><span class="section-number-2">5.</span> Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></h2>
+<div class="outline-text-2" id="text-Heading-with-tags">
+</div>
+</div>
+<div id="outline-container-H1" class="outline-2">
+<h2 id="H1"><span class="section-number-2">6.</span> H1</h2>
+<div class="outline-text-2" id="text-H1">
+<p>
+H1 Text
+</p>
+</div>
+<div id="outline-container-H2" class="outline-3">
+<h3 id="H2"><span class="section-number-3">6.1.</span> H2</h3>
+<div class="outline-text-3" id="text-H2">
+<p>
+H2 Text
+</p>
+</div>
+<div id="outline-container-H3" class="outline-4">
+<h4 id="H3"><span class="section-number-4">6.1.1.</span> H3</h4>
+<div class="outline-text-4" id="text-H3">
+<p>
+H3 Text
+</p>
+</div>
+<div id="outline-container-H4" class="outline-5">
+<h5 id="H4"><span class="section-number-5">6.1.1.1.</span> H4</h5>
+<div class="outline-text-5" id="text-H4">
+<p>
+H4 Text
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-Table" class="outline-2">
+<h2 id="Table"><span class="section-number-2">7.</span> Table</h2>
+<div class="outline-text-2" id="text-Table">
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> test</caption>
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">a</th>
+<th scope="col" class="org-right">b</th>
+<th scope="col" class="org-right">c</th>
+<th scope="col" class="org-right">d</th>
+<th scope="col" class="org-right">e</th>
+<th scope="col" class="org-right">f</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">7</td>
+<td class="org-right">8</td>
+<td class="org-right">9</td>
+<td class="org-right">10</td>
+<td class="org-right">11</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-right">13</td>
+<td class="org-right">14</td>
+<td class="org-right">15</td>
+<td class="org-right">16</td>
+<td class="org-right">17</td>
+</tr>
+
+<tr>
+<td class="org-right">18</td>
+<td class="org-right">19</td>
+<td class="org-right">20</td>
+<td class="org-right">21</td>
+<td class="org-right">22</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-right">24</td>
+<td class="org-right">25</td>
+<td class="org-right">26</td>
+<td class="org-right">27</td>
+<td class="org-right">28</td>
+<td class="org-right">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-Blocks" class="outline-2">
+<h2 id="Blocks"><span class="section-number-2">8.</span> Blocks</h2>
+<div class="outline-text-2" id="text-Blocks">
+</div>
+<div id="outline-container-Center" class="outline-3">
+<h3 id="Center"><span class="section-number-3">8.1.</span> Center</h3>
+<div class="outline-text-3" id="text-Center">
+<div class="org-center">
+<p>
+This is a center block. This is a center block. This is a center block. This is
+a center block. This is a center block. This is a center block.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Comment" class="outline-3">
+<h3 id="Comment"><span class="section-number-3">8.2.</span> Comment</h3>
+<div class="outline-text-3" id="text-Comment">
+<p>
+Comment blocks are not exported.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Example" class="outline-3">
+<h3 id="Example"><span class="section-number-3">8.3.</span> Example</h3>
+<div class="outline-text-3" id="text-Example">
+<pre class="example">
+This is an example block
+</pre>
+</div>
+</div>
+
+<div id="outline-container-Quote" class="outline-3">
+<h3 id="Quote"><span class="section-number-3">8.4.</span> Quote</h3>
+<div class="outline-text-3" id="text-Quote">
+<blockquote>
+<p>
+Words can be like X-rays, if you use them properly—they’ll go through anything.
+You read and you’re pierced.
+</p>
+
+
+<p>
+—Aldous Huxley, Brave New World
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-Verse" class="outline-3">
+<h3 id="Verse"><span class="section-number-3">8.5.</span> Verse</h3>
+<div class="outline-text-3" id="text-Verse">
+<p class="verse">
+Let me not to the marriage of true minds<br>
+Admit impediments. Love is not love<br>
+Which alters when it alteration finds,<br>
+Or bends with the remover to remove:<br>
+<br>
+O, no! it is an ever-fix`ed mark,<br>
+That looks on tempests and is never shaken;<br>
+It is the star to every wand'ring bark,<br>
+Whose worth's unknown, although his heighth be taken.<br>
+<br>
+Love's not Time's fool, though rosy lips and cheeks<br>
+Within his bending sickle's compass come;<br>
+Love alters not with his brief hours and weeks,<br>
+But bears it out even to the edge of doom:<br>
+<br>
+If this be error and upon me proved,<br>
+I never writ, nor no man ever loved.x<br>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-Source-Blocks" class="outline-3">
+<h3 id="Source-Blocks"><span class="section-number-3">8.6.</span> Source Blocks</h3>
+<div class="outline-text-3" id="text-Source-Blocks">
+</div>
+<div id="outline-container-Elisp" class="outline-4">
+<h4 id="Elisp"><span class="section-number-4">8.6.1.</span> Elisp</h4>
+<div class="outline-text-4" id="text-Elisp">
+<div class="multilang">
+<div class="org-src-container">
+<div class="org-src-name"><span class="listing-number">Listing:  </span>test-divider</div><pre class="src src-emacs-lisp" id="test-divider"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</code></pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</code></pre>
+</div>
+
+</div>
+
+
+<div class="multilang">
+<div class="org-src-container">
+<div class="org-src-name"><span class="listing-number">Listing:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example"><code>&lt;&lt;<a href="#test-divider">test-divider</a>&gt;&gt;
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+&lt;&lt;<a href="#test-divider">test-divider</a>&gt;&gt;
+</code></pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><code><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"This</span><span class="org-whitespace-space"> </span><span class="org-string">is</span><span class="org-whitespace-space"> </span><span class="org-string">a</span><span class="org-whitespace-space"> </span><span class="org-string">test."</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"--------------------------------"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</code></pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<code>org-code</code> and <code>org-verbatim</code> are the same when exporting.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Only the ascii characters implement tri-state checkboxes. See
+<code>org-html-checkbox-types</code> for details.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<hr class="Solid">
+<div class="info">
+  <span class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</span>
+  <span class="date">Create Date: 2024-02-29</span>
+  <span class="date">Last modified: 2024-02-29 Thu 22:16</span>
+  <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
+</div>
+</div>
+</body>
+</html>

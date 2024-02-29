@@ -1,26 +1,77 @@
 /* FONT SETTING */
 :root {
-  font-family: 'LXGW WenKai',Roboto,STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
+  font-family: "Times New Roman", Times,'LXGW WenKai',STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  line-height: 1.5rem;
+  font-size: 1.25rem;
 }
 
 pre, code, kbd {
   font-family: monospace;
 }
 
-/* GENERAL SETTING */
-* {
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  letter-spacing: 1px;
-  line-height: 1.5em;
+.content {
+  position: relative;
 }
 
-p {
-  font-size: 1.25em;
+h1 {
+  font-size: 1.5em;
 }
 
-.figure p {
+h2 {
+  font-size: 1.4em;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1.1em;
+}
+/* h2, h3, h4, h5, h6 { */
+/*   font-size: 1.3em; */
+/* } */
+
+div > h2:before,
+div > h3:before,
+div > h4:before,
+div > h5:before {
+  position: absolute;
+  color: #ccc;
+  font-size: 1.3em;
+  padding-top: 0.1em;
+}
+
+div > h2:before {
+  content: "*";
+  left: -0.7em;
+}
+
+div > h3:before {
+  content: "**";
+  left: -1.25em;
+}
+
+div > h4:before {
+  content: "***";
+  left: -1.8em;
+}
+
+div > h5:before {
+  content: "****";
+  left: -2.4em;
+}
+
+
+figure {
   text-align: center;
+  margin: 1em auto;
 }
 
 sup {
@@ -49,8 +100,12 @@ a:hover {
   }
   #table-of-contents {
     position: fixed;
-    width: 23vw;
-    right: 1em;
+    width: 26vw;
+    right: -1em;
+    top: 2em;
+    height: 80vh;
+    overflow: auto;
+    transform: scale(80%);
 
     h2 {
       display: flex;
@@ -118,6 +173,14 @@ a:hover {
 
 .timestamp {
   color: gray;
+  font-family: monospace;
+  font-size: 0.8em;
+}
+
+.timestamp-kwd {
+  color: #d47500;
+  font-family: monospace;
+  font-size: 0.8em;
 }
 
 .title {
@@ -135,6 +198,7 @@ a:hover {
 .sidenote {
   display: none;
   font-size: 0.8rem;
+  font-weight: normal;
   margin-top: 1em;
   margin-bottom: 1em;
 
@@ -170,7 +234,7 @@ label.footref {
     display: block;
     float: left;
     clear: left;
-    margin-left:  -23vw;
+    margin-left:  -24vw;
     margin-top: 1em;
 
     width: 18vw;
@@ -188,6 +252,7 @@ label.footref {
 .multilang {
   position: relative;
   margin: 1em;
+  font-size: 0.8rem;
 }
 
 
@@ -298,3 +363,176 @@ label.footref {
   font-size:  2em;
   color: gray;
 }
+
+
+/* org-mode css */
+
+blockquote {
+  margin: 1em 2em;
+  padding-left: 1em;
+  border-left: 5px solid #ccc;
+  color:  gray;
+
+  * {
+    color:  gray;
+  }
+  p:first-child {
+    display: inline;
+  }
+}
+
+blockquote:before, blockquote:after{
+    color: #ccc;
+    font-size: 4em;
+    line-height: .1em;
+    vertical-align: -0.4em;
+}
+
+blockquote:before {
+  content: open-quote;
+}
+
+/* blockquote::after { */
+/*   content: close-quote; */
+/* } */
+
+.verse {
+    background-color: transparent;
+    border: 0px solid;
+    border-color: #ccc;
+    border-left-width: 0.4em;
+    border-radius: 1.25em 0.5em 0.5em 1.25em;
+    color: gray;
+    font-style: italic;
+    margin: 0 10px;
+    padding: 0.8em;
+
+    width: 80%;
+    margin: auto;
+}
+
+kbd {
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #b4b4b4;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+  color: #333;
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+
+/* Better tables */
+table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: auto;
+  max-width: 100%;
+  border-top: 0.15em solid black;
+  border-bottom: 0.15em solid black;
+
+  /* Table caption */
+  caption {
+    text-align: center;
+    font-size: 1em;
+    padding: 0 0.25em 0.25em;
+    /* .table-number { */
+    /*   font-weight: bold; */
+    /* } */
+  }
+}
+/* add bottom border on column table headings  */
+table tr > th[scope='col'] {
+  border-bottom: 1.36px solid black;
+}
+/* add right border on row table headings  */
+table tr > th[scope='row'] {
+  border-right: 1.36px solid black;
+}
+table > tbody > tr:first-child > td,
+table > tbody > tr:first-child > th {
+  border-top: 1.36px solid black;
+}
+table > tbody > tr:last-child > td,
+table > tbody > tr:last-child > th {
+  border-bottom: 1.36px solid black;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5rem;
+  line-height: 1.1;
+}
+
+.TODO, .todo, .DONE, .done, .priority, .tag{
+  font-family: monospace;
+}
+
+.TODO, .todo,
+.DONE, .done {
+  border-radius: 0.4em;
+  padding: 0.2em 0.3em;
+  font-size: 0.5em;
+  margin-bottom: 0.4em;
+}
+
+.TODO, .todo {
+  background-color: #8408a6;
+  color: white;
+}
+
+.DONE, .done {
+  background-color: #B0BEC5;
+  color: white;
+}
+
+.priority {
+  color: #8408a6;
+}
+
+.tag {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.tag span, .tag span:before {
+  color: gray;
+}
+
+.tag span:before {
+  content: '#';
+}
+
+.tag span {
+  float: right;
+  margin-right: .5em;
+}
+
+dt {
+    font-weight: bold;
+}
+
+code {
+  background-color: #eceff1;
+  padding: 0.05em 0.2em 0.2em 0.2em;
+  border-radius: 0.4em;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+
+.org-center {
+  width: 50%;
+  margin: auto;
+}
+
