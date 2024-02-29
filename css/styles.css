@@ -38,36 +38,37 @@ h5 {
 /*   font-size: 1.3em; */
 /* } */
 
-div > h2:before,
-div > h3:before,
-div > h4:before,
-div > h5:before {
-  position: absolute;
-  color: #ccc;
-  font-size: 1.3em;
-  padding-top: 0.1em;
-}
+@media screen and (min-width: 780px) {
+  div > h2:before,
+  div > h3:before,
+  div > h4:before,
+  div > h5:before {
+    position: absolute;
+    color: #ccc;
+    font-size: 1.3em;
+    padding-top: 0.1em;
+  }
 
-div > h2:before {
-  content: "*";
-  left: -0.7em;
-}
+  div > h2:before {
+    content: "*";
+    left: -0.7em;
+  }
 
-div > h3:before {
-  content: "**";
-  left: -1.25em;
-}
+  div > h3:before {
+    content: "**";
+    left: -1.25em;
+  }
 
-div > h4:before {
-  content: "***";
-  left: -1.8em;
-}
+  div > h4:before {
+    content: "***";
+    left: -1.8em;
+  }
 
-div > h5:before {
-  content: "****";
-  left: -2.4em;
+  div > h5:before {
+    content: "****";
+    left: -2.4em;
+  }
 }
-
 
 figure {
   text-align: center;
