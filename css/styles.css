@@ -252,7 +252,7 @@ label.footref {
 /* code blocks */
 .multilang {
   position: relative;
-  margin: 1em;
+  width: 100%;
   font-size: 0.8rem;
 }
 
@@ -287,15 +287,26 @@ label.footref {
   }
 }
 
-.org-src-container pre{
+.src-expand-section ~ .org-src-container {
   overflow: auto;
   border: 2px solid lightgray;
   border-radius: 0 0 0.8em 0.8em;
+  background-color: #eceff1;
+}
+
+.org-src-container {
+  overflow: auto;
+  border: 2px solid lightgray;
+  border-radius: 0.8em;
   background-color: #eceff1;
 
   a:hover {
     color: white;
     background-color: gray;
+  }
+  .linenr {
+    user-select: none;
+    color: gray;
   }
 }
 
@@ -325,7 +336,7 @@ label.footref {
   }
 }
 
-.multilang:hover {
+.org-src-container:hover {
   .copy-code {
     display: inline-block;
   }
@@ -335,6 +346,8 @@ label.footref {
 
 .src {
   padding: 0.5em;
+  line-height: 1.2rem;
+  font-size: 0.9em;
 }
 
 .src-buttons {
@@ -538,3 +551,6 @@ code {
   margin: auto;
 }
 
+.code-highlighted {
+  background-color: lightgray;
+}
