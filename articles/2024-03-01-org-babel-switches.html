@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-01 Fri 23:42 -->
+<!-- 2024-03-01 Fri 23:58 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>浅析 org babel switches</title>
@@ -339,31 +339,31 @@ Org-mode 帮我们完成的，在 org 源文件中，代码引用的格式是一
 
 <div class="multilang">
 <div class="org-src-container">
-<div class="org-src-name"><span class="listing-number">Listing:  </span>restult-construct</div><pre class="src src-emacs-lisp" id="restult-construct"><span class="linenr">80: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>list<span class="org-whitespace-space"> </span>'src-block
-<span class="linenr">81: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>nconc
-<span class="linenr">82: </span><span class="org-whitespace-space">       </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>list<span class="org-whitespace-space"> </span><span class="org-builtin">:language</span><span class="org-whitespace-space"> </span>language
-<span class="linenr">83: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:switches</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">and</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-string-nw-p<span class="org-whitespace-space"> </span>switches<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-<span class="linenr">84: </span><span class="org-whitespace-space">                            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-trim<span class="org-whitespace-space"> </span>switches<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-<span class="linenr">85: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:parameters</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">and</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-string-nw-p<span class="org-whitespace-space"> </span>parameters<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
-<span class="linenr">86: </span><span class="org-whitespace-space">                              </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-trim<span class="org-whitespace-space"> </span>parameters<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-<span class="linenr">87: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:begin</span><span class="org-whitespace-space"> </span>begin
-<span class="linenr">88: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:end</span><span class="org-whitespace-space"> </span>end
-<span class="linenr">89: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:number-lines</span><span class="org-whitespace-space"> </span>number-lines
-<span class="linenr">90: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:preserve-indent</span><span class="org-whitespace-space"> </span>preserve-indent
-<span class="linenr">91: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:retain-labels</span><span class="org-whitespace-space"> </span>retain-labels
-<span class="linenr">92: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:use-labels</span><span class="org-whitespace-space"> </span>use-labels
-<span class="linenr">93: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:label-fmt</span><span class="org-whitespace-space"> </span>label-fmt
-<span class="linenr">94: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:value</span><span class="org-whitespace-space"> </span>value
-<span class="linenr">95: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:post-blank</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>count-lines<span class="org-whitespace-space"> </span>pos-before-blank<span class="org-whitespace-space"> </span>end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
-<span class="linenr">96: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:post-affiliated</span><span class="org-whitespace-space"> </span>post-affiliated<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
-<span class="linenr">97: </span><span class="org-whitespace-space">       </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>cdr<span class="org-whitespace-space"> </span>affiliated<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<div class="org-src-name"><span class="listing-number">Listing:  </span>restult-construct</div><pre class="src src-emacs-lisp" id="restult-construct"><span class="linenr">81: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>list<span class="org-whitespace-space"> </span>'src-block
+<span class="linenr">82: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>nconc
+<span class="linenr">83: </span><span class="org-whitespace-space">       </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>list<span class="org-whitespace-space"> </span><span class="org-builtin">:language</span><span class="org-whitespace-space"> </span>language
+<span class="linenr">84: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:switches</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">and</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-string-nw-p<span class="org-whitespace-space"> </span>switches<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">85: </span><span class="org-whitespace-space">                            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-trim<span class="org-whitespace-space"> </span>switches<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">86: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:parameters</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">and</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-string-nw-p<span class="org-whitespace-space"> </span>parameters<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">87: </span><span class="org-whitespace-space">                              </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-trim<span class="org-whitespace-space"> </span>parameters<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">88: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:begin</span><span class="org-whitespace-space"> </span>begin
+<span class="linenr">89: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:end</span><span class="org-whitespace-space"> </span>end
+<span class="linenr">90: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:number-lines</span><span class="org-whitespace-space"> </span>number-lines
+<span class="linenr">91: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:preserve-indent</span><span class="org-whitespace-space"> </span>preserve-indent
+<span class="linenr">92: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:retain-labels</span><span class="org-whitespace-space"> </span>retain-labels
+<span class="linenr">93: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:use-labels</span><span class="org-whitespace-space"> </span>use-labels
+<span class="linenr">94: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:label-fmt</span><span class="org-whitespace-space"> </span>label-fmt
+<span class="linenr">95: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:value</span><span class="org-whitespace-space"> </span>value
+<span class="linenr">96: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:post-blank</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>count-lines<span class="org-whitespace-space"> </span>pos-before-blank<span class="org-whitespace-space"> </span>end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">97: </span><span class="org-whitespace-space">             </span><span class="org-builtin">:post-affiliated</span><span class="org-whitespace-space"> </span>post-affiliated<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr">98: </span><span class="org-whitespace-space">       </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>cdr<span class="org-whitespace-space"> </span>affiliated<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
 </pre>
 </div>
 
 </div>
 
 <p>
-（此代码块的 <code>switches</code> 是 <code>-n 80</code>）
+（此代码块的 <code>switches</code> 是 <code>-n 81</code>）
 </p>
 
 <p>
@@ -409,7 +409,7 @@ ob 的源码。
 <div class="info">
   <span class="author">Author: Eli Qian (<a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a>)</span>
   <span class="date">Create Date: 2024-03-01</span>
-  <span class="date">Last modified: 2024-03-01 Fri 23:42</span>
+  <span class="date">Last modified: 2024-03-01 Fri 23:58</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
 </div>
 </div>
