@@ -554,3 +554,11 @@ code {
 .code-highlighted {
   background-color: lightgray;
 }
+
+.abstract {
+  margin: 2em 2em;
+  padding-left: 1em;
+  border-left: 4px solid #ccc;
+  color:  gray;
+  font-size: 0.9em;
+}
