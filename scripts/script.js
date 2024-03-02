@@ -1,11 +1,14 @@
 const copyLabel = "<i class='bx bx-copy-alt' ></i>";
 
 async function copyCode(block, button) {
-  let codes = block.querySelectorAll('pre.src code code');
+  let codes = block.querySelector('pre.src').childNodes;
   let text = '';
   codes.forEach((code) => {
-    text += code.innerText;
-    text += '\n';
+    if (code.nodeType == 3) {
+      text += code.data;
+    } else if (code.className != 'linenr') {
+      text += code.innerText;
+    }
   });
   text = text.slice(0, -1);
   await navigator.clipboard.writeText(text);

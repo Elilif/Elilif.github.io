@@ -336,7 +336,7 @@ label.footref {
   }
 }
 
-.org-src-container:hover {
+.multilang:hover {
   .copy-code {
     display: inline-block;
   }
