@@ -39,32 +39,32 @@ h5 {
 /* } */
 
 @media screen and (min-width: 780px) {
-  div > h2:before,
-  div > h3:before,
-  div > h4:before,
-  div > h5:before {
+  div > h2::before,
+            div > h3::before,
+                      div > h4::before,
+                                div > h5::before {
     position: absolute;
     color: #ccc;
     font-size: 1.3em;
     padding-top: 0.1em;
   }
 
-  div > h2:before {
+  div > h2::before {
     content: "*";
     left: -0.7em;
   }
 
-  div > h3:before {
+  div > h3::before {
     content: "**";
     left: -1.25em;
   }
 
-  div > h4:before {
+  div > h4::before {
     content: "***";
     left: -1.8em;
   }
 
-  div > h5:before {
+  div > h5::before {
     content: "****";
     left: -2.4em;
   }
@@ -395,18 +395,18 @@ blockquote {
   }
 }
 
-blockquote:before, blockquote:after{
+blockquote::before, blockquote::after{
     color: #ccc;
     font-size: 4em;
     line-height: .1em;
     vertical-align: -0.4em;
 }
 
-blockquote:before {
+blockquote::before {
   content: open-quote;
 }
 
-/* blockquote::after { */
+/* blockquote:::after { */
 /*   content: close-quote; */
 /* } */
 
@@ -517,11 +517,11 @@ td {
     font-weight: normal;
 }
 
-.tag span, .tag span:before {
+.tag span, .tag span::before {
   color: gray;
 }
 
-.tag span:before {
+.tag span::before {
   content: '#';
 }
 
