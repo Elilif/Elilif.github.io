@@ -1,0 +1,32 @@
+#+TITLE: 百般武艺，此乃 Emacs （序）
+#+DATE: 2024-02-20
+
+* 这是什么?
+这是一个系列文章，主要介绍了我目前用 Emacs 做的各种事情。
+
+写这个系列的出衷是因为我最近打算实践一下文学编程，用文学编程的方式重写我的 Emacs
+配置文件，希望最终能像 [[https://tecosaur.github.io/emacs-config/config.html#language-configuration][tecosaur's Doom Emacs Configuration]] 那样发布成一个网页。
+但是重写配置是一个十分麻烦且枯燥的工作，所以我希望能将其分解成一系列更小的模块慢
+慢写，同时尝试发布在网页上看看效果，于是此系列就应运而生。
+
+* 注意事项
+1. 此站点还在施工中，在 UI 、交互等方面还有很多不完善的地方。
+2. 我还在探索文学编程的最佳实践，目前发布的文章中的代码块的展示方式也还没有确定，
+   其中的内容也可能比较混乱。
+
+目前的方案是提供一个展开代码块中的 noweb 的按钮，比如说有如下代码：
+
+#+NAME: test-divider
+#+begin_src emacs-lisp
+  (message "--------------------------------")
+#+end_src
+
+在下面的代码块中按展开按钮可以展开 [[test-divider][<<test-divider>>]] 。
+#+NAME: test-example
+#+begin_src emacs-lisp -n -r -l ";; (ref:%s)"
+  <<test-divider>>
+  (message "This is a test.")
+  <<test-divider>>
+#+end_src
+
+* Footnotes

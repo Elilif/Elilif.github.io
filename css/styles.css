@@ -373,7 +373,7 @@ label.footref {
   border: none;
 }
 
-.bx {
+.multilang.bx {
   font-size:  2em;
   color: gray;
 }
@@ -561,4 +561,17 @@ code {
   border-left: 4px solid #ccc;
   color:  gray;
   font-size: 0.9em;
+}
+
+.post-status {
+  color: gray;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.post-status i {
+  margin-right: 0.1rem;
+}
+.post-status span + span {
+  margin-left: 1em;
 }

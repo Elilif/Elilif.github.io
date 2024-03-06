@@ -1,0 +1,144 @@
+#+TITLE: CSS for Org-exported HTML(WIP)
+#+DATE: 2024-02-29
+
+* Markups[fn:1]
+*bold*
+/italic/
+_underline_
+=verbatim=
+~code~
++strike-through+
+{{{kbd(C-h h)}}}
+* Lists
+** Todo List
+*** TODO First todo
+*** DONE First Done with Date
+CLOSED: [2021-02-18 Thu 10:12]
+*** Scheduled
+SCHEDULED: <2021-02-18 Thu>
+*** Deadline
+DEADLINE: <2021-02-18 Thu>
+*** Date
+<2021-02-18 Thu>
+
+** Simple list
+- List item
+- List item
+- List item
+
+** Sorted List
+1. List item
+2. List item
+3. List item
+
+** Checkbox[fn:2]
+- [ ] List item
+- [X] List item
+- [-] List item
+
+** Definition list
+
+- Lorem ipsum :: dolor sit amet, consectetur adipiscing elit.  Mauris laoreet
+     sollicitudin venenatis.  Duis sed consequat dolor.
+- Etiam feugiat :: pharetra sapien et semper.  Nunc ornare lacus sit amet massa
+     auctor, vitae aliquam eros interdum.  Mauris arcu ante, imperdiet vel purus
+     ac, bibendum faucibus diam.  Ut blandit nec mi at ultricies.  Donec eget
+     mattis nisl.  In sed nibh felis.  Cras quis convallis orci.
+* Images
+
+#+CAPTION: org-mode
+[[../static/post-img/2024-02-29-org-CSS/org-mode.png]]
+* Math
+
+\begin{align}
+\mathcal{F}(a) &= \frac{1}{2\pi i}\oint_\gamma \frac{f(z)}{z - a}\,dz\\
+\int_D (\nabla\cdot \mathcal{F})\,dV &=\int_{\partial D}\mathcal{F}\cdot n\, dS
+\end{align}
+
+* Heading with tags                                               :tag1:tag2:
+* H1
+H1 Text
+** H2
+H2 Text
+*** H3
+H3 Text
+**** H4
+H4 Text
+* Table
+#+CAPTION: test
+|  a |  b |  c |  d |  e |  f |
+|----+----+----+----+----+----|
+|  0 |  1 |  2 |  3 |  4 |  5 |
+|  6 |  7 |  8 |  9 | 10 | 11 |
+| 12 | 13 | 14 | 15 | 16 | 17 |
+| 18 | 19 | 20 | 21 | 22 | 23 |
+| 24 | 25 | 26 | 27 | 28 | 29 |
+* Blocks
+** Center
+#+begin_center
+This is a center block. This is a center block. This is a center block. This is
+a center block. This is a center block. This is a center block.
+#+end_center
+
+** Comment
+Comment blocks are not exported.
+#+begin_comment
+This is a comment block
+#+end_comment
+
+** Example
+#+begin_example
+This is an example block
+#+end_example
+
+** Quote
+#+begin_quote
+Words can be like X-rays, if you use them properly—they’ll go through anything.
+You read and you’re pierced.
+
+
+—Aldous Huxley, Brave New World
+#+end_quote
+
+** Verse
+#+begin_verse
+Let me not to the marriage of true minds
+Admit impediments. Love is not love
+Which alters when it alteration finds,
+Or bends with the remover to remove:
+
+O, no! it is an ever-fix`ed mark,
+That looks on tempests and is never shaken;
+It is the star to every wand'ring bark,
+Whose worth's unknown, although his heighth be taken.
+
+Love's not Time's fool, though rosy lips and cheeks
+Within his bending sickle's compass come;
+Love alters not with his brief hours and weeks,
+But bears it out even to the edge of doom:
+
+If this be error and upon me proved,
+I never writ, nor no man ever loved.x
+#+end_verse
+
+
+** Source Blocks
+*** Elisp
+#+NAME: test-divider
+#+begin_src emacs-lisp
+  (message "--------------------------------")
+#+end_src
+
+#+NAME: test-example
+#+begin_src emacs-lisp
+  <<test-divider>>
+  (message "This is a test.")
+  <<test-divider>>
+#+end_src
+
+* Footnotes
+
+[fn:1] =org-code= and =org-verbatim= are the same when exporting.
+
+[fn:2] Only the ascii characters implement tri-state checkboxes. See
+=org-html-checkbox-types= for details.

@@ -1,0 +1,196 @@
+#+TITLE: 浅析 org babel switches
+#+DATE: 2024-03-01
+
+#+begin_abstract
+本文以分析函数 ~org-element-src-block-parser~ 为例，简要介绍了 Org-mode 代码块中
+=switches= 的作用和用法。
+#+end_abstract
+* 什么是 =switches= ?
+=switches= 是 =#+BEGIN_SRC= [fn:1] 一栏上的可选参数，其具体的位置如下：
+#+begin_example
+  ,#+BEGIN_SRC <language> <switches> <header arguments>
+    <body>
+  ,#+END_SRC
+#+end_example
+它的作用是提供更精细的代码导出控制[fn:2] 。Org Manual 在 [[https://orgmode.org/manual/Literal-Examples.html][Literal Examples]] 一节介
+绍几个 =switch= 及其用法，这里做个简单的总结：
+- -n :: 在导出时给代码块添加行号。默认第一行的行号是 1 ，如果提供一个数字 a（如
+  =-n 10=），则第一行的行号是 a 。
+- +n :: 在导出时给代码块添加行号。但与 =-n= 不同的是，它是从上一个有行号的代码块的
+  结束行开始计数，比如说上一个代码块的结束行号是 10 ，那么当前代码块就从 11 开始
+  计数。=+n= 同样也接受一个可选的数字参数，作用与 =-n= 类似。
+- -l :: 为当前代码块设置 =org-coderef-label-format= 。
+- -r :: 导出时移除代码块中的引用标签（coderef label）。如果和 =-n= 一起用，则会把
+  引用标签移到行号上（在 HTML 中就是设置行号所在元素的 =id= 属性）。
+- -i :: 导出时不修改代码块中的缩进。
+- -k :: 导出时保留代码块中的引用标签（coderef label）。
+* 使用分享
+:PROPERTIES:
+:ID:       f993088e-8da0-4fa0-95f2-b52187dd1e40
+:END:
+只是从纸面上讨论 =switches= 是非常枯燥的，同时也不容易让人明白其具体作用。所以接下
+来让我们实际体验一下 =switches= 的使用。我们以 =org-element-src-block-parser= 为例，
+分析一下 =switches= 是如何被解析的：
+
+=org-element-src-block-parser= 主要由[[regexp-match][regexp-match]] ，[[switches-analysis][switches-analysis]] 和
+[[restult-construct][restult-construct]]三个部分构成[fn:3] :
+#+NAME: org-element-src-block-parser
+#+begin_src emacs-lisp
+  (defun org-element-src-block-parser (limit affiliated)
+    "Parse a source block.
+
+  LIMIT bounds the search.  AFFILIATED is a list of which CAR is
+  the buffer position at the beginning of the first affiliated
+  keyword and CDR is a plist of affiliated keywords along with
+  their value.
+
+  Return a list whose CAR is `src-block' and CDR is a plist
+  containing `:language', `:switches', `:parameters', `:begin',
+  `:end', `:number-lines', `:retain-labels', `:use-labels',
+  `:label-fmt', `:preserve-indent', `:value', `:post-blank' and
+  `:post-affiliated' keywords.
+
+  Assume point is at the beginning of the block."
+    (let ((case-fold-search t))
+      (if (not (save-excursion (re-search-forward "^[ \t]*#\\+END_SRC[ \t]*$"
+                                                  limit t)))
+          ;; Incomplete block: parse it as a paragraph.
+          (org-element-paragraph-parser limit affiliated)
+        (let ((contents-end (match-beginning 0)))
+          (save-excursion
+            (let* (
+                   <<regexp-match>>
+                   <<switches-analysis>>
+                   ;; Retrieve code.
+                   (value (org-unescape-code-in-string
+                           (buffer-substring-no-properties
+                            (line-beginning-position 2) contents-end)))
+                   (pos-before-blank (progn (goto-char contents-end)
+                                            (forward-line)
+                                            (point)))
+                   ;; Get position after ending blank lines.
+                   (end (progn (skip-chars-forward " \r\t\n" limit)
+                               (if (eobp) (point) (line-beginning-position)))))
+              <<restult-construct>>))))))
+#+end_src
+
+这几个部分的实现比较简单，因此我们将重点放在 =switches= 的导出效果上面。我们来逐个
+分析：
+#+NAME: regexp-match
+#+begin_src emacs-lisp -n 24
+  (begin (car affiliated))
+  (post-affiliated (point))
+  ;; Get language as a string.
+  (language
+   (progn
+     (looking-at
+      "^[ \t]*#\\+BEGIN_SRC\
+    \\(?: +\\(\\S-+\\)\\)?\
+    \\(\\(?: +\\(?:-\\(?:l \".+\"\\|[ikr]\\)\\|[-+]n\\(?: *[0-9]+\\)?\\)\\)+\\)?\
+    \\(.*\\)[ \t]*$")
+     (match-string-no-properties 1)))
+  ;; Get switches.
+  (switches (match-string-no-properties 2)) ;;                 (ref:get-switches)
+  ;; Get parameters.
+  (parameters (match-string-no-properties 3))
+#+end_src
+（此代码块的 =switches= 是 =-n 24= ，使代码块从第 24 行开始计数，以便符合
+[[org-element-src-block-parser][org-element-src-block-parser]] 中的情况。）
+
+这部分的代码很清晰，就是通过正则匹配来得出代码块所用语言、=switches= 和代码块的其
+他参数。我们感兴趣的是 =coderef= ： [[(get-switches)]] 。
+
+当我们把光标移到 [[(get-switches)][get-switches]] 上面时，会发现代码块中对应的一行也被高亮了。这是通
+过 ~(setq org-html-head-include-scripts t)~ 实现的，它会把变量 =org-html-scripts=
+中的 js 注入网页，实现高亮的效果[fn:4]。
+
+#+NAME: switches-analysis
+#+begin_src emacs-lisp +n -r -l ";; (ref:%s)"
+  ;; Switches analysis.
+  (number-lines                                                      ;; (ref:num)
+   (and switches
+        (string-match "\\([-+]\\)n\\(?: *\\([0-9]+\\)\\)?\\>"
+                      switches)
+        (cons
+         (if (equal (match-string 1 switches) "-")
+             'new
+           'continued)
+         (if (not (match-end 2)) 0
+           ;; Subtract 1 to give number of lines before
+           ;; first line.
+           (1- (string-to-number (match-string 2 switches)))))))
+  (preserve-indent                                                ;; (ref:indent)
+   (and switches
+        (string-match "-i\\>" switches)))
+  (label-fmt                                                   ;; (ref:label-fmt)
+   (and switches
+        (string-match "-l +\"\\([^\"\n]+\\)\"" switches)
+        (match-string 1 switches)))
+  ;; Should labels be retained in (or stripped from)
+  ;; source blocks?
+  (retain-labels                                           ;; (ref:retain-labels)
+   (or (not switches)
+       (not (string-match "-r\\>" switches))
+       (and number-lines (string-match "-k\\>" switches))))
+  ;; What should code-references use - labels or
+  ;; line-numbers?
+  (use-labels                                                 ;; (ref:use-labels)
+   (or (not switches)
+       (and retain-labels
+            (not (string-match "-k\\>" switches)))))
+#+end_src
+（此代码块的 =switches= 是 =+n -r -l ";; (ref:%s)"=）
+
+这一部分的工作是解析代码块中的 =switches= 。也基本上都是通过正则匹配来获得相应 的
+信息。第 [[(num)][(num)]] 、[[(indent)][(indent)]] 和 [[(label-fmt)][(label-fmt)]] 行分别对应 =n= 、 =i= 和 =l= 三个=switches= 。
+第 [[(retain-labels)][(retain-labels)]] 和 [[(use-labels)][(use-labels)]] 行则是考虑多个 =switches= 一起用的情况。第
+[[(retain-labels)][(retain-labels)]] 行的 =retain-labels= 指是否保留代码块中的引用标签，如果有=-k= 则一定
+保留，其优先级最高，然后如果没有 =-k= 但是有 =-r= 就删除代码块中的引用标签。第
+[[(use-labels)][(use-labels)]] 行的 =use-labels= 则是判断是在链接中使用引用标签还是使用行号。
+
+我们回到 =switches= , 这里行号用了 =+n= ，这是因为在 [[org-element-src-block-parser][org-element-src-block-parser]] 中
+[[regexp-match][regexp-match]] 和 [[switches-analysis][switches-analysis]] 两部分是连在一起的，所以可以直接连起来。另外使
+用=-r= 来去除代码块中的引用标签，链接中改用行号来显示。注意这个工作是导出时
+Org-mode 帮我们完成的，在 org 源文件中，代码引用的格式是一样的。
+
+#+NAME: restult-construct
+#+begin_src emacs-lisp -n 81
+  (list 'src-block
+        (nconc
+         (list :language language
+               :switches (and (org-string-nw-p switches)
+                              (org-trim switches))
+               :parameters (and (org-string-nw-p parameters)
+                                (org-trim parameters))
+               :begin begin
+               :end end
+               :number-lines number-lines
+               :preserve-indent preserve-indent
+               :retain-labels retain-labels
+               :use-labels use-labels
+               :label-fmt label-fmt
+               :value value
+               :post-blank (count-lines pos-before-blank end)
+               :post-affiliated post-affiliated)
+         (cdr affiliated)))
+#+end_src
+（此代码块的 =switches= 是 =-n 81=）
+
+最后就是把结果组合成一个 List 返回。
+* 总结
+如果要写技术博客（笔记）的话，代码块是非常重要的一个环节，而 Org-mode 在这两方面
+都有极其优秀的支持。本文所介绍的内容仅仅是九牛一毛，只希望读者在阅读完毕后能够
+对 Org-mode 代码块中 =switches= 有更进一步的了解，感谢阅读！
+* Footnotes
+
+[fn:1] =switches= 也可用于 =#+BEGIN_EXAMPLE= 。
+
+[fn:2] 原文是 "Switches provide finer control of the code execution, export, and
+format." 但是我没搞懂 =switches= 在代码执行的时候会有什么影响，只知
+道~org-babel--expand-body~ 会在代码执行的时候移除 =coderef= 。这可能需要进一步分析
+ob 的源码。
+
+[fn:3] 代码块中如果有 =<<xxx>>= 之类的文本，可以点击代码块上的 =expand= 按钮展开，也
+可以直接点击 =<<xxx>>= 跳转到定义位置。
+
+[fn:4] 需要 CSS 文件中设置 =.code-highlighted= 的样式。
