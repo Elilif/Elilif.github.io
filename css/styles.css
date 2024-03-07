@@ -1,4 +1,3 @@
-/* FONT SETTING */
 :root {
   font-family: "Times New Roman", Times,'LXGW WenKai',STFangSong, Helvetica, Arial, Vernada, Tahoma, STXihei, "Microsoft YaHei", "Songti SC", SimSun, Heiti, sans-serif;
   box-sizing: border-box;
@@ -9,6 +8,10 @@
 
 pre, code, kbd {
   font-family: monospace;
+}
+
+pre {
+  overflow: auto;
 }
 
 .content {
@@ -155,7 +158,7 @@ a:hover {
 
 @media screen and (max-width: 780px) {
   .content {
-    width: 80vw;
+    width: 100vw;
   }
 }
 
@@ -566,12 +569,34 @@ code {
 .post-status {
   color: gray;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+
+  a {
+    color: inherit;
+  }
+
+  i {
+    margin-right: 0.1rem;
+  }
+
+  span + span {
+    margin-left: 0.3em;
+  }
 }
 
-.post-status i {
-  margin-right: 0.1rem;
+@media screen and (min-width: 780px) {
+  .post-status {
+    font-size: 0.9rem;
+
+    span + span {
+      margin-left: 1em;
+    }
+  }
 }
-.post-status span + span {
-  margin-left: 1em;
+
+@media screen and (max-width: 780px) {
+  .MathJax {
+    width: 80% !important;
+    font-size: 70% !important;
+  }
 }
