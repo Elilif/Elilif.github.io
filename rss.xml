@@ -14,8 +14,8 @@
   <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Thu, 07 Mar 2024 13:57:14 +0800</pubDate>
-  <lastBuildDate>Thu, 07 Mar 2024 13:57:14 +0800</lastBuildDate>
+  <pubDate>Thu, 07 Mar 2024 14:08:43 +0800</pubDate>
+  <lastBuildDate>Thu, 07 Mar 2024 14:08:43 +0800</lastBuildDate>
   <generator>Emacs 29.2 Org-mode 9.6.15</generator>
   <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
   <image>
@@ -64,14 +64,14 @@
     <description><![CDATA[<p>
     本文简要介绍了如何使用 Emacs 来生成静态博客网站。主要分为三个模块：
     </p>
-    <div id="outline-container-orge2ec520" class="outline-3">
-    <h3 id="orge2ec520"><span class="section-number-3">3.1.</span> 博客生成</h3>
+    <div class="outline-3">
+    <h3><span class="section-number-3">3.1.</span> 博客生成</h3>
     </div>
-    <div id="outline-container-orgee6b85e" class="outline-3">
-    <h3 id="orgee6b85e"><span class="section-number-3">3.2.</span> RSS 生成</h3>
+    <div class="outline-3">
+    <h3><span class="section-number-3">3.2.</span> RSS 生成</h3>
     </div>
-    <div id="outline-container-orgd33e94c" class="outline-3">
-    <h3 id="orgd33e94c"><span class="section-number-3">3.3.</span> 文学编程网页导出</h3>
+    <div class="outline-3">
+    <h3><span class="section-number-3">3.3.</span> 文学编程网页导出</h3>
     <div class="outline-text-3" id="text-3-3">
     <p>
     <a href="https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html">Read More</a>
