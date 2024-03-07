@@ -4,7 +4,6 @@
 :properties:
 :rss_permalink: articles/2024-03-01-org-babel-switches.html
 :pubdate: 2024-03-01
-:ID:       95829b3d-f3d8-4b76-93d9-f0b0502b7c16
 :END:
 本文以分析函数 ~org-element-src-block-parser~ 为例，简要介绍了 Org-mode 代码块中
 =switches= 的作用和用法。
@@ -14,7 +13,6 @@
 :properties:
 :rss_permalink: articles/2024-02-29-org-CSS.html
 :pubdate: 2024-02-29
-:ID:       7c960a2b-724a-4af8-8b1e-0f35267ddd39
 :END:
 
 [[https://elilif.github.io/articles/2024-02-29-org-CSS.html][Read More]]
@@ -22,28 +20,17 @@
 :properties:
 :rss_permalink: articles/2024-02-21-all-in-emacs-blog.html
 :pubdate: 2024-02-21
-:ID:       57342665-188e-453c-94a6-1ed006000a11
 :END:
 本文简要介绍了如何使用 Emacs 来生成静态博客网站。主要分为三个模块：
 ** 博客生成
-:PROPERTIES:
-:ID:       65d381a4-ec67-43ee-9abe-9c79765f181a
-:END:
 ** RSS 生成
-:PROPERTIES:
-:ID:       2bc92c7b-2c1b-40da-8ace-87e78a6ed89f
-:END:
 ** 文学编程网页导出
-:PROPERTIES:
-:ID:       ba5657d5-64c2-461a-bcaa-648768ad0857
-:END:
 
 [[https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html][Read More]]
 * 百般武艺，此乃 Emacs （序）
 :properties:
 :rss_permalink: articles/2024-02-20-all-in-emacs-preface.html
 :pubdate: 2024-02-20
-:ID:       3dfb674e-889b-4d84-835b-bd0265df9f38
 :END:
 
 [[https://elilif.github.io/articles/2024-02-20-all-in-emacs-preface.html][Read More]]
