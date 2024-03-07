@@ -6,6 +6,12 @@
   font-size: 1.25rem;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 pre, code, kbd {
   font-family: monospace;
 }
@@ -37,15 +43,12 @@ h4 {
 h5 {
   font-size: 1.1em;
 }
-/* h2, h3, h4, h5, h6 { */
-/*   font-size: 1.3em; */
-/* } */
 
 @media screen and (min-width: 780px) {
   div > h2::before,
-            div > h3::before,
-                      div > h4::before,
-                                div > h5::before {
+  div > h3::before,
+  div > h4::before,
+  div > h5::before {
     position: absolute;
     color: #ccc;
     font-size: 1.3em;
@@ -158,7 +161,7 @@ a:hover {
 
 @media screen and (max-width: 780px) {
   .content {
-    width: 100vw;
+    width: 90vw;
   }
 }
 
@@ -169,9 +172,13 @@ a:hover {
   justify-content: space-around;
 }
 
-@media screen and (max-width: 780px) {
+#postamble .info {
+  flex-direction: column;
+}
+
+@media screen and (min-width: 780px) {
   #postamble .info {
-    flex-direction: column;
+    flex-direction: row;
   }
 }
 
@@ -233,7 +240,7 @@ label.footref {
   border-bottom: 0.0625rem dotted;
 }
 
-@media (min-width: 780px) {
+@media screen and  (min-width: 780px) {
   .sidenote {
     display: block;
     float: left;
@@ -263,7 +270,7 @@ label.footref {
 .multilang {
   pre {
     margin-top: 0;
-    max-height: 20em;
+    max-height: 30em;
     min-height: 2em;
   }
   .src-expand-section {
@@ -344,8 +351,6 @@ label.footref {
     display: inline-block;
   }
 }
-/* .org-src-name { */
-/* } */
 
 .src {
   padding: 0.5em;
@@ -358,19 +363,6 @@ label.footref {
   right: 0;
   top: 0.5em
 }
-
-/* @media screen and (max-width: 425px) { */
-/*   .org-src-name { */
-/*     padding-bottom: 2.5em; */
-/*     padding-top: 0.5em; */
-/*   } */
-
-/*   .src-buttons { */
-/*     position: absolute; */
-/*     left: 0.1em; */
-/*     top: 2.5em; */
-/* } */
-/* } */
 
 .multilang .src-buttons button {
   border: none;
@@ -408,10 +400,6 @@ blockquote::before, blockquote::after{
 blockquote::before {
   content: open-quote;
 }
-
-/* blockquote:::after { */
-/*   content: close-quote; */
-/* } */
 
 .verse {
     background-color: transparent;
