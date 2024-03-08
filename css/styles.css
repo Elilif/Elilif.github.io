@@ -79,6 +79,10 @@ h5 {
 figure {
   text-align: center;
   margin: 1em auto;
+
+  figcaption {
+    color: gray;
+  }
 }
 
 sup {
@@ -196,11 +200,9 @@ a:hover {
   font-size: 0.8em;
 }
 
-.title {
-    display: flex;
-    flex-direction: column;
+.title, .subtitle {
     text-align: center;
-  }
+}
 
 /* FOOTNOTES */
 #footnotes {
@@ -600,4 +602,9 @@ code {
   .giscus {
     width: 50vw;
   }
+}
+
+
+img {
+  max-width: 100%;
 }
