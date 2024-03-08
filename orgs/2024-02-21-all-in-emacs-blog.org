@@ -35,30 +35,39 @@ Org-mode 的 =ox= 模块提供了很多 hook ，比如能够分别在导出前�
 :END:
 首先介绍一下博客的基本结构
 
+#+begin_src bash :exports results :dir "~/Elilif.github.io/" :eval never-export
+  tree --noreport -L 1 -I "google*" --dirsfirst -F
+#+end_src
+
+#+RESULTS:
 #+begin_example
-  ├── articles/
-  ├── config.html
-  ├── css/
-  │   └── style.css
-  ├── index.html
-  ├── rss.xml
-  └── scripts/
-      └── script.js
-      └── toc.js
+./
+├── articles/
+├── css/
+├── orgs/
+├── scripts/
+├── static/
+├── config.html
+├── index.html
+├── rss.xml
+└── sitemap.xml
 #+end_example
 
 - articles :: 此文件夹包含所有的博客文章
 - css :: 此文件夹包含所有的 CSS 文件
+- orgs :: 此文件夹包含所有的 Org 源文件
 - script :: 此文件夹包含所有的 JS 文件
+- static :: 此文件夹包含所有的其他静态资源
 - config.html :: 我的 Emacs 文学编程配置
 - index.html :: 博客主页
 - rss.xml :: RSS 订阅
+- sitemap.xml :: 网站站点地图，用于在 [[https://search.google.com/search-console/about][Google Search Console]] 中建立索引
 ** 基本配置
 ox-publish.el 的配置几乎只用一个变量 ~org-publish-project-alist~ 就能完成，非常简
 单。相关语法和用法请查阅 ~org-publish-project-alist~ 的文档和 [[https://orgmode.org/manual/Publishing.html][Publishing (The Org
 Manual)]] ，本文将侧重于分享我的个人配置。
 
-~org-publish-project-alist~ 中个每个元素就是一个发布项目，其有一个项目名和一个
+~org-publish-project-alist~ 中个每个元素就是一个发布项目，其由一个项目名和一个
 property list 组成。如 [fn:2]：
 
 #+NAME: my-blog
@@ -75,43 +84,27 @@ property list 组成。如 [fn:2]：
 我们的主要工作就是配置这个 property list 以满足我们不同的需
 求，接下来的几个部分将介绍我们所使用的属性：
 
-*** 杂项部分
-首先我们来定义一些辅助函数：
-
-#+NAME: blog-helper-functions
-#+begin_src emacs-lisp
-  <<custom-backend>>
-
-  <<eli/org-blog-src-block>>
-
-  <<eli/org-blog-publish-to-html>>
-
-  <<blog-variables>>
-
-  <<eli/org-publish-sitemap>>
-
-  <<eli/sitemap-dated-entry-format>>
-
-  <<timestamp-macro>>
-
-  <<eli/blog-publish-completion>>
-
-  <<eli/kill-sitemap-buffer>>
-#+end_src
-
+*** 自定义导出后端
 我希望博客的导出和常规 HTML 之间的行为有所区别，所以首先让我们定义一个专门用于
-博客导出的 org 导出后端 =blog= ，这是为了方便修改=html= 后端的默认行为，比如说我们可
-以修改对 org-mode 中代码块的处理：由于我采用的是文学编程，所以希望在没有
-=caption=的时候用代码块的 =name= 属性来作为代码块的标签。
+博客导出的 org 导出后端 =blog= ，这是为了方便修改=html= 后端的默认行为（通过
+=:translate-alist= 等其他方式实现）。
 
 #+NAME: custom-backend
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (org-export-define-derived-backend 'blog 'html
-    :translate-alist '((src-block . eli/org-blog-src-block)))
+    :translate-alist '((src-block . eli/org-blog-src-block)
+                       (footnote-reference . eli/org-blog-footnote-reference)
+                       (template . eli/org-blog-template)))
 #+end_src
 
+我们分别修改了代码块、文档注释和导出模板：
+
+**** 代码块
+由于博客文章中的代码块的组织方式是以文学编程编程的方式来处理的，而我的习惯是仅使
+用 =name= 属性来命名代码块，所以我希望在没有 =caption= 的时候用 =name= 属性来作为代码
+块的标签：
 #+NAME: eli/org-blog-src-block
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (defun eli/org-blog-src-block (src-block _contents info)
     "Transcode a SRC-BLOCK element from Org to HTML.
   CONTENTS holds the contents of the item.  INFO is a plist holding
@@ -151,10 +144,197 @@ property list 组成。如 [fn:2]：
                             lang label code)))))))
 #+end_src
 
-接下来我们需要为 ox-publish 定义一个导出后端为 =blog= 的发布函数：
+**** 注释
+我们对注释也需要额外处理。默认的处理方式是放在页面的末尾，这其实是不利于读者阅读
+的，经常前后跳转可能会打断读者的心流。所以我们更希望采用侧注[fn:3]的方式，方便读者就近
+查阅。而对于移动设备，我们希望采用弹出注释的方式：
+
+#+CAPTION: show-annotations
+[[../static/post-img/2024-02-21-all-in-emacs-blog/Peek 2024-03-08 17-58.gif]]
+
+为了实现上述需求，仅使用 HTML 是不够的，还需要 CSS/JS 的帮助，这部分细节可以在仓
+库 [[https://github.com/Elilif/Elilif.github.io][GitHub - Elilif/Elilif.github.io]] 查看，本文专注于导出部分。下面的代码在原有基
+础上添加了几个标签，方便后续处理。
+
+#+NAME: eli/org-blog-footnote-reference
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
+  (defun eli/org-blog-footnote-reference (footnote-reference _contents info)
+    "Transcode a FOOTNOTE-REFERENCE element from Org to HTML.
+  CONTENTS is nil.  INFO is a plist holding contextual information."
+    (concat
+     ;; Insert separator between two footnotes in a row.
+     (let ((prev (org-export-get-previous-element footnote-reference info)))
+       (when (eq (org-element-type prev) 'footnote-reference)
+         (plist-get info :html-footnote-separator)))
+     (let* ((n (org-export-get-footnote-number footnote-reference info))
+            (id (format "fnr.%d%s"
+                        n
+                        (if (org-export-footnote-first-reference-p
+                             footnote-reference info)
+                            ""
+                          ".100"))))
+       (format
+        (concat (plist-get info :html-footnote-format)
+                "<input id=\"%s\" class=\"footref-toggle\" type=\"checkbox\">")
+        (format "<label for=\"%s\" class=\"footref\">%s</label>"
+                id n)
+        id))))
+#+end_src
+
+**** 导出模板
+最后我们需要修改下默认的导出模板：
+
+#+NAME: eli/org-blog-template
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
+  (defun eli/org-blog-template (contents info)
+    "Return complete document string after HTML conversion.
+  CONTENTS is the transcoded contents string.  INFO is a plist
+  holding export options."
+    (setq eli-test info)
+    (concat
+     (when (and (not (org-html-html5-p info)) (org-html-xhtml-p info))
+       (let* ((xml-declaration (plist-get info :html-xml-declaration))
+              (decl (or (and (stringp xml-declaration) xml-declaration)
+                        (cdr (assoc (plist-get info :html-extension)
+                                    xml-declaration))
+                        (cdr (assoc "html" xml-declaration))
+                        "")))
+         (when (not (or (not decl) (string= "" decl)))
+           (format "%s\n"
+                   (format decl
+                           (or (and org-html-coding-system
+                                    ;; FIXME: Use Emacs 22 style here, see `coding-system-get'.
+                                    (coding-system-get org-html-coding-system 'mime-charset))
+                               "iso-8859-1"))))))
+     (org-html-doctype info)
+     "\n"
+     (concat "<html"
+             (cond ((org-html-xhtml-p info)
+                    (format
+                     " xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"%s\" xml:lang=\"%s\""
+                     (plist-get info :language) (plist-get info :language)))
+                   ((org-html-html5-p info)
+                    (format " lang=\"%s\"" (plist-get info :language))))
+             ">\n")
+     "<head>\n"
+     (org-html--build-meta-info info)
+     (org-html--build-head info)
+     (org-html--build-mathjax-config info)
+     "</head>\n"
+     "<body>\n"
+     (let ((link-up (org-trim (plist-get info :html-link-up)))
+           (link-home (org-trim (plist-get info :html-link-home))))
+       (unless (and (string= link-up "") (string= link-home ""))
+         (format (plist-get info :html-home/up-format)
+                 (or link-up link-home)
+                 (or link-home link-up))))
+     ;; Preamble.
+     (org-html--build-pre/postamble 'preamble info)
+     ;; Document contents.
+     (let ((div (assq 'content (plist-get info :html-divs))))
+       (format "<%s id=\"%s\" class=\"%s\">\n"
+               (nth 1 div)
+               (nth 2 div)
+               (plist-get info :html-content-class)))
+     ;; Document title.
+     (when (plist-get info :with-title)
+       (let ((title (and (plist-get info :with-title)
+                         (plist-get info :title)))
+             (subtitle (plist-get info :subtitle))
+             (html5-fancy (org-html--html5-fancy-p info)))
+         (when title
+           (format
+            (if html5-fancy
+                "<header>\n<h1 class=\"title\">%s</h1>\n%s</header>"
+              "<h1 class=\"title\">%s%s</h1>\n")
+            (org-export-data title info)
+            (if subtitle
+                (format
+                 (if html5-fancy
+                     "<p class=\"subtitle\" role=\"doc-subtitle\">%s</p>\n"
+                   (concat "\n" (org-html-close-tag "br" nil info) "\n"
+                           "<span class=\"subtitle\">%s</span>\n"))
+                 (org-export-data subtitle info))
+              "")))))
+     ;; add article status
+     (eli/blog-build-article-status info)
+     contents
+     (format "</%s>\n" (nth 1 (assq 'content (plist-get info :html-divs))))
+     ;; gisus
+     (eli/blog-build-giscus info)
+     ;; Postamble.
+     (org-html--build-pre/postamble 'postamble info)
+     ;; Possibly use the Klipse library live code blocks.
+     (when (plist-get info :html-klipsify-src)
+       (concat "<script>" (plist-get info :html-klipse-selection-script)
+               "</script><script src=\""
+               org-html-klipse-js
+               "\"></script><link rel=\"stylesheet\" type=\"text/css\" href=\""
+               org-html-klipse-css "\"/>"))
+     ;; Closing document.
+     "</body>\n</html>"))
+#+end_src
+
+目前主要是两个部分：一是增加标题下的文章信息；二是添加评论模块（使用[[https://giscus.app/][ giscus]] ）。
+注意这两个信息我们都不希望添加到主页中，所以在后面的代码中都做了相应的判断。
+
+添加文章信息部分逻辑很简单，就是组合一些字符串，代码如下：
+
+#+NAME: eli/blog-build-article-status
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
+  (defvar eli/blog-status-format "<span><i class='bx bx-calendar'></i>
+  <span>%d</span></span>\n<span><i class='bx bx-edit'></i><span>%C</span></span>")
+  (defvar eli/blog-history-base-url "https://github.com/Elilif/Elilif.github.io/commits/master/orgs/")
+
+  (defun eli/blog-build-article-status (info)
+    (let ((input-file (file-name-nondirectory (plist-get info :input-file))))
+      (unless (string-equal input-file eli/blog-sitamap)
+        (let ((spec (org-html-format-spec info))
+              (history-url (concat eli/blog-history-base-url input-file)))
+          (concat
+           "<div class=\"post-status\">"
+           (format-spec eli/blog-status-format spec)
+           (format "<span><i class='bx bx-history'></i><span><a href=\"%s\">history</a></span></span>"
+                   history-url)
+           "</div>")))))
+#+end_src
+
+效果：
+#+CAPTION: article-status
+[[../static/post-img/2024-02-21-all-in-emacs-blog/2024-03-08_18-40.png]]
+
+
+添加评论模块的代码如下：
+
+#+NAME: eli/blog-build-giscus
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
+  (defvar eli/blog-giscus-script "<script src=\"https://giscus.app/client.js\"
+            data-repo=\"Elilif/Elilif.github.io\"
+            data-repo-id=\"MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg=\"
+            data-category=\"Announcements\"
+            data-category-id=\"DIC_kwDOEcWfFM4Cdz5V\"
+            data-mapping=\"pathname\"
+            data-strict=\"0\"
+            data-reactions-enabled=\"1\"
+            data-emit-metadata=\"0\"
+            data-input-position=\"top\"
+            data-theme=\"light\"
+            data-lang=\"zh-CN\"
+            crossorigin=\"anonymous\"
+            async>
+    </script>")
+
+  (defun eli/blog-build-giscus (info)
+    (let ((input-file (file-name-nondirectory (plist-get info :input-file))))
+      (unless (string-equal input-file eli/blog-sitamap)
+        eli/blog-giscus-script)))
+#+end_src
+
+到这里，我们自定义的导出后端就定义完成了。最后我们需要为 ox-publish 定义一个导出
+后端为 =blog= 的发布函数：
 
 #+NAME: eli/org-blog-publish-to-html
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   ;;;###autoload
   (defun eli/org-blog-publish-to-html (plist filename pub-dir)
     "Publish an org file to HTML.
@@ -172,17 +352,18 @@ property list 组成。如 [fn:2]：
                         plist pub-dir))
 #+end_src
 
+*** 杂项部分
 为了方便后续的编辑，我们定义如下几个变量：
 
 #+NAME: blog-variables
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (setq eli/blog-base-dir "path-to/blog/"
         eli/blog-publish-dir "your-blog-site-dir"
         eli/blog-sitamap "index.org")
 #+end_src
 
-至此，property list 中的杂项部分就完成了，下面这些未指出的属性读者可以查阅
-[[https://orgmode.org/manual/Publishing.html][Publishing (The Org Manual)]] 等文档，这里就不一一说明了。
+property list 中的杂项部分如下，基本上看名字就知道是什么意思，下面这些未指出的属
+性读者可以查阅[[https://orgmode.org/manual/Publishing.html][Publishing (The Org Manual)]] 等文档，这里就不一一说明了。
 #+NAME: misc
 #+begin_src emacs-lisp
   :base-directory ,eli/blog-base-dir
@@ -193,6 +374,7 @@ property list 组成。如 [fn:2]：
   :publishing-function eli/org-blog-publish-to-html
   :exclude "rss.org"
 #+end_src
+
 *** HTML 部分
 org 文件导出后的 HTML 主要由 =preamble= 、=content= 和 =postamble= 三个部分组成，我们
 的文章内容填充的是 =content= 部分，其他两个部分由变量 =org-html-preamble= 、
@@ -200,7 +382,7 @@ org 文件导出后的 HTML 主要由 =preamble= 、=content= 和 =postamble= �
 控制。其具体用途可任由读者发挥，这里我们将 =preamle= 用做导航栏，而 =postamble= 则用
 作提供文章信息。
 
-导航栏是几个很简单的标签[fn:3]：
+导航栏是几个很简单的标签[fn:4]：
 #+NAME: blog-preamble
 #+begin_src emacs-lisp
   (("en" "<nav class=\"nav\">
@@ -211,7 +393,7 @@ org 文件导出后的 HTML 主要由 =preamble= 、=content= 和 =postamble= �
   <hr>"))
 #+end_src
 
-postamble 则提供了作者、创建时间和修改时间等信息[fn:4]：
+postamble 则提供了作者、创建时间和修改时间等信息[fn:5]：
 
 #+NAME: blog-postamble
 #+begin_src emacs-lisp
@@ -224,10 +406,11 @@ postamble 则提供了作者、创建时间和修改时间等信息[fn:4]：
   </div>"))
 #+end_src
 
-此外，我们还可以为导出的 HTML 提供 CSS 和 JS 文件，以获取更舒适的浏览体验[fn:5]：
+此外，我们还可以为导出的 HTML 提供 CSS 和 JS 文件，以获取更舒适的浏览体验[fn:6]：
 #+NAME: head
 #+begin_src emacs-lisp
   "<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\" />
+   <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/htmlize.css\" />
    <script src=\"/scripts/script.js\"></script>
    <script src=\"/scripts/toc.js\"></script>"
 #+end_src
@@ -250,7 +433,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 首先我们为博客主页固定一个创建时间：
 
 #+NAME: eli/org-publish-sitemap
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (defun eli/org-publish-sitemap (title list)
     "Generate the sitemap with title."
     (concat "#+TITLE: " title
@@ -263,7 +446,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 其次我们可以为 sitemap 中的每一个 entry 添加时间前缀：
 
 #+NAME: eli/sitemap-dated-entry-format
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (defun eli/sitemap-dated-entry-format (entry _style project)
     "Sitemap PROJECT ENTRY STYLE format that includes date."
     (let* ((file (org-publish--expand-file-name entry project))
@@ -285,7 +468,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 注意 =eli/sitemap-dated-entry-format= 里的 ={{{timestamp(%s)}}}= 是一个导出宏：
 
 #+NAME: timestamp-macro
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (add-to-list 'org-export-global-macros
                '("timestamp" . "@@html:<span class=\"timestamp\">[$1]</span>@@"))
 #+end_src
@@ -296,7 +479,7 @@ sitemap 就是站点地图，其中列举了项目中的所有文章链接，这
 sitemap 移到根目录
 
 #+NAME: eli/blog-publish-completion
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (defun eli/blog-publish-completion (project)
     (let* ((publishing-directory (plist-get project :publishing-directory))
            (sitamap (file-name-with-extension eli/blog-sitamap "html"))
@@ -316,7 +499,7 @@ sitemap 移到根目录
 sitemap 是自动生成的，我们也不需要修改。
 
 #+NAME: eli/kill-sitemap-buffer
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb-ref blog-helper-functions
   (defun eli/kill-sitemap-buffer (project)
     (let* ((sitemap-filename (plist-get project :sitemap-filename))
            (base-dir (plist-get project :base-directory))
@@ -340,8 +523,38 @@ sitemap 是自动生成的，我们也不需要修改。
 *** 本章总结
 现在我们已经介绍完了所有需要的属性，接下来让我们让我们把这些属性合到一起，加上名
 字组成一个完整的 project 。至此，一个简单的博客导出工具就完成了：
+
+#+NAME: blog-helper--functions
 #+begin_src emacs-lisp
-  <<blog-helper-functions>>
+  <<eli/kill-sitemap-buffer>>
+
+  <<eli/blog-publish-completion>>
+
+  <<timestamp-macro>>
+
+  <<eli/sitemap-dated-entry-format>>
+
+  <<eli/org-publish-sitemap>>
+
+  <<blog-variables>>
+
+  <<eli/org-blog-publish-to-html>>
+
+  <<eli/blog-build-giscus>>
+
+  <<eli/blog-build-article-status>>
+
+  <<eli/org-blog-template>>
+
+  <<eli/org-blog-footnote-reference>>
+
+  <<eli/org-blog-src-block>>
+
+  <<custom-backend>>
+#+end_src
+
+#+begin_src emacs-lisp
+  <<blog-helper--functions>>
 
   (setq org-publish-project-alist `(
                                     <<my-blog>>
@@ -447,8 +660,16 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 #+end_src
 
 下面是完整的代码：
+#+NAME: rss-helper--functions
 #+begin_src emacs-lisp
-  <<rss-helper-functions>>
+  <<eli/org-publish-rss-feed>>
+
+  <<eli/org-publish-rss-sitemap>>
+
+  <<eli/org-publish-rss-entry>>
+#+end_src
+#+begin_src emacs-lisp
+  <<rss-helper--functions>>
 
   <<rss>>
 #+end_src
@@ -491,6 +712,11 @@ js 添加一个按钮，实现不同版本间的切换。
 #+end_src
 
 Emacs 配置部分的 project 如下：
+#+NAME: config-helper--functions
+#+begin_src emacs-lisp
+  <<eli/org-export-src-babel-duplicate>>
+#+end_src
+
 #+NAME: emacs-config
 #+begin_src emacs-lisp
   ("Emacs config"
@@ -505,11 +731,11 @@ Emacs 配置部分的 project 如下：
 以下代码完整地包括了前文提到的内容：
 #+NAME: result
 #+begin_src emacs-lisp
-  <<blog-helper-functions>>
+  <<blog-helper--functions>>
 
-  <<rss-helper-functions>>
+  <<rss-helper--functions>>
 
-  <<config-helper-functions>>
+  <<config-helper--functions>>
 
   (setq org-publish-project-alist `(
                                     <<my-blog>>
@@ -527,8 +753,10 @@ rule.
 [fn:2] 代码块中如果有 =<<xxx>>= 之类的文本，可以点击代码块上的 =expand= 按钮展开，也
 可以直接点击 =<<xxx>>= 跳转到定义位置。
 
-[fn:3] 具体可以查阅变量 =org-html-preamble-format= 的文档。
+[fn:3] 比如说这条注释。
 
-[fn:4] 具体可以查阅变量 =org-html-postamble-format= 的文档。
+[fn:4] 具体可以查阅变量 =org-html-preamble-format= 的文档。
 
-[fn:5] 具体可以查阅变量 =org-html-head= 的文档。
+[fn:5] 具体可以查阅变量 =org-html-postamble-format= 的文档。
+
+[fn:6] 具体可以查阅变量 =org-html-head= 的文档。
