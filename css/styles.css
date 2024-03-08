@@ -122,6 +122,10 @@ a:hover {
       list-style: none;
     }
 
+    ul ul {
+      padding-inline-start: 20px;
+    }
+
     li a {
       display: inline-block;
       color: #aaa;
