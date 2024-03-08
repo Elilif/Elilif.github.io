@@ -593,6 +593,11 @@ code {
 
 
 .giscus {
-  width: 50vw;
   margin: 5em auto 0;
+}
+
+@media screen and (min-width: 780px) {
+  .giscus {
+    width: 50vw;
+  }
 }
