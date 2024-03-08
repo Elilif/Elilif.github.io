@@ -590,3 +590,9 @@ code {
     font-size: 70% !important;
   }
 }
+
+
+.giscus {
+  width: 50vw;
+  margin: 5em auto 0;
+}
