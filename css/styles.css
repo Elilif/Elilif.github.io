@@ -173,6 +173,7 @@ a:hover {
 
 #postamble .info,
 #preamble nav {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -608,3 +609,65 @@ code {
 img {
   max-width: 100%;
 }
+
+ul .tags {
+  float: right;
+}
+
+@media screen and (min-width: 780px) {
+  .tags::after {
+    content: attr(data-tags);
+    color: gray;
+  }
+}
+
+li:has(.tags) {
+  display: none;
+}
+
+
+.filter {
+  text-align: center;
+  font-size: 0.8em;
+
+  label {
+    position: relative;
+  }
+
+  .category {
+    span:before {
+      content:"✓";
+      position:absolute;
+      top: -0.1em;
+      right: 0em;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transform:scale(0.5);
+      display: none;
+    }
+
+    display: inline-flex;
+    input {
+      display: none;
+    }
+    input:checked + span:before {
+      display: block;
+    }
+    input:checked + span {
+      color: black;
+      border-color: black;
+    }
+    span {
+      border: 2px lightgray solid;
+      color: lightgray;
+      border-radius: 0.8em;
+      padding: 0em 0.7em;
+      user-select: none;
+    }
+  }
+}
+
+.filter ~ ul {
+  padding-inline-start: 0.5em;
+}
+

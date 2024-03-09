@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-03-09 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>给博客添加评论和标签过滤功能</title>
+<meta name="author" content="Eli Qian" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
+.content:has([value="CSS"]:checked)
+ li:has([data-tags~="#CSS"]){display: list-item;}
+.content:has([value="blog"]:checked)
+ li:has([data-tags~="#blog"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+  <a href="/index.html" class="button">Home</a>
+  <a href="/config.html" class="button">Literate Emacs Config</a>
+  <a href="/rss.xml" class="button">RSS</a>
+</nav>
+<hr>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">给博客添加评论和标签过滤功能</h1>
+</header><div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2024-03-09</span></span>
+<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-09-blog-comments-and-tag-filtering.org">history</a></span></span></div><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#评论功能">1. 评论功能</a>
+<ul>
+<li><a href="#为什么选择-giscus">1.1. 为什么选择 giscus</a></li>
+<li><a href="#引入-giscus">1.2. 引入 giscus</a></li>
+</ul>
+</li>
+<li><a href="#标签过滤功能">2. 标签过滤功能</a>
+<ul>
+<li><a href="#实现原理">2.1. 实现原理</a></li>
+<li><a href="#实现">2.2. 实现</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div class="abstract">
+<p>
+本文主要介绍了如何使用 giscus 为博客添加评论系统和用 CSS 为博客添加标签过滤功能。
+</p>
+
+</div>
+
+<div id="outline-container-评论功能" class="outline-2">
+<h2 id="评论功能"><span class="section-number-2">1.</span> 评论功能</h2>
+<div class="outline-text-2" id="text-评论功能">
+<p>
+本博客使用 <a href="https://giscus.app/">giscus</a> 作为评论系统。
+</p>
+</div>
+<div id="outline-container-为什么选择-giscus" class="outline-3">
+<h3 id="为什么选择-giscus"><span class="section-number-3">1.1.</span> 为什么选择 giscus</h3>
+<div class="outline-text-3" id="text-为什么选择-giscus">
+<p>
+<a href="https://giscus.app/">Giscus</a> 是利用 GitHub Discussions 实现的评论系统，可以让访客借助 GitHub 在我们的网站上留下评论和表情。根据官网，giscus 的特性有很多：
+</p>
+<blockquote>
+<p>
+giscus 的特点如下：
+</p>
+<ul class="org-ul">
+<li>开源。</li>
+<li>无跟踪，无广告，永久免费。</li>
+<li>无需数据库。所有数据均储存在 GitHub Discussions 中。</li>
+<li>支持自定义主题！</li>
+<li>支持多种语言。</li>
+<li>高可配置性。</li>
+<li>自动从 GitHub 拉取新评论与编辑。</li>
+<li>可自建服务！</li>
+</ul>
+</blockquote>
+
+<p>
+但对于我来说，真正吸引我的地方是它是利用 GitHub Discussions 实现的。我觉得这比使用 GitHub issues 要好一点。
+</p>
+</div>
+</div>
+<div id="outline-container-引入-giscus" class="outline-3">
+<h3 id="引入-giscus"><span class="section-number-3">1.2.</span> 引入 giscus</h3>
+<div class="outline-text-3" id="text-引入-giscus">
+<p>
+配置其实很简单，在<a href="https://giscus.app/">官网</a>上根据说明用鼠标点点就好了，非常人性化。最终我们会得到一段
+HTML 配置：
+</p>
+
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-html"><span class="linenr"> 1: </span>&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"https://giscus.app/client.js"</span>
+<span class="linenr"> 2: </span>        <span class="org-variable-name">data-repo</span>=<span class="org-string">"[&#22312;&#27492;&#36755;&#20837;&#20179;&#24211;]"</span>
+<span class="linenr"> 3: </span>        <span class="org-variable-name">data-repo-id</span>=<span class="org-string">"[&#22312;&#27492;&#36755;&#20837;&#20179;&#24211; ID]"</span>
+<span class="linenr"> 4: </span>        <span class="org-variable-name">data-category</span>=<span class="org-string">"[&#22312;&#27492;&#36755;&#20837;&#20998;&#31867;&#21517;]"</span>
+<span class="linenr"> 5: </span>        <span class="org-variable-name">data-category-id</span>=<span class="org-string">"[&#22312;&#27492;&#36755;&#20837;&#20998;&#31867; ID]"</span>
+<span class="linenr"> 6: </span>        <span class="org-variable-name">data-mapping</span>=<span class="org-string">"pathname"</span>
+<span class="linenr"> 7: </span>        <span class="org-variable-name">data-strict</span>=<span class="org-string">"0"</span>
+<span class="linenr"> 8: </span>        <span class="org-variable-name">data-reactions-enabled</span>=<span class="org-string">"1"</span>
+<span class="linenr"> 9: </span>        <span class="org-variable-name">data-emit-metadata</span>=<span class="org-string">"0"</span>
+<span class="linenr">10: </span>        <span class="org-variable-name">data-input-position</span>=<span class="org-string">"bottom"</span>
+<span class="linenr">11: </span>        <span class="org-variable-name">data-theme</span>=<span class="org-string">"preferred_color_scheme"</span>
+<span class="linenr">12: </span>        <span class="org-variable-name">data-lang</span>=<span class="org-string">"zh-CN"</span>
+<span class="linenr">13: </span>        <span class="org-variable-name">crossorigin</span>=<span class="org-string">"anonymous"</span>
+<span class="linenr">14: </span>        async&gt;
+<span class="linenr">15: </span>&lt;/<span class="org-function-name">script</span>&gt;
+</pre>
+</div>
+
+</div>
+
+
+<p>
+接下来就只需把这段代码放入博客对应位置就好了。但在 ox-publish 中，这可能比较麻烦。一个方案是我们可以将其放在 <code>org-html-postamble</code> 中，但这会导致我们的主页上也有评论界面<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox">，这不是我们想要的。所以我的方案是利用修改 <code>org-html-template</code> 。把评论系统添加到除主页外的所有页面里。具体可以看<a href="https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html#%E5%AF%BC%E5%87%BA%E6%A8%A1%E6%9D%BF">百般武艺，此乃 Emacs （一）：用 Emacs
+写博客</a> 。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-标签过滤功能" class="outline-2">
+<h2 id="标签过滤功能"><span class="section-number-2">2.</span> 标签过滤功能</h2>
+<div class="outline-text-2" id="text-标签过滤功能">
+</div>
+<div id="outline-container-实现原理" class="outline-3">
+<h3 id="实现原理"><span class="section-number-3">2.1.</span> 实现原理</h3>
+<div class="outline-text-3" id="text-实现原理">
+<p>
+ox-publish 对生成文章 tag/categories 页面并没有原生支持，自己实现起来比较麻烦，所以我一开始是不打算做的。但是最近在逛 CodePen 的时候看到了一个 <a href="https://codepen.io/jlengstorf/pen/YzMwNrp">2 cool ways to
+use :has()</a> ，突然想到应该可以利用 <code>:has()</code> 来实现博客文章过滤功能，实验了一下果然可以。
+</p>
+
+<p>
+原理其实很简单，我们以上述 CodePen 中的代码为例，简单梳理一下流程：
+</p>
+
+<p>
+简要的 HTML 代码如下：
+</p>
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-html"><span class="linenr"> 1: </span>&lt;<span class="org-function-name">section</span>&gt;
+<span class="linenr"> 2: </span>    &lt;<span class="org-function-name">form</span>&gt;
+<span class="linenr"> 3: </span>        &lt;<span class="org-function-name">p</span>&gt;Filter by category:&lt;/<span class="org-function-name">p</span>&gt;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>        &lt;<span class="org-function-name">label</span>&gt;
+<span class="linenr"> 6: </span>            &lt;<span class="org-function-name">input</span> <span class="org-variable-name">type</span>=<span class="org-string">"checkbox"</span> <span class="org-variable-name">name</span>=<span class="org-string">"naps"</span> checked /&gt;
+<span class="linenr"> 7: </span>            naps
+<span class="linenr"> 8: </span>        &lt;/<span class="org-function-name">label</span>&gt;
+<span class="linenr"> 9: </span>        &lt;/<span class="org-function-name">p</span>&gt;
+<span class="linenr">10: </span>    &lt;/<span class="org-function-name">form</span>&gt;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    &lt;<span class="org-function-name">article</span>&gt;
+<span class="linenr">13: </span>        &lt;<span class="org-function-name">img</span> <span class="org-variable-name">src</span>=<span class="org-string">"path/to/image"</span> <span class="org-variable-name">alt</span>=<span class="org-string">"abstract color pattern"</span> /&gt;
+<span class="linenr">14: </span>        &lt;<span class="org-function-name">h2</span>&gt;<span class="org-underline"><span class="org-bold-italic">Afternoon Hammock</span></span>&lt;/<span class="org-function-name">h2</span>&gt;
+<span class="linenr">15: </span>        &lt;<span class="org-function-name">p</span> <span class="org-variable-name">class</span>=<span class="org-string">"categories"</span> <span class="org-variable-name">data-category</span>=<span class="org-string">"naps"</span>&gt;&lt;/<span class="org-function-name">p</span>&gt;
+<span class="linenr">16: </span>    &lt;/<span class="org-function-name">article</span>&gt;
+<span class="linenr">17: </span>&lt;/<span class="org-function-name">section</span>&gt;
+</pre>
+</div>
+
+</div>
+
+
+<p>
+核心 CSS 代码如下：
+</p>
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-css"><span class="linenr">1: </span><span class="org-css-selector">article</span><span class="org-whitespace-space"> </span><span class="org-rainbow-delimiters-depth-1">{</span>
+<span id="coderef-hide" class="coderef-off"><span class="linenr">2: </span><span class="org-whitespace-space">    </span><span class="org-css-property">display</span>:<span class="org-whitespace-space"> </span>none;</span>
+<span class="linenr">3: </span><span class="org-rainbow-delimiters-depth-1">}</span>
+<span class="linenr">4: </span>
+<span id="coderef-selector" class="coderef-off"><span class="linenr">5: </span><span class="org-css-property">section</span>:has<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>name=<span class="org-string">"naps"</span><span class="org-rainbow-delimiters-depth-2">]</span>:checked<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-whitespace-space"> </span>article:has<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>data-category=<span class="org-string">"naps"</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-whitespace-space"> </span><span class="org-rainbow-delimiters-depth-1">{</span></span>
+<span class="linenr">6: </span><span class="org-whitespace-space">    </span><span class="org-css-property">display</span>:<span class="org-whitespace-space"> </span>block;
+<span class="linenr">7: </span><span class="org-rainbow-delimiters-depth-1">}</span>
+</pre>
+</div>
+
+</div>
+
+<dl class="org-dl">
+<dt>CSS 代码第 <a href="#coderef-hide" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-hide');" onmouseout="CodeHighlightOff(this, 'coderef-hide');">2</a> 行</dt><dd>一开始的时候隐藏所有的 <code>&lt;article&gt;</code> 元素</dd>
+<dt>CSS 代码第 <a href="#coderef-selector" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-selector');" onmouseout="CodeHighlightOff(this, 'coderef-selector');">5</a> 行</dt><dd>在选中 <code>checkbox</code> 后，此选择器就生效，重新显示对应的
+<code>article</code> 元素</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-实现" class="outline-3">
+<h3 id="实现"><span class="section-number-3">2.2.</span> 实现</h3>
+<div class="outline-text-3" id="text-实现">
+<p>
+知道了原理后，剩下的问题就是如何添加对应的 HTML/CSS 代码，其中的关键就是如何获得文章标签。因为文章的标签都是动态添加的，在导出时我们一般无法直接得出现有的标签列表。不过好在 ox-publish 对 sitemap 的处理方式为我们提供了机会：ox-publish 是先利用由 <code>:sitemap-format-entry</code> 指定的函数来收集所有的文章标题，然后用
+<code>:sitemap-function</code> 指定的函数将数据写到指定文件中<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"> ，最后再将其导出成 HTML
+文件。我们可以在其收集文章标题的时候顺便用 <code>org-publish-find-property</code> 来收集对应的标签。对应的代码如下：
+</p>
+
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="linenr"> 1: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defvar</span><span class="org-whitespace-space"> </span><span class="org-variable-name">eli/blog-tags</span><span class="org-whitespace-space"> </span>nil<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+<span class="linenr"> 2: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/sitemap-dated-entry-format</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>entry<span class="org-whitespace-space"> </span>_style<span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="linenr"> 3: </span><span class="org-whitespace-space">  </span><span class="org-doc">"Sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">PROJECT</span><span class="org-whitespace-space"> </span><span class="org-doc">ENTRY</span><span class="org-whitespace-space"> </span><span class="org-doc">STYLE</span><span class="org-whitespace-space"> </span><span class="org-doc">format</span><span class="org-whitespace-space"> </span><span class="org-doc">that</span><span class="org-whitespace-space"> </span><span class="org-doc">includes</span><span class="org-whitespace-space"> </span><span class="org-doc">date."</span>
+<span class="linenr"> 4: </span><span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">let*</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>file<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-publish--expand-file-name<span class="org-whitespace-space"> </span>entry<span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr"> 5: </span><span class="org-whitespace-space">         </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>parsed-title<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-publish-find-property<span class="org-whitespace-space"> </span>file<span class="org-whitespace-space"> </span><span class="org-builtin">:title</span><span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr"> 6: </span><span class="org-whitespace-space">         </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>title
+<span class="linenr"> 7: </span><span class="org-whitespace-space">          </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span>parsed-title
+<span class="linenr"> 8: </span><span class="org-whitespace-space">              </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>org-no-properties
+<span class="linenr"> 9: </span><span class="org-whitespace-space">               </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>org-element-interpret-data<span class="org-whitespace-space"> </span>parsed-title<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span class="linenr">10: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>file-name-nondirectory<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>file-name-sans-extension<span class="org-whitespace-space"> </span>file<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span id="coderef-find-prop" class="coderef-off"><span class="linenr">11: </span><span class="org-whitespace-space">         </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>tags<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>org-publish-find-property<span class="org-whitespace-space"> </span>file<span class="org-whitespace-space"> </span><span class="org-builtin">:filetags</span><span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span></span>
+<span class="linenr">12: </span><span class="org-whitespace-space">         </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>tags-string<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>mapconcat
+<span class="linenr">13: </span><span class="org-whitespace-space">                       </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">lambda</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>tag<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
+<span id="coderef-hashtag" class="coderef-off"><span class="linenr">14: </span><span class="org-whitespace-space">                         </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>concat<span class="org-whitespace-space"> </span><span class="org-string">"#"</span><span class="org-whitespace-space"> </span>tag<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span></span>
+<span class="linenr">15: </span><span class="org-whitespace-space">                       </span>tags<span class="org-whitespace-space"> </span><span class="org-string">"</span><span class="org-whitespace-space"> </span><span class="org-string">"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr">16: </span><span class="org-whitespace-space">    </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">dolist</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>tag<span class="org-whitespace-space"> </span>tags<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span id="coderef-collect-tag" class="coderef-off"><span class="linenr">17: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">cl-pushnew</span><span class="org-whitespace-space"> </span>tag<span class="org-whitespace-space"> </span>eli/blog-tags<span class="org-whitespace-space"> </span><span class="org-builtin">:test</span><span class="org-whitespace-space"> </span>#'string=<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span></span>
+<span class="linenr">18: </span><span class="org-whitespace-space">    </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>org-publish-cache-set-file-property<span class="org-whitespace-space"> </span>file<span class="org-whitespace-space"> </span><span class="org-builtin">:title</span><span class="org-whitespace-space"> </span>title<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr">19: </span><span class="org-whitespace-space">    </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>=<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>length<span class="org-whitespace-space"> </span>title<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-whitespace-space"> </span>0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">20: </span><span class="org-whitespace-space">        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>format<span class="org-whitespace-space"> </span><span class="org-string">"*%s*"</span><span class="org-whitespace-space"> </span>entry<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span id="coderef-tag-macro" class="coderef-off"><span class="linenr">21: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>format<span class="org-whitespace-space"> </span><span class="org-string">"{{{timestamp(%s)}}}</span><span class="org-whitespace-space">   </span><span class="org-string">[[file:%s][%s]]</span><span class="org-whitespace-space"> </span><span class="org-string">{{{tags(%s)}}}"</span></span>
+<span class="linenr">22: </span><span class="org-whitespace-space">              </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>car<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>org-publish-find-property<span class="org-whitespace-space"> </span>file<span class="org-whitespace-space"> </span><span class="org-builtin">:date</span><span class="org-whitespace-space"> </span>project<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">23: </span><span class="org-whitespace-space">              </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>concat<span class="org-whitespace-space"> </span><span class="org-string">"articles/"</span><span class="org-whitespace-space"> </span>entry<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">24: </span><span class="org-whitespace-space">              </span>title
+<span class="linenr">25: </span><span class="org-whitespace-space">              </span>tags-string<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+
+</div>
+
+
+<dl class="org-dl">
+<dt>第 <a href="#coderef-find-prop" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-find-prop');" onmouseout="CodeHighlightOff(this, 'coderef-find-prop');">11</a> 行</dt><dd>文档中的标签形式是 <code>#+FILETAGS: :taga:tagb:</code> 。</dd>
+<dt>第 <a href="#coderef-hashtag" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-hashtag');" onmouseout="CodeHighlightOff(this, 'coderef-hashtag');">14</a> 行</dt><dd>这里添加了 <code>#</code> 来更好的表示标签。</dd>
+<dt>第 <a href="#coderef-collect-tag" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-collect-tag');" onmouseout="CodeHighlightOff(this, 'coderef-collect-tag');">17</a> 行</dt><dd>收集标签。</dd>
+<dt>第 <a href="#coderef-tag-macro" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-tag-macro');" onmouseout="CodeHighlightOff(this, 'coderef-tag-macro');">21</a> 行</dt><dd>这里的 <code>{{{tags(%s)}}}</code> 是一个导出宏：</dd>
+</dl>
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="linenr">1: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span>add-to-list<span class="org-whitespace-space"> </span>'org-export-global-macros
+<span class="linenr">2: </span><span class="org-whitespace-space">             </span>'<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-string">"tags"</span><span class="org-whitespace-space"> </span>.<span class="org-whitespace-space"> </span><span class="org-string">"@@html:&lt;span</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"tags\"</span><span class="org-whitespace-space"> </span><span class="org-string">data-tags=\"$1\"&gt;&lt;/span&gt;@@"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+
+</div>
+
+
+<p>
+收集到了标签后，剩下的就是设置标签对应的 HTML/CSS 代码了。我们可以在 ox-publish
+写入 sitemap 文件的时候，同时插入 HTML 代码和设置 <code>org-html-head-extra</code> ：
+</p>
+
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="linenr"> 1: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/org-publish-sitemap</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>title<span class="org-whitespace-space"> </span>list<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="linenr"> 2: </span><span class="org-whitespace-space">  </span><span class="org-doc">"Generate</span><span class="org-whitespace-space"> </span><span class="org-doc">the</span><span class="org-whitespace-space"> </span><span class="org-doc">sitemap</span><span class="org-whitespace-space"> </span><span class="org-doc">with</span><span class="org-whitespace-space"> </span><span class="org-doc">title."</span>
+<span class="linenr"> 3: </span><span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">setq</span><span class="org-whitespace-space"> </span>org-html-head-extra
+<span class="linenr"> 4: </span><span class="org-whitespace-space">        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>format<span class="org-whitespace-space"> </span><span class="org-string">"&lt;style&gt;\n%s\n%s\n&lt;/style&gt;"</span>
+<span class="linenr"> 5: </span><span class="org-whitespace-space">                </span><span class="org-string">".content:has([value=\"all\"]:checked)</span><span class="org-whitespace-space"> </span><span class="org-string">li{display:</span><span class="org-whitespace-space"> </span><span class="org-string">list-item;}\n"</span>
+<span class="linenr"> 6: </span><span class="org-whitespace-space">                </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>mapconcat
+<span class="linenr"> 7: </span><span class="org-whitespace-space">                 </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">lambda</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>tag<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span class="linenr"> 8: </span><span class="org-whitespace-space">                   </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>format<span class="org-whitespace-space"> </span><span class="org-string">".content:has([value=\"%s\"]:checked)</span>
+<span class="linenr"> 9: </span><span class="org-whitespace-space"> </span><span class="org-string">li:has([data-tags~=\"%s\"]){display:</span><span class="org-whitespace-space"> </span><span class="org-string">list-item;}"</span>
+<span class="linenr">10: </span><span class="org-whitespace-space">                           </span>tag<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>concat<span class="org-whitespace-space"> </span><span class="org-string">"#"</span><span class="org-whitespace-space"> </span>tag<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">11: </span><span class="org-whitespace-space">                 </span>eli/blog-tags<span class="org-whitespace-space"> </span><span class="org-string">"\n"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="linenr">12: </span><span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>concat<span class="org-whitespace-space"> </span><span class="org-string">"#+TITLE:</span><span class="org-whitespace-space"> </span><span class="org-string">"</span><span class="org-whitespace-space"> </span>title
+<span class="linenr">13: </span><span class="org-whitespace-space">          </span><span class="org-string">"\n"</span>
+<span class="linenr">14: </span><span class="org-whitespace-space">          </span><span class="org-string">"#+DATE:</span><span class="org-whitespace-space"> </span><span class="org-string">2023-10-10"</span>
+<span class="linenr">15: </span><span class="org-whitespace-space">          </span><span class="org-string">"\n"</span>
+<span id="coderef-html-block" class="coderef-off"><span class="linenr">16: </span><span class="org-whitespace-space">          </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>format<span class="org-whitespace-space"> </span><span class="org-string">"#+BEGIN_EXPORT</span><span class="org-whitespace-space"> </span><span class="org-string">html</span></span>
+<span class="linenr">17: </span><span class="org-string">&lt;section</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"filter\"&gt;\n%s\n%s&lt;/section&gt;</span>
+<span class="linenr">18: </span><span class="org-string">#+END_EXPORT"</span>
+<span id="coderef-all" class="coderef-off"><span class="linenr">19: </span><span class="org-whitespace-space">                  </span><span class="org-string">"&lt;label</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"category\"&gt;</span></span>
+<span class="linenr">20: </span><span class="org-string">&lt;input</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"radio\"</span><span class="org-whitespace-space"> </span><span class="org-string">name=\"tag\"</span><span class="org-whitespace-space"> </span><span class="org-string">value=\"all\"</span><span class="org-whitespace-space"> </span><span class="org-string">checked/&gt;</span>
+<span class="linenr">21: </span><span class="org-string">&lt;span&gt;All&lt;/span&gt;</span>
+<span class="linenr">22: </span><span class="org-string">&lt;/label&gt;"</span>
+<span class="linenr">23: </span><span class="org-whitespace-space">                  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>mapconcat
+<span class="linenr">24: </span><span class="org-whitespace-space">                   </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">lambda</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>tag<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span class="linenr">25: </span><span class="org-whitespace-space">                     </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>format<span class="org-whitespace-space"> </span><span class="org-string">"&lt;label</span><span class="org-whitespace-space"> </span><span class="org-string">class=\"category\"&gt;</span>
+<span class="linenr">26: </span><span class="org-string">&lt;input</span><span class="org-whitespace-space"> </span><span class="org-string">type=\"radio\"</span><span class="org-whitespace-space"> </span><span class="org-string">name=\"tag\"</span><span class="org-whitespace-space"> </span><span class="org-string">value=\"%s\"/&gt;</span>
+<span class="linenr">27: </span><span class="org-string">&lt;span&gt;%s&lt;/span&gt;</span>
+<span class="linenr">28: </span><span class="org-string">&lt;/label&gt;"</span>
+<span class="linenr">29: </span><span class="org-whitespace-space">                             </span>tag<span class="org-whitespace-space"> </span>tag<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">30: </span><span class="org-whitespace-space">                   </span>eli/blog-tags<span class="org-whitespace-space"> </span><span class="org-string">"\n"</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr">31: </span><span class="org-whitespace-space">          </span><span class="org-string">"\n"</span>
+<span class="linenr">32: </span><span class="org-whitespace-space">          </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>org-list-to-org<span class="org-whitespace-space"> </span>list<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+
+</div>
+
+
+<dl class="org-dl">
+<dt>第 <a href="#coderef-html-block" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-html-block');" onmouseout="CodeHighlightOff(this, 'coderef-html-block');">16</a> 行</dt><dd>这里的代码比较多<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">，采用 HTML export code blocks 的方式。</dd>
+<dt>第 <a href="#coderef-all" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-all');" onmouseout="CodeHighlightOff(this, 'coderef-all');">19</a> 行</dt><dd>这里我们添加一个显示全部文章的默认按钮。</dd>
+</dl>
+
+
+<p>
+这样，我们的标签过滤功能就完成了，详细的 CSS 代码可以查看仓库： <a href="https://github.com/Elilif/Elilif.github.io">GitHub -
+Elilif/Elilif.github.io</a> 。效果如下所示：
+</p>
+
+<figure>
+<img src="../static/post-img/2024-03-09-blog-comments-and-tag-filtering/Peek 2024-03-09 20-07.gif" alt="Peek 2024-03-09 20-07.gif">
+
+<figcaption><span class="figure-number">Figure 1: </span>tag-filtering-demo</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<code>org-html-postamble</code> 会被添加到所有导出页面中。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+即 <code>org-publish-project-alist</code> 中的 <code>:sitemap-filename</code> 属性对应的文件。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+这是 ox-publish 的另一个缺点：只能用原始的字符串拼接来定制 html 。
+</p></div></div>
+
+
+</div>
+</div></div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+<div class="info">
+  <span class="author">Author: Eli Qian</span>
+  <span class="author">Email: <a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a></span>
+  <span class="date">Create Date: 2024-03-09</span>
+  <span class="date">Last modified: 2024-03-09</span>
+  <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
+</div>
+</div>
+</body>
+</html>

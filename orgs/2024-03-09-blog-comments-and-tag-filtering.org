@@ -1,0 +1,200 @@
+#+TITLE: 给博客添加评论和标签过滤功能
+#+DATE: 2024-03-09
+#+FILETAGS: :blog:CSS:
+
+#+begin_abstract
+本文主要介绍了如何使用 giscus 为博客添加评论系统和用 CSS 为博客添加标签过滤功能。
+#+end_abstract
+
+* 评论功能
+本博客使用 [[https://giscus.app/][giscus]] 作为评论系统。
+** 为什么选择 giscus
+[[https://giscus.app/][Giscus]] 是利用 GitHub Discussions 实现的评论系统，可以让访客借助 GitHub 在我们的
+网站上留下评论和表情。根据官网，giscus 的特性有很多：
+#+begin_quote
+giscus 的特点如下：
+- 开源。
+- 无跟踪，无广告，永久免费。
+- 无需数据库。所有数据均储存在 GitHub Discussions 中。
+- 支持自定义主题！
+- 支持多种语言。
+- 高可配置性。
+- 自动从 GitHub 拉取新评论与编辑。
+- 可自建服务！
+#+end_quote
+
+但对于我来说，真正吸引我的地方是它是利用 GitHub Discussions 实现的。我觉得这比使
+用 GitHub issues 要好一点。
+** 引入 giscus
+配置其实很简单，在[[https://giscus.app/][官网]]上根据说明用鼠标点点就好了，非常人性化。最终我们会得到一段
+HTML 配置：
+
+#+begin_src html
+<script src="https://giscus.app/client.js"
+        data-repo="[在此输入仓库]"
+        data-repo-id="[在此输入仓库 ID]"
+        data-category="[在此输入分类名]"
+        data-category-id="[在此输入分类 ID]"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+#+end_src
+
+接下来就只需把这段代码放入博客对应位置就好了。但在 ox-publish 中，这可能比较麻烦。
+一个方案是我们可以将其放在 =org-html-postamble= 中，但这会导致我们的主页上也有评论
+界面[fn:1]，这不是我们想要的。所以我的方案是利用修改 =org-html-template= 。把评论
+系统添加到除主页外的所有页面里。具体可以看[[https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html#%E5%AF%BC%E5%87%BA%E6%A8%A1%E6%9D%BF][百般武艺，此乃 Emacs （一）：用 Emacs
+写博客]] 。
+
+* 标签过滤功能
+** 实现原理
+ox-publish 对生成文章 tag/categories 页面并没有原生支持，自己实现起来比较麻烦，
+所以我一开始是不打算做的。但是最近在逛 CodePen 的时候看到了一个 [[https://codepen.io/jlengstorf/pen/YzMwNrp][2 cool ways to
+use :has()]] ，突然想到应该可以利用 =:has()= 来实现博客文章过滤功能，实验了一下果
+然可以。
+
+原理其实很简单，我们以上述 CodePen 中的代码为例，简单梳理一下流程：
+
+简要的 HTML 代码如下：
+#+begin_src html
+  <section>
+      <form>
+          <p>Filter by category:</p>
+
+          <label>
+              <input type="checkbox" name="naps" checked />
+              naps
+          </label>
+          </p>
+      </form>
+
+      <article>
+          <img src="path/to/image" alt="abstract color pattern" />
+          <h2>Afternoon Hammock</h2>
+          <p class="categories" data-category="naps"></p>
+      </article>
+  </section>
+#+end_src
+
+核心 CSS 代码如下：
+#+begin_src css
+  article {
+      display: none;                                                   (ref:hide)
+  }
+
+  section:has([name="naps"]:checked) article:has([data-category="naps"]) { (ref:selector)
+      display: block;
+  }
+#+end_src
+- CSS 代码第 [[(hide)]] 行 :: 一开始的时候隐藏所有的 =<article>= 元素
+- CSS 代码第 [[(selector)]] 行 :: 在选中 =checkbox= 后，此选择器就生效，重新显示对应的
+  =article= 元素
+
+** 实现
+知道了原理后，剩下的问题就是如何添加对应的 HTML/CSS 代码，其中的关键就是如何获得
+文章标签。因为文章的标签都是动态添加的，在导出时我们一般无法直接得出现有的标签列
+表。不过好在 ox-publish 对 sitemap 的处理方式为我们提供了机会：ox-publish 是先利
+用由 =:sitemap-format-entry= 指定的函数来收集所有的文章标题，然后用
+=:sitemap-function= 指定的函数将数据写到指定文件中[fn:2] ，最后再将其导出成 HTML
+文件。我们可以在其收集文章标题的时候顺便用 =org-publish-find-property= 来收集对应
+的标签。对应的代码如下：
+
+#+begin_src emacs-lisp
+  (defvar eli/blog-tags nil)
+  (defun eli/sitemap-dated-entry-format (entry _style project)
+    "Sitemap PROJECT ENTRY STYLE format that includes date."
+    (let* ((file (org-publish--expand-file-name entry project))
+           (parsed-title (org-publish-find-property file :title project))
+           (title
+            (if parsed-title
+                (org-no-properties
+                 (org-element-interpret-data parsed-title))
+              (file-name-nondirectory (file-name-sans-extension file))))
+           (tags (org-publish-find-property file :filetags project)) ;; (ref:find-prop)
+           (tags-string (mapconcat
+                         (lambda (tag)
+                           (concat "#" tag))                     ;; (ref:hashtag)
+                         tags " ")))
+      (dolist (tag tags)
+        (cl-pushnew tag eli/blog-tags :test #'string=))      ;; (ref:collect-tag)
+      (org-publish-cache-set-file-property file :title title)
+      (if (= (length title) 0)
+          (format "*%s*" entry)
+        (format "{{{timestamp(%s)}}}   [[file:%s][%s]] {{{tags(%s)}}}" ;; (ref:tag-macro)
+                (car (org-publish-find-property file :date project))
+                (concat "articles/" entry)
+                title
+                tags-string))))
+#+end_src
+
+- 第 [[(find-prop)]] 行 :: 文档中的标签形式是 =#+FILETAGS: :taga:tagb:= 。
+- 第 [[(hashtag)]] 行 :: 这里添加了 =#= 来更好的表示标签。
+- 第 [[(collect-tag)]] 行 :: 收集标签。
+- 第 [[(tag-macro)]] 行 :: 这里的 ={{{tags(%s)}}}= 是一个导出宏：
+#+begin_src emacs-lisp
+  (add-to-list 'org-export-global-macros
+               '("tags" . "@@html:<span class=\"tags\" data-tags=\"$1\"></span>@@"))
+#+end_src
+
+收集到了标签后，剩下的就是设置标签对应的 HTML/CSS 代码了。我们可以在 ox-publish
+写入 sitemap 文件的时候，同时插入 HTML 代码和设置 =org-html-head-extra= ：
+
+#+begin_src emacs-lisp
+  (defun eli/org-publish-sitemap (title list)
+    "Generate the sitemap with title."
+    (setq org-html-head-extra
+          (format "<style>\n%s\n%s\n</style>"
+                  ".content:has([value=\"all\"]:checked) li{display: list-item;}\n"
+                  (mapconcat
+                   (lambda (tag)
+                     (format ".content:has([value=\"%s\"]:checked)
+   li:has([data-tags~=\"%s\"]){display: list-item;}"
+                             tag (concat "#" tag)))
+                   eli/blog-tags "\n")))
+    (concat "#+TITLE: " title
+            "\n"
+            "#+DATE: 2023-10-10"
+            "\n"
+            (format "#+BEGIN_EXPORT html                      ;; (ref:html-block)
+  <section class=\"filter\">\n%s\n%s</section>
+  ,#+END_EXPORT"
+                    "<label class=\"category\">               ;; (ref:all)
+  <input type=\"radio\" name=\"tag\" value=\"all\" checked/>
+  <span>All</span>
+  </label>"
+                    (mapconcat
+                     (lambda (tag)
+                       (format "<label class=\"category\">
+  <input type=\"radio\" name=\"tag\" value=\"%s\"/>
+  <span>%s</span>
+  </label>"
+                               tag tag))
+                     eli/blog-tags "\n"))
+            "\n"
+            (org-list-to-org list)))
+#+end_src
+
+- 第 [[(html-block)]] 行 :: 这里的代码比较多[fn:3]，采用 HTML export code blocks 的
+  方式。
+- 第 [[(all)]] 行 :: 这里我们添加一个显示全部文章的默认按钮。  
+
+
+这样，我们的标签过滤功能就完成了，详细的 CSS 代码可以查看仓库： [[https://github.com/Elilif/Elilif.github.io][GitHub -
+Elilif/Elilif.github.io]] 。效果如下所示：
+#+CAPTION: tag-filtering-demo
+[[../static/post-img/2024-03-09-blog-comments-and-tag-filtering/Peek 2024-03-09 20-07.gif]]
+
+* Footnotes
+
+[fn:1] =org-html-postamble= 会被添加到所有导出页面中。
+
+[fn:2] 即 =org-publish-project-alist= 中的 =:sitemap-filename= 属性对应的文件。
+
+[fn:3] 这是 ox-publish 的另一个缺点：只能用原始的字符串拼接来定制 html 。

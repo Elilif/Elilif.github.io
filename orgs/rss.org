@@ -1,5 +1,13 @@
 #+TITLE: Eli's Blog
 
+* 给博客添加评论和标签过滤功能
+:properties:
+:rss_permalink: articles/2024-03-09-blog-comments-and-tag-filtering.html
+:pubdate: 2024-03-09
+:END:
+本文主要介绍了如何使用 giscus 为博客添加评论系统和用 CSS 为博客添加标签过滤功能。
+
+[[https://elilif.github.io/articles/2024-03-09-blog-comments-and-tag-filtering.html][Read More]]
 * 浅析 org babel switches
 :properties:
 :rss_permalink: articles/2024-03-01-org-babel-switches.html
