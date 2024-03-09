@@ -13,6 +13,18 @@
                   <script src="/scripts/script.js"></script>
                   <script src="/scripts/toc.js"></script>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
+.content:has([value="CSS"]:checked)
+ li:has([data-tags~="#CSS"]){display: list-item;}
+.content:has([value="blog"]:checked)
+ li:has([data-tags~="#blog"]){display: list-item;}
+</style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
      function CodeHighlightOn(elem, id)

@@ -13,6 +13,18 @@
                   <script src="/scripts/script.js"></script>
                   <script src="/scripts/toc.js"></script>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
+.content:has([value="CSS"]:checked)
+ li:has([data-tags~="#CSS"]){display: list-item;}
+.content:has([value="blog"]:checked)
+ li:has([data-tags~="#blog"]){display: list-item;}
+</style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
      function CodeHighlightOn(elem, id)
@@ -48,7 +60,7 @@
 <h1 class="title">百般武艺，此乃 Emacs （序）</h1>
 </header><div class="post-status"><span><i class='bx bx-calendar'></i>
 <span>2024-02-20</span></span>
-<span><i class='bx bx-edit'></i><span>2024-03-06</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-02-20-all-in-emacs-preface.org">history</a></span></span></div><nav id="table-of-contents" role="doc-toc">
+<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-02-20-all-in-emacs-preface.org">history</a></span></span></div><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
@@ -96,6 +108,7 @@
 <p>
 在下面的代码块中按展开按钮可以展开 <a href="#test-divider">&lt;&lt;test-divider&gt;&gt;</a> 。
 </p>
+
 <div class="multilang">
 <div class="org-src-container">
 <div class="org-src-name"><span class="listing-number">Listing:  </span>test-example</div><pre class="src src-emacs-lisp" id="test-example"><span class="linenr">1: </span>&lt;&lt;<a href="#test-divider">test-divider</a>&gt;&gt;
@@ -134,7 +147,7 @@
   <span class="author">Author: Eli Qian</span>
   <span class="author">Email: <a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a></span>
   <span class="date">Create Date: 2024-02-20</span>
-  <span class="date">Last modified: 2024-03-06</span>
+  <span class="date">Last modified: 2024-03-09</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
 </div>
 </div>

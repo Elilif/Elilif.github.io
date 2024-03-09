@@ -1,6 +1,6 @@
 #+TITLE: 百般武艺，此乃 Emacs （一）：用 Emacs 写博客
 #+DATE: 2024-02-21
-#+BLOGTAGS: Emacs Literate-Programing
+#+FILETAGS: :emacs:blog:
 
 #+begin_abstract
 本文简要介绍了如何使用 Emacs 来生成静态博客网站。主要分为三个模块：

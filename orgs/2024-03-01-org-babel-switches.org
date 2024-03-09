@@ -1,5 +1,6 @@
 #+TITLE: 浅析 org babel switches
 #+DATE: 2024-03-01
+#+FILETAGS: :org:blog:
 
 #+begin_abstract
 本文以分析函数 ~org-element-src-block-parser~ 为例，简要介绍了 Org-mode 代码块中

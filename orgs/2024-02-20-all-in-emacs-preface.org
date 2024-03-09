@@ -1,5 +1,6 @@
 #+TITLE: 百般武艺，此乃 Emacs （序）
 #+DATE: 2024-02-20
+#+FILETAGS: :emacs:
 
 * 这是什么?
 这是一个系列文章，主要介绍了我目前用 Emacs 做的各种事情。
@@ -22,6 +23,7 @@
 #+end_src
 
 在下面的代码块中按展开按钮可以展开 [[test-divider][<<test-divider>>]] 。
+
 #+NAME: test-example
 #+begin_src emacs-lisp -n -r -l ";; (ref:%s)"
   <<test-divider>>
