@@ -608,6 +608,8 @@ code {
 
 img {
   max-width: 100%;
+  border-radius: 0.8em;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 ul .tags {
