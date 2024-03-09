@@ -665,6 +665,7 @@ li:has(.tags) {
       border-radius: 0.8em;
       padding: 0em 0.7em;
       user-select: none;
+      cursor: pointer;
     }
   }
 }
