@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-09 -->
+<!-- 2024-03-15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>百般武艺，此乃 Emacs （一）：用 Emacs 写博客</title>
@@ -16,14 +16,14 @@
 <style>
 .content:has([value="all"]:checked) li{display: list-item;}
 
-.content:has([value="emacs"]:checked)
- li:has([data-tags~="#emacs"]){display: list-item;}
-.content:has([value="org"]:checked)
- li:has([data-tags~="#org"]){display: list-item;}
 .content:has([value="CSS"]:checked)
  li:has([data-tags~="#CSS"]){display: list-item;}
 .content:has([value="blog"]:checked)
  li:has([data-tags~="#blog"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
 </style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
@@ -60,40 +60,40 @@
 <h1 class="title">百般武艺，此乃 Emacs （一）：用 Emacs 写博客</h1>
 </header><div class="post-status"><span><i class='bx bx-calendar'></i>
 <span>2024-02-21</span></span>
-<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-02-21-all-in-emacs-blog.org">history</a></span></span></div><nav id="table-of-contents" role="doc-toc">
+<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-02-21-all-in-emacs-blog.org">history</a></span></span><span><i class='bx bxs-hourglass'></i>2628 字</span></div><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#使用-ox-publish.el-来生成博客">1. 使用 ox-publish.el 来生成博客</a>
+<li><a href="#使用-ox-publish.el-来生成博客">使用 ox-publish.el 来生成博客</a>
 <ul>
-<li><a href="#为什么选择-ox-publish.el">1.1. 为什么选择 ox-publish.el</a>
+<li><a href="#为什么选择-ox-publish.el">为什么选择 ox-publish.el</a>
 <ul>
-<li><a href="#兼容性">1.1.1. 兼容性</a></li>
-<li><a href="#内置">1.1.2. 内置</a></li>
-<li><a href="#可拓展性">1.1.3. 可拓展性</a></li>
+<li><a href="#兼容性">兼容性</a></li>
+<li><a href="#内置">内置</a></li>
+<li><a href="#可拓展性">可拓展性</a></li>
 </ul>
 </li>
-<li><a href="#blog-structure">1.2. 博客结构</a></li>
-<li><a href="#基本配置">1.3. 基本配置</a>
+<li><a href="#blog-structure">博客结构</a></li>
+<li><a href="#基本配置">基本配置</a>
 <ul>
-<li><a href="#自定义导出后端">1.3.1. 自定义导出后端</a>
+<li><a href="#自定义导出后端">自定义导出后端</a>
 <ul>
-<li><a href="#代码块">1.3.1.1. 代码块</a></li>
-<li><a href="#注释">1.3.1.2. 注释</a></li>
-<li><a href="#导出模板">1.3.1.3. 导出模板</a></li>
+<li><a href="#代码块">代码块</a></li>
+<li><a href="#注释">注释</a></li>
+<li><a href="#导出模板">导出模板</a></li>
 </ul>
 </li>
-<li><a href="#杂项部分">1.3.2. 杂项部分</a></li>
-<li><a href="#HTML-部分">1.3.3. HTML 部分</a></li>
-<li><a href="#sitemap-部分">1.3.4. sitemap 部分</a></li>
-<li><a href="#本章总结">1.3.5. 本章总结</a></li>
+<li><a href="#杂项部分">杂项部分</a></li>
+<li><a href="#HTML-部分">HTML 部分</a></li>
+<li><a href="#sitemap-部分">sitemap 部分</a></li>
+<li><a href="#本章总结">本章总结</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#RSS-生成">2. RSS 生成</a></li>
-<li><a href="#Org-文学编程网页导出">3. Org 文学编程网页导出</a></li>
-<li><a href="#总结">4. 总结</a></li>
+<li><a href="#RSS-生成">RSS 生成</a></li>
+<li><a href="#Org-文学编程网页导出">Org 文学编程网页导出</a></li>
+<li><a href="#总结">总结</a></li>
 </ul>
 </div>
 </nav>
@@ -110,11 +110,11 @@
 </div>
 
 <div id="outline-container-使用-ox-publish.el-来生成博客" class="outline-2">
-<h2 id="使用-ox-publish.el-来生成博客"><span class="section-number-2">1.</span> 使用 ox-publish.el 来生成博客</h2>
+<h2 id="使用-ox-publish.el-来生成博客">使用 ox-publish.el 来生成博客</h2>
 <div class="outline-text-2" id="text-使用-ox-publish.el-来生成博客">
 </div>
 <div id="outline-container-为什么选择-ox-publish.el" class="outline-3">
-<h3 id="为什么选择-ox-publish.el"><span class="section-number-3">1.1.</span> 为什么选择 ox-publish.el</h3>
+<h3 id="为什么选择-ox-publish.el">为什么选择 ox-publish.el</h3>
 <div class="outline-text-3" id="text-为什么选择-ox-publish.el">
 <p>
 在 Emacs 里写博客的方案有很多，比如说 Org + Hugo 、Markdown/Org + Jekyll 等等。它们各有各的优点，但这不是本文的讨论重点，有兴趣的读者可以自行查阅。我之所以使用
@@ -122,7 +122,7 @@ ox-publish.el ，主要有以下几点原因：
 </p>
 </div>
 <div id="outline-container-兼容性" class="outline-4">
-<h4 id="兼容性"><span class="section-number-4">1.1.1.</span> 兼容性</h4>
+<h4 id="兼容性">兼容性</h4>
 <div class="outline-text-4" id="text-兼容性">
 <p>
 我基本上所有的写作活动都是在 Org-mode 里完成的，对 Org-mode 有着比较深度的自定义配置，因此希望能直接基于 org 文件来生成博客。Hugo 虽然号称能够解析 org 格式，但是对于自定义的格式就无能为力了<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox">，比如说<a href="https://orgmode.org/manual/Adding-Hyperlink-Types.html">自定义的链接格式</a>。而 ox-publish.el 采用的是 Org-mode 自带的导出功能，只需要你自己写好相关格式的导出方式，便可以完美地支持任何 org 文件。
@@ -130,7 +130,7 @@ ox-publish.el ，主要有以下几点原因：
 </div>
 </div>
 <div id="outline-container-内置" class="outline-4">
-<h4 id="内置"><span class="section-number-4">1.1.2.</span> 内置</h4>
+<h4 id="内置">内置</h4>
 <div class="outline-text-4" id="text-内置">
 <p>
 ox-publish.el 中的 <code>ox</code> 是 <code>org-export</code> 的缩写，从名字就能看出来它是 Org-mode 导出功能的一个模块。因此可以和 Org-mode 的其他功能功能无缝整合，任何需求都能较为简单地实现。内置的另一个好处是我不用担心这个项目后续的发展，只要 Org-mode 还能用，
@@ -139,7 +139,7 @@ ox-publish.el 就能用。
 </div>
 </div>
 <div id="outline-container-可拓展性" class="outline-4">
-<h4 id="可拓展性"><span class="section-number-4">1.1.3.</span> 可拓展性</h4>
+<h4 id="可拓展性">可拓展性</h4>
 <div class="outline-text-4" id="text-可拓展性">
 <p>
 Org-mode 的 <code>ox</code> 模块提供了很多 hook ，比如能够分别在导出前后修改原始文本（的复制）和导出文本。这基本上满足我的绝大部分个性化需求，实在不行我也可以通过 <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html">advice</a> 来修改原有函数，总之可扩展性非常好强。
@@ -148,7 +148,7 @@ Org-mode 的 <code>ox</code> 模块提供了很多 hook ，比如能够分别在
 </div>
 </div>
 <div id="outline-container-blog-structure" class="outline-3">
-<h3 id="blog-structure"><span class="section-number-3">1.2.</span> 博客结构</h3>
+<h3 id="blog-structure">博客结构</h3>
 <div class="outline-text-3" id="text-blog-structure">
 <p>
 首先介绍一下博客的基本结构
@@ -186,7 +186,7 @@ Org-mode 的 <code>ox</code> 模块提供了很多 hook ，比如能够分别在
 </div>
 </div>
 <div id="outline-container-基本配置" class="outline-3">
-<h3 id="基本配置"><span class="section-number-3">1.3.</span> 基本配置</h3>
+<h3 id="基本配置">基本配置</h3>
 <div class="outline-text-3" id="text-基本配置">
 <p>
 ox-publish.el 的配置几乎只用一个变量 <code>org-publish-project-alist</code> 就能完成，非常简单。相关语法和用法请查阅 <code>org-publish-project-alist</code> 的文档和 <a href="https://orgmode.org/manual/Publishing.html">Publishing (The Org
@@ -261,7 +261,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 </div>
 
 <div id="outline-container-自定义导出后端" class="outline-4">
-<h4 id="自定义导出后端"><span class="section-number-4">1.3.1.</span> 自定义导出后端</h4>
+<h4 id="自定义导出后端">自定义导出后端</h4>
 <div class="outline-text-4" id="text-自定义导出后端">
 <p>
 我希望博客的导出和常规 HTML 之间的行为有所区别，所以首先让我们定义一个专门用于博客导出的 org 导出后端 <code>blog</code> ，这是为了方便修改<code>html</code> 后端的默认行为（通过
@@ -286,7 +286,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 </div>
 
 <div id="outline-container-代码块" class="outline-5">
-<h5 id="代码块"><span class="section-number-5">1.3.1.1.</span> 代码块</h5>
+<h5 id="代码块">代码块</h5>
 <div class="outline-text-5" id="text-代码块">
 <p>
 由于博客文章中的代码块的组织方式是以文学编程编程的方式来处理的，而我的习惯是仅使用 <code>name</code> 属性来命名代码块，所以我希望在没有 <code>caption</code> 的时候用 <code>name</code> 属性来作为代码块的标签：
@@ -339,7 +339,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 
 
 <div id="outline-container-注释" class="outline-5">
-<h5 id="注释"><span class="section-number-5">1.3.1.2.</span> 注释</h5>
+<h5 id="注释">注释</h5>
 <div class="outline-text-5" id="text-注释">
 <p>
 我们对注释也需要额外处理。默认的处理方式是放在页面的末尾，这其实是不利于读者阅读的，经常前后跳转可能会打断读者的心流。所以我们更希望采用侧注<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">的方式，方便读者就近查阅。而对于移动设备，我们希望采用弹出注释的方式：
@@ -388,7 +388,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 
 
 <div id="outline-container-导出模板" class="outline-5">
-<h5 id="导出模板"><span class="section-number-5">1.3.1.3.</span> 导出模板</h5>
+<h5 id="导出模板">导出模板</h5>
 <div class="outline-text-5" id="text-导出模板">
 <p>
 最后我们需要修改下默认的导出模板：
@@ -594,7 +594,7 @@ property list 组成。如 <sup><label for="fnr.2" class="footref">2</label></su
 
 
 <div id="outline-container-杂项部分" class="outline-4">
-<h4 id="杂项部分"><span class="section-number-4">1.3.2.</span> 杂项部分</h4>
+<h4 id="杂项部分">杂项部分</h4>
 <div class="outline-text-4" id="text-杂项部分">
 <p>
 为了方便后续的编辑，我们定义如下几个变量：
@@ -632,7 +632,7 @@ property list 中的杂项部分如下，基本上看名字就知道是什么意
 
 
 <div id="outline-container-HTML-部分" class="outline-4">
-<h4 id="HTML-部分"><span class="section-number-4">1.3.3.</span> HTML 部分</h4>
+<h4 id="HTML-部分">HTML 部分</h4>
 <div class="outline-text-4" id="text-HTML-部分">
 <p>
 org 文件导出后的 HTML 主要由 <code>preamble</code> 、<code>content</code> 和 <code>postamble</code> 三个部分组成，我们的文章内容填充的是 <code>content</code> 部分，其他两个部分由变量 <code>org-html-preamble</code> 、
@@ -733,7 +733,7 @@ postamble 则提供了作者、创建时间和修改时间等信息<sup><label f
 </div>
 
 <div id="outline-container-sitemap-部分" class="outline-4">
-<h4 id="sitemap-部分"><span class="section-number-4">1.3.4.</span> sitemap 部分</h4>
+<h4 id="sitemap-部分">sitemap 部分</h4>
 <div class="outline-text-4" id="text-sitemap-部分">
 <p>
 sitemap 就是站点地图，其中列举了项目中的所有文章链接，这样通过 sitemap 就可以访问全部的文章内容。因此我们可以把 sitemap 稍作修改，用作我们博客的主页。
@@ -862,7 +862,7 @@ sitemap 是自动生成的，我们也不需要修改。
 </div>
 
 <div id="outline-container-本章总结" class="outline-4">
-<h4 id="本章总结"><span class="section-number-4">1.3.5.</span> 本章总结</h4>
+<h4 id="本章总结">本章总结</h4>
 <div class="outline-text-4" id="text-本章总结">
 <p>
 现在我们已经介绍完了所有需要的属性，接下来让我们让我们把这些属性合到一起，加上名字组成一个完整的 project 。至此，一个简单的博客导出工具就完成了：
@@ -1472,7 +1472,7 @@ sitemap 是自动生成的，我们也不需要修改。
 </div>
 
 <div id="outline-container-RSS-生成" class="outline-2">
-<h2 id="RSS-生成"><span class="section-number-2">2.</span> RSS 生成</h2>
+<h2 id="RSS-生成">RSS 生成</h2>
 <div class="outline-text-2" id="text-RSS-生成">
 <p>
 RSS 对于一个博客来说是比较重要的，可惜的是 ox-publish.el 没有原生功能支持。不过好在有 <a href="https://github.com/BenedictHW/ox-rss">GitHub - BenedictHW/ox-rss</a> 。然而 ox-rss 也有缺点，它只能用于单个文件里的
@@ -1764,7 +1764,7 @@ entry ，生成一个 rss.org，最后把他导出成我们需要的 rss.xml 。
 </div>
 
 <div id="outline-container-Org-文学编程网页导出" class="outline-2">
-<h2 id="Org-文学编程网页导出"><span class="section-number-2">3.</span> Org 文学编程网页导出</h2>
+<h2 id="Org-文学编程网页导出">Org 文学编程网页导出</h2>
 <div class="outline-text-2" id="text-Org-文学编程网页导出">
 <p>
 我希望在导出时能够把代码块中的 noweb 展开，并且在网页中同时提供不展开和展开两种版本。这样就能在保持原汁原味的文学编程的同时又方便读者查看。下面是大致实现思路：
@@ -1894,7 +1894,7 @@ Emacs 配置部分的 project 如下：
 </div>
 
 <div id="outline-container-总结" class="outline-2">
-<h2 id="总结"><span class="section-number-2">4.</span> 总结</h2>
+<h2 id="总结">总结</h2>
 <div class="outline-text-2" id="text-总结">
 <p>
 以下代码完整地包括了前文提到的内容：

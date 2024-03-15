@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-09 -->
+<!-- 2024-03-15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CSS for Org-exported HTML(WIP)</title>
@@ -16,14 +16,14 @@
 <style>
 .content:has([value="all"]:checked) li{display: list-item;}
 
-.content:has([value="emacs"]:checked)
- li:has([data-tags~="#emacs"]){display: list-item;}
-.content:has([value="org"]:checked)
- li:has([data-tags~="#org"]){display: list-item;}
 .content:has([value="CSS"]:checked)
  li:has([data-tags~="#CSS"]){display: list-item;}
 .content:has([value="blog"]:checked)
  li:has([data-tags~="#blog"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
 </style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
@@ -92,55 +92,55 @@
 <h1 class="title">CSS for Org-exported HTML(WIP)</h1>
 </header><div class="post-status"><span><i class='bx bx-calendar'></i>
 <span>2024-02-29</span></span>
-<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-02-29-org-CSS.org">history</a></span></span></div><nav id="table-of-contents" role="doc-toc">
+<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-02-29-org-CSS.org">history</a></span></span><span><i class='bx bxs-hourglass'></i>378 字</span></div><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#Markups[fn:1]">1. Markups</a></li>
-<li><a href="#Lists">2. Lists</a>
+<li><a href="#Markups[fn:1]">Markups</a></li>
+<li><a href="#Lists">Lists</a>
 <ul>
-<li><a href="#Todo-List">2.1. Todo List</a>
+<li><a href="#Todo-List">Todo List</a>
 <ul>
-<li><a href="#First-todo">2.1.1. <span class="todo TODO">TODO</span> First todo</a></li>
-<li><a href="#First-Done-with-Date">2.1.2. <span class="done DONE">DONE</span> First Done with Date</a></li>
-<li><a href="#Scheduled">2.1.3. Scheduled</a></li>
-<li><a href="#Deadline">2.1.4. Deadline</a></li>
-<li><a href="#Date">2.1.5. Date</a></li>
+<li><a href="#First-todo"><span class="todo TODO">TODO</span> First todo</a></li>
+<li><a href="#First-Done-with-Date"><span class="done DONE">DONE</span> First Done with Date</a></li>
+<li><a href="#Scheduled">Scheduled</a></li>
+<li><a href="#Deadline">Deadline</a></li>
+<li><a href="#Date">Date</a></li>
 </ul>
 </li>
-<li><a href="#Simple-list">2.2. Simple list</a></li>
-<li><a href="#Sorted-List">2.3. Sorted List</a></li>
-<li><a href="#Checkbox[fn:2]">2.4. Checkbox</a></li>
-<li><a href="#Definition-list">2.5. Definition list</a></li>
+<li><a href="#Simple-list">Simple list</a></li>
+<li><a href="#Sorted-List">Sorted List</a></li>
+<li><a href="#Checkbox[fn:2]">Checkbox</a></li>
+<li><a href="#Definition-list">Definition list</a></li>
 </ul>
 </li>
-<li><a href="#Images">3. Images</a></li>
-<li><a href="#Math">4. Math</a></li>
-<li><a href="#Heading-with-tags">5. Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></a></li>
-<li><a href="#H1">6. H1</a>
+<li><a href="#Images">Images</a></li>
+<li><a href="#Math">Math</a></li>
+<li><a href="#Heading-with-tags">Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></a></li>
+<li><a href="#H1">H1</a>
 <ul>
-<li><a href="#H2">6.1. H2</a>
+<li><a href="#H2">H2</a>
 <ul>
-<li><a href="#H3">6.1.1. H3</a>
+<li><a href="#H3">H3</a>
 <ul>
-<li><a href="#H4">6.1.1.1. H4</a></li>
+<li><a href="#H4">H4</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#Table">7. Table</a></li>
-<li><a href="#Blocks">8. Blocks</a>
+<li><a href="#Table">Table</a></li>
+<li><a href="#Blocks">Blocks</a>
 <ul>
-<li><a href="#Center">8.1. Center</a></li>
-<li><a href="#Comment">8.2. Comment</a></li>
-<li><a href="#Example">8.3. Example</a></li>
-<li><a href="#Quote">8.4. Quote</a></li>
-<li><a href="#Verse">8.5. Verse</a></li>
-<li><a href="#Source-Blocks">8.6. Source Blocks</a>
+<li><a href="#Center">Center</a></li>
+<li><a href="#Comment">Comment</a></li>
+<li><a href="#Example">Example</a></li>
+<li><a href="#Quote">Quote</a></li>
+<li><a href="#Verse">Verse</a></li>
+<li><a href="#Source-Blocks">Source Blocks</a>
 <ul>
-<li><a href="#Elisp">8.6.1. Elisp</a></li>
+<li><a href="#Elisp">Elisp</a></li>
 </ul>
 </li>
 </ul>
@@ -150,7 +150,7 @@
 </nav>
 
 <div id="outline-container-Markups[fn:1]" class="outline-2">
-<h2 id="Markups[fn:1]"><span class="section-number-2">1.</span> Markups<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"></h2>
+<h2 id="Markups[fn:1]">Markups<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"></h2>
 <div class="outline-text-2" id="text-Markups[fn:1]">
 <p>
 <b>bold</b>
@@ -164,38 +164,38 @@
 </div>
 </div>
 <div id="outline-container-Lists" class="outline-2">
-<h2 id="Lists"><span class="section-number-2">2.</span> Lists</h2>
+<h2 id="Lists">Lists</h2>
 <div class="outline-text-2" id="text-Lists">
 </div>
 <div id="outline-container-Todo-List" class="outline-3">
-<h3 id="Todo-List"><span class="section-number-3">2.1.</span> Todo List</h3>
+<h3 id="Todo-List">Todo List</h3>
 <div class="outline-text-3" id="text-Todo-List">
 </div>
 <div id="outline-container-First-todo" class="outline-4">
-<h4 id="First-todo"><span class="section-number-4">2.1.1.</span> <span class="todo TODO">TODO</span> First todo</h4>
+<h4 id="First-todo"><span class="todo TODO">TODO</span> First todo</h4>
 <div class="outline-text-4" id="text-First-todo">
 </div>
 </div>
 <div id="outline-container-First-Done-with-Date" class="outline-4">
-<h4 id="First-Done-with-Date"><span class="section-number-4">2.1.2.</span> <span class="done DONE">DONE</span> First Done with Date</h4>
+<h4 id="First-Done-with-Date"><span class="done DONE">DONE</span> First Done with Date</h4>
 <div class="outline-text-4" id="text-First-Done-with-Date">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2021-02-18 Thu 10:12]</span></span></p>
 </div>
 </div>
 <div id="outline-container-Scheduled" class="outline-4">
-<h4 id="Scheduled"><span class="section-number-4">2.1.3.</span> Scheduled</h4>
+<h4 id="Scheduled">Scheduled</h4>
 <div class="outline-text-4" id="text-Scheduled">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
 </div>
 </div>
 <div id="outline-container-Deadline" class="outline-4">
-<h4 id="Deadline"><span class="section-number-4">2.1.4.</span> Deadline</h4>
+<h4 id="Deadline">Deadline</h4>
 <div class="outline-text-4" id="text-Deadline">
 <p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
 </div>
 </div>
 <div id="outline-container-Date" class="outline-4">
-<h4 id="Date"><span class="section-number-4">2.1.5.</span> Date</h4>
+<h4 id="Date">Date</h4>
 <div class="outline-text-4" id="text-Date">
 <p>
 <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span>
@@ -205,7 +205,7 @@
 </div>
 
 <div id="outline-container-Simple-list" class="outline-3">
-<h3 id="Simple-list"><span class="section-number-3">2.2.</span> Simple list</h3>
+<h3 id="Simple-list">Simple list</h3>
 <div class="outline-text-3" id="text-Simple-list">
 <ul class="org-ul">
 <li>List item</li>
@@ -216,7 +216,7 @@
 </div>
 
 <div id="outline-container-Sorted-List" class="outline-3">
-<h3 id="Sorted-List"><span class="section-number-3">2.3.</span> Sorted List</h3>
+<h3 id="Sorted-List">Sorted List</h3>
 <div class="outline-text-3" id="text-Sorted-List">
 <ol class="org-ol">
 <li>List item</li>
@@ -227,7 +227,7 @@
 </div>
 
 <div id="outline-container-Checkbox[fn:2]" class="outline-3">
-<h3 id="Checkbox[fn:2]"><span class="section-number-3">2.4.</span> Checkbox<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"></h3>
+<h3 id="Checkbox[fn:2]">Checkbox<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"></h3>
 <div class="outline-text-3" id="text-Checkbox[fn:2]">
 <ul class="org-ul">
 <li class="off"><input type='checkbox'
@@ -241,7 +241,7 @@ onclick="return false;"/> List item</li>
 </div>
 
 <div id="outline-container-Definition-list" class="outline-3">
-<h3 id="Definition-list"><span class="section-number-3">2.5.</span> Definition list</h3>
+<h3 id="Definition-list">Definition list</h3>
 <div class="outline-text-3" id="text-Definition-list">
 <dl class="org-dl">
 <dt>Lorem ipsum</dt><dd>dolor sit amet, consectetur adipiscing elit.  Mauris laoreet
@@ -255,7 +255,7 @@ mattis nisl.  In sed nibh felis.  Cras quis convallis orci.</dd>
 </div>
 </div>
 <div id="outline-container-Images" class="outline-2">
-<h2 id="Images"><span class="section-number-2">3.</span> Images</h2>
+<h2 id="Images">Images</h2>
 <div class="outline-text-2" id="text-Images">
 
 <figure>
@@ -266,7 +266,7 @@ mattis nisl.  In sed nibh felis.  Cras quis convallis orci.</dd>
 </div>
 </div>
 <div id="outline-container-Math" class="outline-2">
-<h2 id="Math"><span class="section-number-2">4.</span> Math</h2>
+<h2 id="Math">Math</h2>
 <div class="outline-text-2" id="text-Math">
 \begin{align}
 \mathcal{F}(a) &= \frac{1}{2\pi i}\oint_\gamma \frac{f(z)}{z - a}\,dz\\
@@ -276,33 +276,33 @@ mattis nisl.  In sed nibh felis.  Cras quis convallis orci.</dd>
 </div>
 
 <div id="outline-container-Heading-with-tags" class="outline-2">
-<h2 id="Heading-with-tags"><span class="section-number-2">5.</span> Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></h2>
+<h2 id="Heading-with-tags">Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></h2>
 <div class="outline-text-2" id="text-Heading-with-tags">
 </div>
 </div>
 <div id="outline-container-H1" class="outline-2">
-<h2 id="H1"><span class="section-number-2">6.</span> H1</h2>
+<h2 id="H1">H1</h2>
 <div class="outline-text-2" id="text-H1">
 <p>
 H1 Text
 </p>
 </div>
 <div id="outline-container-H2" class="outline-3">
-<h3 id="H2"><span class="section-number-3">6.1.</span> H2</h3>
+<h3 id="H2">H2</h3>
 <div class="outline-text-3" id="text-H2">
 <p>
 H2 Text
 </p>
 </div>
 <div id="outline-container-H3" class="outline-4">
-<h4 id="H3"><span class="section-number-4">6.1.1.</span> H3</h4>
+<h4 id="H3">H3</h4>
 <div class="outline-text-4" id="text-H3">
 <p>
 H3 Text
 </p>
 </div>
 <div id="outline-container-H4" class="outline-5">
-<h5 id="H4"><span class="section-number-5">6.1.1.1.</span> H4</h5>
+<h5 id="H4">H4</h5>
 <div class="outline-text-5" id="text-H4">
 <p>
 H4 Text
@@ -313,7 +313,7 @@ H4 Text
 </div>
 </div>
 <div id="outline-container-Table" class="outline-2">
-<h2 id="Table"><span class="section-number-2">7.</span> Table</h2>
+<h2 id="Table">Table</h2>
 <div class="outline-text-2" id="text-Table">
 <table>
 <caption class="t-above"><span class="table-number">Table 1:</span> test</caption>
@@ -391,11 +391,11 @@ H4 Text
 </div>
 </div>
 <div id="outline-container-Blocks" class="outline-2">
-<h2 id="Blocks"><span class="section-number-2">8.</span> Blocks</h2>
+<h2 id="Blocks">Blocks</h2>
 <div class="outline-text-2" id="text-Blocks">
 </div>
 <div id="outline-container-Center" class="outline-3">
-<h3 id="Center"><span class="section-number-3">8.1.</span> Center</h3>
+<h3 id="Center">Center</h3>
 <div class="outline-text-3" id="text-Center">
 <div class="org-center">
 <p>
@@ -407,7 +407,7 @@ a center block. This is a center block. This is a center block.
 </div>
 
 <div id="outline-container-Comment" class="outline-3">
-<h3 id="Comment"><span class="section-number-3">8.2.</span> Comment</h3>
+<h3 id="Comment">Comment</h3>
 <div class="outline-text-3" id="text-Comment">
 <p>
 Comment blocks are not exported.
@@ -416,7 +416,7 @@ Comment blocks are not exported.
 </div>
 
 <div id="outline-container-Example" class="outline-3">
-<h3 id="Example"><span class="section-number-3">8.3.</span> Example</h3>
+<h3 id="Example">Example</h3>
 <div class="outline-text-3" id="text-Example">
 <pre class="example">
 This is an example block
@@ -425,7 +425,7 @@ This is an example block
 </div>
 
 <div id="outline-container-Quote" class="outline-3">
-<h3 id="Quote"><span class="section-number-3">8.4.</span> Quote</h3>
+<h3 id="Quote">Quote</h3>
 <div class="outline-text-3" id="text-Quote">
 <blockquote>
 <p>
@@ -442,7 +442,7 @@ You read and you’re pierced.
 </div>
 
 <div id="outline-container-Verse" class="outline-3">
-<h3 id="Verse"><span class="section-number-3">8.5.</span> Verse</h3>
+<h3 id="Verse">Verse</h3>
 <div class="outline-text-3" id="text-Verse">
 <p class="verse">
 Let me not to the marriage of true minds<br>
@@ -468,11 +468,11 @@ I never writ, nor no man ever loved.x<br>
 
 
 <div id="outline-container-Source-Blocks" class="outline-3">
-<h3 id="Source-Blocks"><span class="section-number-3">8.6.</span> Source Blocks</h3>
+<h3 id="Source-Blocks">Source Blocks</h3>
 <div class="outline-text-3" id="text-Source-Blocks">
 </div>
 <div id="outline-container-Elisp" class="outline-4">
-<h4 id="Elisp"><span class="section-number-4">8.6.1.</span> Elisp</h4>
+<h4 id="Elisp">Elisp</h4>
 <div class="outline-text-4" id="text-Elisp">
 <div class="multilang">
 <div class="org-src-container">

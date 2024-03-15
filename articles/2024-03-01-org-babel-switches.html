@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-09 -->
+<!-- 2024-03-15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>浅析 org babel switches</title>
@@ -16,14 +16,14 @@
 <style>
 .content:has([value="all"]:checked) li{display: list-item;}
 
-.content:has([value="emacs"]:checked)
- li:has([data-tags~="#emacs"]){display: list-item;}
-.content:has([value="org"]:checked)
- li:has([data-tags~="#org"]){display: list-item;}
 .content:has([value="CSS"]:checked)
  li:has([data-tags~="#CSS"]){display: list-item;}
 .content:has([value="blog"]:checked)
  li:has([data-tags~="#blog"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
 </style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
@@ -60,13 +60,13 @@
 <h1 class="title">浅析 org babel switches</h1>
 </header><div class="post-status"><span><i class='bx bx-calendar'></i>
 <span>2024-03-01</span></span>
-<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-01-org-babel-switches.org">history</a></span></span></div><nav id="table-of-contents" role="doc-toc">
+<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-01-org-babel-switches.org">history</a></span></span><span><i class='bx bxs-hourglass'></i>1183 字</span></div><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#什么是-=switches=-?">1. 什么是 <code>switches</code> ?</a></li>
-<li><a href="#使用分享">2. 使用分享</a></li>
-<li><a href="#总结">3. 总结</a></li>
+<li><a href="#什么是-=switches=-?">什么是 <code>switches</code> ?</a></li>
+<li><a href="#使用分享">使用分享</a></li>
+<li><a href="#总结">总结</a></li>
 </ul>
 </div>
 </nav>
@@ -78,7 +78,7 @@
 
 </div>
 <div id="outline-container-什么是-=switches=-?" class="outline-2">
-<h2 id="什么是-=switches=-?"><span class="section-number-2">1.</span> 什么是 <code>switches</code> ?</h2>
+<h2 id="什么是-=switches=-?">什么是 <code>switches</code> ?</h2>
 <div class="outline-text-2" id="text-什么是-=switches=-?">
 <p>
 <code>switches</code> 是 <code>#+BEGIN_SRC</code> <sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"> 一栏上的可选参数，其具体的位置如下：
@@ -103,7 +103,7 @@
 </div>
 </div>
 <div id="outline-container-使用分享" class="outline-2">
-<h2 id="使用分享"><span class="section-number-2">2.</span> 使用分享</h2>
+<h2 id="使用分享">使用分享</h2>
 <div class="outline-text-2" id="text-使用分享">
 <p>
 只是从纸面上讨论 <code>switches</code> 是非常枯燥的，同时也不容易让人明白其具体作用。所以接下来让我们实际体验一下 <code>switches</code> 的使用。我们以 <code>org-element-src-block-parser</code> 为例，分析一下 <code>switches</code> 是如何被解析的：
@@ -387,7 +387,7 @@ Org-mode 帮我们完成的，在 org 源文件中，代码引用的格式是一
 </div>
 </div>
 <div id="outline-container-总结" class="outline-2">
-<h2 id="总结"><span class="section-number-2">3.</span> 总结</h2>
+<h2 id="总结">总结</h2>
 <div class="outline-text-2" id="text-总结">
 <p>
 如果要写技术博客（笔记）的话，代码块是非常重要的一个环节，而 Org-mode 在这两方面都有极其优秀的支持。本文所介绍的内容仅仅是九牛一毛，只希望读者在阅读完毕后能够对 Org-mode 代码块中 <code>switches</code> 有更进一步的了解，感谢阅读！

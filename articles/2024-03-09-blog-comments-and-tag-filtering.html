@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-09 -->
+<!-- 2024-03-15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>给博客添加评论和标签过滤功能</title>
@@ -16,14 +16,14 @@
 <style>
 .content:has([value="all"]:checked) li{display: list-item;}
 
-.content:has([value="emacs"]:checked)
- li:has([data-tags~="#emacs"]){display: list-item;}
-.content:has([value="org"]:checked)
- li:has([data-tags~="#org"]){display: list-item;}
 .content:has([value="CSS"]:checked)
  li:has([data-tags~="#CSS"]){display: list-item;}
 .content:has([value="blog"]:checked)
  li:has([data-tags~="#blog"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
 </style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
@@ -60,20 +60,20 @@
 <h1 class="title">给博客添加评论和标签过滤功能</h1>
 </header><div class="post-status"><span><i class='bx bx-calendar'></i>
 <span>2024-03-09</span></span>
-<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-09-blog-comments-and-tag-filtering.org">history</a></span></span></div><nav id="table-of-contents" role="doc-toc">
+<span><i class='bx bx-edit'></i><span>2024-03-09</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-09-blog-comments-and-tag-filtering.org">history</a></span></span><span><i class='bx bxs-hourglass'></i>1049 字</span></div><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#评论功能">1. 评论功能</a>
+<li><a href="#评论功能">评论功能</a>
 <ul>
-<li><a href="#为什么选择-giscus">1.1. 为什么选择 giscus</a></li>
-<li><a href="#引入-giscus">1.2. 引入 giscus</a></li>
+<li><a href="#为什么选择-giscus">为什么选择 giscus</a></li>
+<li><a href="#引入-giscus">引入 giscus</a></li>
 </ul>
 </li>
-<li><a href="#标签过滤功能">2. 标签过滤功能</a>
+<li><a href="#标签过滤功能">标签过滤功能</a>
 <ul>
-<li><a href="#实现原理">2.1. 实现原理</a></li>
-<li><a href="#实现">2.2. 实现</a></li>
+<li><a href="#实现原理">实现原理</a></li>
+<li><a href="#实现">实现</a></li>
 </ul>
 </li>
 </ul>
@@ -87,14 +87,14 @@
 </div>
 
 <div id="outline-container-评论功能" class="outline-2">
-<h2 id="评论功能"><span class="section-number-2">1.</span> 评论功能</h2>
+<h2 id="评论功能">评论功能</h2>
 <div class="outline-text-2" id="text-评论功能">
 <p>
 本博客使用 <a href="https://giscus.app/">giscus</a> 作为评论系统。
 </p>
 </div>
 <div id="outline-container-为什么选择-giscus" class="outline-3">
-<h3 id="为什么选择-giscus"><span class="section-number-3">1.1.</span> 为什么选择 giscus</h3>
+<h3 id="为什么选择-giscus">为什么选择 giscus</h3>
 <div class="outline-text-3" id="text-为什么选择-giscus">
 <p>
 <a href="https://giscus.app/">Giscus</a> 是利用 GitHub Discussions 实现的评论系统，可以让访客借助 GitHub 在我们的网站上留下评论和表情。根据官网，giscus 的特性有很多：
@@ -121,7 +121,7 @@ giscus 的特点如下：
 </div>
 </div>
 <div id="outline-container-引入-giscus" class="outline-3">
-<h3 id="引入-giscus"><span class="section-number-3">1.2.</span> 引入 giscus</h3>
+<h3 id="引入-giscus">引入 giscus</h3>
 <div class="outline-text-3" id="text-引入-giscus">
 <p>
 配置其实很简单，在<a href="https://giscus.app/">官网</a>上根据说明用鼠标点点就好了，非常人性化。最终我们会得到一段
@@ -160,11 +160,11 @@ HTML 配置：
 </div>
 
 <div id="outline-container-标签过滤功能" class="outline-2">
-<h2 id="标签过滤功能"><span class="section-number-2">2.</span> 标签过滤功能</h2>
+<h2 id="标签过滤功能">标签过滤功能</h2>
 <div class="outline-text-2" id="text-标签过滤功能">
 </div>
 <div id="outline-container-实现原理" class="outline-3">
-<h3 id="实现原理"><span class="section-number-3">2.1.</span> 实现原理</h3>
+<h3 id="实现原理">实现原理</h3>
 <div class="outline-text-3" id="text-实现原理">
 <p>
 ox-publish 对生成文章 tag/categories 页面并没有原生支持，自己实现起来比较麻烦，所以我一开始是不打算做的。但是最近在逛 CodePen 的时候看到了一个 <a href="https://codepen.io/jlengstorf/pen/YzMwNrp">2 cool ways to
@@ -229,7 +229,7 @@ use :has()</a> ，突然想到应该可以利用 <code>:has()</code> 来实现�
 </div>
 
 <div id="outline-container-实现" class="outline-3">
-<h3 id="实现"><span class="section-number-3">2.2.</span> 实现</h3>
+<h3 id="实现">实现</h3>
 <div class="outline-text-3" id="text-实现">
 <p>
 知道了原理后，剩下的问题就是如何添加对应的 HTML/CSS 代码，其中的关键就是如何获得文章标签。因为文章的标签都是动态添加的，在导出时我们一般无法直接得出现有的标签列表。不过好在 ox-publish 对 sitemap 的处理方式为我们提供了机会：ox-publish 是先利用由 <code>:sitemap-format-entry</code> 指定的函数来收集所有的文章标题，然后用
