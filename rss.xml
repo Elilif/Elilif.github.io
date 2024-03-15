@@ -14,8 +14,8 @@
   <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sat, 09 Mar 2024 20:12:06 +0800</pubDate>
-  <lastBuildDate>Sat, 09 Mar 2024 20:12:06 +0800</lastBuildDate>
+  <pubDate>Fri, 15 Mar 2024 23:30:12 +0800</pubDate>
+  <lastBuildDate>Fri, 15 Mar 2024 23:30:12 +0800</lastBuildDate>
   <generator>Emacs 29.2 Org-mode 9.6.15</generator>
   <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
   <image>
@@ -25,6 +25,22 @@
   </image>
 
 
+  <item>
+    <title>org syntax 与 org-mode 字数统计</title>
+    <link>https://elilif.github.io/articles/2024-03-12-org-syntax-and-word-count.html</link>
+    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <guid isPermaLink="false">https://elilif.github.io/articles/2024-03-12-org-syntax-and-word-count.html</guid>
+    <pubDate>Fri, 15 Mar 2024 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    本文简要介绍了 org 语法的组成和架构，并利用其 API 初步实现了一个比 <code>count-words</code>更精确的 org-mode 字数统计插件。
+    </p>
+
+    <p>
+    <a href="https://elilif.github.io/articles/2024-03-12-org-syntax-and-word-count.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
   <item>
     <title>给博客添加评论和标签过滤功能</title>
     <link>https://elilif.github.io/articles/2024-03-09-blog-comments-and-tag-filtering.html</link>
@@ -81,14 +97,14 @@
     本文简要介绍了如何使用 Emacs 来生成静态博客网站。主要分为三个模块：
     </p>
     <div class="outline-3">
-    <h3><span class="section-number-3">4.1.</span> 博客生成</h3>
+    <h3>博客生成</h3>
     </div>
     <div class="outline-3">
-    <h3><span class="section-number-3">4.2.</span> RSS 生成</h3>
+    <h3>RSS 生成</h3>
     </div>
     <div class="outline-3">
-    <h3><span class="section-number-3">4.3.</span> 文学编程网页导出</h3>
-    <div class="outline-text-3" id="text-4-3">
+    <h3>文学编程网页导出</h3>
+    <div class="outline-text-3">
     <p>
     <a href="https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html">Read More</a>
     </p>
