@@ -55,7 +55,7 @@ sections 有如下两类：
 1. normal sections
    一般来说，位于两个标题之间的内容都属于同一个 section
 2. the zeroth section
-   这是一个特殊的 section ，位于第一个标题前的所有元素都属于 zeroth section 。
+   这是一个特殊的 section ，位于第一个标题前的所有元素都属于 the zeroth section 。
 **** greater elements
 greater elements 指那些能包含 less elements 或 greater elements 的元素，常见的
 greater elements 如下：
@@ -79,7 +79,8 @@ Superscript、Table Cells、Timestamps、Text Markup、Plain Text
 :PROPERTIES:
 :CUSTOM_ID: org-synctax-api
 :END:
-=org-element.el= 用于解析 org 语法，提供了一系列有用的函数。下面列举几个常用的函数：
+=org-element.el= 用于解析 org 语法，提供了一系列有用的函数让我们处理 org syntax 对
+象。下面列举几个常用的函数：
 - org-element-parse-buffer :: Recursively parse the buffer and return structure.
 - org-element-at-point :: Determine closest element around point.
 - org-element-context :: Return smallest element or object around point.
@@ -185,7 +186,7 @@ API 了。下面说一下大致的实现思路[fn:7]：
    时，只统计其=description=部分。
 
 
-这样我们就可以比 =count-words= 更精确得统计字数了， 具体实现可以看
+这样我们就可以比 =count-words= 更精确地统计字数了， 具体实现可以看
 [[https://github.com/Elilif/org-count-words][Elilif/org-count-words: Count word in org-mode.]]
 
 * Footnotes

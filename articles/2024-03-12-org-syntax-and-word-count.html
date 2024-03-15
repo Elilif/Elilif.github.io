@@ -13,6 +13,18 @@
                   <script src="/scripts/script.js"></script>
                   <script src="/scripts/toc.js"></script>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="CSS"]:checked)
+ li:has([data-tags~="#CSS"]){display: list-item;}
+.content:has([value="blog"]:checked)
+ li:has([data-tags~="#blog"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
+</style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
      function CodeHighlightOn(elem, id)
@@ -48,7 +60,7 @@
 <h1 class="title">org syntax 与 org-mode 字数统计</h1>
 </header><div class="post-status"><span><i class='bx bx-calendar'></i>
 <span>2024-03-15</span></span>
-<span><i class='bx bx-edit'></i><span>2024-03-15</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-12-org-syntax-and-word-count.org">history</a></span></span><span><i class='bx bxs-hourglass'></i>1380 字</span></div><nav id="table-of-contents" role="doc-toc">
+<span><i class='bx bx-edit'></i><span>2024-03-15</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-12-org-syntax-and-word-count.org">history</a></span></span><span><i class='bx bxs-hourglass'></i>1390 字</span></div><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
@@ -142,7 +154,7 @@ sections 有如下两类：
 <li>normal sections
 一般来说，位于两个标题之间的内容都属于同一个 section</li>
 <li>the zeroth section
-这是一个特殊的 section ，位于第一个标题前的所有元素都属于 zeroth section 。</li>
+这是一个特殊的 section ，位于第一个标题前的所有元素都属于 the zeroth section 。</li>
 </ol>
 </div>
 </div>
@@ -194,7 +206,7 @@ Superscript、Table Cells、Timestamps、Text Markup、Plain Text
 <h3 id="org-synctax-api">org syntax API</h3>
 <div class="outline-text-3" id="text-org-synctax-api">
 <p>
-<code>org-element.el</code> 用于解析 org 语法，提供了一系列有用的函数。下面列举几个常用的函数：
+<code>org-element.el</code> 用于解析 org 语法，提供了一系列有用的函数让我们处理 org syntax 对象。下面列举几个常用的函数：
 </p>
 <dl class="org-dl">
 <dt>org-element-parse-buffer</dt><dd>Recursively parse the buffer and return structure.</dd>
@@ -329,7 +341,7 @@ API 了。下面说一下大致的实现思路<sup><label for="fnr.7" class="foo
 
 
 <p>
-这样我们就可以比 <code>count-words</code> 更精确得统计字数了， 具体实现可以看
+这样我们就可以比 <code>count-words</code> 更精确地统计字数了， 具体实现可以看
 <a href="https://github.com/Elilif/org-count-words">Elilif/org-count-words: Count word in org-mode.</a>
 </p>
 </div>
