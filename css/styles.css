@@ -24,6 +24,11 @@ pre {
   position: relative;
 }
 
+h1, h2, h3, h4, h5 {
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+}
+
 h1 {
   font-size: 1.5em;
 }
@@ -563,7 +568,7 @@ code {
 .post-status {
   color: gray;
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 
   a {
     color: inherit;
