@@ -7,22 +7,23 @@
 <span>All</span>
 </label>
 <label class="category">
-<input type="radio" name="tag" value="emacs"/>
-<span>emacs</span>
-</label>
-<label class="category">
-<input type="radio" name="tag" value="org"/>
-<span>org</span>
-</label>
-<label class="category">
 <input type="radio" name="tag" value="CSS"/>
 <span>CSS</span>
 </label>
 <label class="category">
 <input type="radio" name="tag" value="blog"/>
 <span>blog</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="emacs"/>
+<span>emacs</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="org"/>
+<span>org</span>
 </label></section>
 #+END_EXPORT
+- {{{timestamp(2024-03-15)}}}   [[file:articles/2024-03-12-org-syntax-and-word-count.org][org syntax 与 org-mode 字数统计]] {{{tags(#org #emacs)}}}
 - {{{timestamp(2024-03-09)}}}   [[file:articles/2024-03-09-blog-comments-and-tag-filtering.org][给博客添加评论和标签过滤功能]] {{{tags(#blog #CSS)}}}
 - {{{timestamp(2024-03-01)}}}   [[file:articles/2024-03-01-org-babel-switches.org][浅析 org babel switches]] {{{tags(#org #blog)}}}
 - {{{timestamp(2024-02-29)}}}   [[file:articles/2024-02-29-org-CSS.org][CSS for Org-exported HTML(WIP)]] {{{tags(#CSS #blog)}}}

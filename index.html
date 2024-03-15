@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-09 -->
+<!-- 2024-03-15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Eli's Blog</title>
@@ -16,14 +16,14 @@
 <style>
 .content:has([value="all"]:checked) li{display: list-item;}
 
-.content:has([value="emacs"]:checked)
- li:has([data-tags~="#emacs"]){display: list-item;}
-.content:has([value="org"]:checked)
- li:has([data-tags~="#org"]){display: list-item;}
 .content:has([value="CSS"]:checked)
  li:has([data-tags~="#CSS"]){display: list-item;}
 .content:has([value="blog"]:checked)
  li:has([data-tags~="#blog"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
 </style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
@@ -64,22 +64,23 @@
 <span>All</span>
 </label>
 <label class="category">
-<input type="radio" name="tag" value="emacs"/>
-<span>emacs</span>
-</label>
-<label class="category">
-<input type="radio" name="tag" value="org"/>
-<span>org</span>
-</label>
-<label class="category">
 <input type="radio" name="tag" value="CSS"/>
 <span>CSS</span>
 </label>
 <label class="category">
 <input type="radio" name="tag" value="blog"/>
 <span>blog</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="emacs"/>
+<span>emacs</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="org"/>
+<span>org</span>
 </label></section>
 <ul class="org-ul">
+<li><span class="timestamp">[2024-03-15]</span>   <a href="articles/2024-03-12-org-syntax-and-word-count.html">org syntax 与 org-mode 字数统计</a> <span class="tags" data-tags="#org #emacs"></span></li>
 <li><span class="timestamp">[2024-03-09]</span>   <a href="articles/2024-03-09-blog-comments-and-tag-filtering.html">给博客添加评论和标签过滤功能</a> <span class="tags" data-tags="#blog #CSS"></span></li>
 <li><span class="timestamp">[2024-03-01]</span>   <a href="articles/2024-03-01-org-babel-switches.html">浅析 org babel switches</a> <span class="tags" data-tags="#org #blog"></span></li>
 <li><span class="timestamp">[2024-02-29]</span>   <a href="articles/2024-02-29-org-CSS.html">CSS for Org-exported HTML(WIP)</a> <span class="tags" data-tags="#CSS #blog"></span></li>
@@ -93,7 +94,7 @@
   <span class="author">Author: Eli Qian</span>
   <span class="author">Email: <a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a></span>
   <span class="date">Create Date: 2023-10-10</span>
-  <span class="date">Last modified: 2024-03-09</span>
+  <span class="date">Last modified: 2024-03-15</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
 </div>
 </div>

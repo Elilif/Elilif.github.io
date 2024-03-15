@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-03-15 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>org syntax 与 org-mode 字数统计</title>
+<meta name="author" content="Eli Qian" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+  <a href="/index.html" class="button">Home</a>
+  <a href="/config.html" class="button">Literate Emacs Config</a>
+  <a href="/rss.xml" class="button">RSS</a>
+</nav>
+<hr>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">org syntax 与 org-mode 字数统计</h1>
+</header><div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2024-03-15</span></span>
+<span><i class='bx bx-edit'></i><span>2024-03-15</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-12-org-syntax-and-word-count.org">history</a></span></span><span><i class='bx bxs-hourglass'></i>1380 字</span></div><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org-synctax-intro">org syntax 简介</a>
+<ul>
+<li><a href="#org-syntax-的组成">org syntax 的组成</a>
+<ul>
+<li><a href="#elements">elements</a>
+<ul>
+<li><a href="#headings">headings</a></li>
+<li><a href="#sections">sections</a></li>
+<li><a href="#greater-elements">greater elements</a></li>
+<li><a href="#lesser-elements">lesser elements</a></li>
+</ul>
+</li>
+<li><a href="#objects">objects</a></li>
+</ul>
+</li>
+<li><a href="#org-synctax-api">org syntax API</a></li>
+</ul>
+</li>
+<li><a href="#字数统计">字数统计</a>
+<ul>
+<li><a href="#中文字数统计">中文字数统计</a></li>
+<li><a href="#org-mode-中的字数统计">org-mode 中的字数统计</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div class="abstract">
+<p>
+本文简要介绍了 org 语法的组成和架构，并利用其 API 初步实现了一个比 <code>count-words</code>更精确的 org-mode 字数统计插件。
+</p>
+
+</div>
+
+
+<div id="outline-container-org-synctax-intro" class="outline-2">
+<h2 id="org-synctax-intro">org syntax 简介<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"></h2>
+<div class="outline-text-2" id="text-org-synctax-intro">
+<p>
+Org syntax , 顾名思义，即 Org 的语法。不像 Markdown 那样有各种各样的方言，Org 的语法只有一个，有着良好的一致性。
+</p>
+</div>
+
+<div id="outline-container-org-syntax-的组成" class="outline-3">
+<h3 id="org-syntax-的组成">org syntax 的组成</h3>
+<div class="outline-text-3" id="text-org-syntax-的组成">
+<p>
+org 组成部件按作用域（scope）大小可以分成 <code>elements</code> 和 <code>objects</code> 两种，以段落（paragraph）为基准，作用域比段落大（或者相同）的是 <code>elements</code> ，反之则是<code>objects</code>
+。通俗地讲就是在日常写作中，能在段落里用的标记（如 <code>*</code>、<code>=</code> 等记号）就是<code>object</code> ，必须要新起一行才能使用的（如代码块等）就是 <code>element</code> 。
+</p>
+</div>
+
+<div id="outline-container-elements" class="outline-4">
+<h4 id="elements">elements</h4>
+<div class="outline-text-4" id="text-elements">
+<p>
+变量 <code>org-element-all-elements</code> 提供了完整的 <code>elements</code> 列表，其中的元素按作用范围可分为四个层级，从大到小分别是 ：<code>headings</code>、<code>sections</code>、<code>greater elements</code> 和
+<code>less-elements</code> ，它们的关系如图 <a href="#fig-eltstraf">1</a> 所示<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox">：
+</p>
+
+<div class="multilang">
+
+</div>
+
+
+
+<figure id="fig-eltstraf">
+<img src="../static/post-img/2024-03-12-org-syntax-and-word-count/element-strafication.svg" alt="element-strafication.svg" class="org-svg">
+
+<figcaption><span class="figure-number">Figure 1: </span>element-strafication</figcaption>
+</figure>
+</div>
+<div id="outline-container-headings" class="outline-5">
+<h5 id="headings">headings</h5>
+<div class="outline-text-5" id="text-headings">
+<p>
+即 org 中的标题及其内容。
+</p>
+</div>
+</div>
+<div id="outline-container-sections" class="outline-5">
+<h5 id="sections">sections</h5>
+<div class="outline-text-5" id="text-sections">
+<p>
+sections 有如下两类：
+</p>
+<ol class="org-ol">
+<li>normal sections
+一般来说，位于两个标题之间的内容都属于同一个 section</li>
+<li>the zeroth section
+这是一个特殊的 section ，位于第一个标题前的所有元素都属于 zeroth section 。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-greater-elements" class="outline-5">
+<h5 id="greater-elements">greater elements</h5>
+<div class="outline-text-5" id="text-greater-elements">
+<p>
+greater elements 指那些能包含 less elements 或 greater elements 的元素，常见的
+greater elements 如下：
+</p>
+
+<p>
+Greater Blocks、Drawers and Property Drawers、Dynamic Blocks、Footnote
+Definitions、Inlinetasks、Items、Plain Lists、Property Drawers、Tables
+</p>
+</div>
+</div>
+<div id="outline-container-lesser-elements" class="outline-5">
+<h5 id="lesser-elements">lesser elements</h5>
+<div class="outline-text-5" id="text-lesser-elements">
+<p>
+lesser elements 是最小的元素，常见的 lesser elements 如下：
+</p>
+
+<p>
+Blocks 、Clock、Diary Sexp、Planning、Comments、Fixed Width Areas、Horizontal
+Rules、Keywords、LaTeX Environments、Node Properties、<b>Paragraphs</b>、Table Rows
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-objects" class="outline-4">
+<h4 id="objects">objects</h4>
+<div class="outline-text-4" id="text-objects">
+<p>
+大多数 <code>objects</code> 不能包含其他的 <code>objects</code> ，所以基本上可以认为是单独的一个元素。常见的 <code>objects</code> 如下<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">：
+</p>
+
+<p>
+Entities、LaTeX Fragments、Export Snippets、Footnote References、Citations、
+Citation references、Inline Babel Calls、Inline Source Blocks、Line Breaks、
+Links、Macros、Targets and Radio Targets、Statistics Cookies、Subscript and
+Superscript、Table Cells、Timestamps、Text Markup、Plain Text
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org-synctax-api" class="outline-3">
+<h3 id="org-synctax-api">org syntax API</h3>
+<div class="outline-text-3" id="text-org-synctax-api">
+<p>
+<code>org-element.el</code> 用于解析 org 语法，提供了一系列有用的函数。下面列举几个常用的函数：
+</p>
+<dl class="org-dl">
+<dt>org-element-parse-buffer</dt><dd>Recursively parse the buffer and return structure.</dd>
+<dt>org-element-at-point</dt><dd>Determine closest element around point.</dd>
+<dt>org-element-context</dt><dd>Return smallest element or object around point.</dd>
+<dt>org-element-map</dt><dd>Map a function on selected elements or objects.</dd>
+<dt>org-element-property</dt><dd>Extract the value from the PROPERTY of an ELEMENT.</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-字数统计" class="outline-2">
+<h2 id="字数统计">字数统计</h2>
+<div class="outline-text-2" id="text-字数统计">
+</div>
+<div id="outline-container-中文字数统计" class="outline-3">
+<h3 id="中文字数统计">中文字数统计</h3>
+<div class="outline-text-3" id="text-中文字数统计">
+<p>
+Emacs 自带的 <code>count-words</code> 是不适用于 CJK 字符的，它不知道 CJK 中的一个 <code>word</code> 是如何定义的，所以会像英文那样，把一段连续的 CJK 字符统计为一个单词 ，导致最终得出的结果误差非常大。因此我们首先需要明确一下 <code>word</code> 的概念：在字数统计这方面，我们采用和 Word(或 WPS) 一样的方式：即一个 CJK 字符和一个英文单词一样都是一个 <code>word</code> 。
+</p>
+
+<p>
+有了这个共识后我们来看一下 <code>count-words</code> 的代码：
+</p>
+
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="linenr"> 1: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">count-words</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>start<span class="org-whitespace-space"> </span>end<span class="org-whitespace-space"> </span><span class="org-type">&amp;optional</span><span class="org-whitespace-space"> </span>totals<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="linenr"> 2: </span><span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">interactive</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>list<span class="org-whitespace-space"> </span>nil<span class="org-whitespace-space"> </span>nil<span class="org-whitespace-space"> </span>current-prefix-arg<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="linenr"> 3: </span><span class="org-whitespace-space">  </span><span class="org-comment-delimiter">;;</span><span class="org-whitespace-space"> </span><span class="org-comment">When</span><span class="org-whitespace-space"> </span><span class="org-comment">called</span><span class="org-whitespace-space"> </span><span class="org-comment">from</span><span class="org-whitespace-space"> </span><span class="org-comment">Lisp,</span><span class="org-whitespace-space"> </span><span class="org-comment">return</span><span class="org-whitespace-space"> </span><span class="org-comment">the</span><span class="org-whitespace-space"> </span><span class="org-comment">data.</span>
+<span class="linenr"> 4: </span><span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>not<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>called-interactively-p<span class="org-whitespace-space"> </span>'any<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr"> 5: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">let</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>words<span class="org-whitespace-space"> </span>0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr"> 6: </span><span class="org-whitespace-space">            </span><span class="org-comment-delimiter">;;</span><span class="org-whitespace-space"> </span><span class="org-comment">Count</span><span class="org-whitespace-space"> </span><span class="org-comment">across</span><span class="org-whitespace-space"> </span><span class="org-comment">field</span><span class="org-whitespace-space"> </span><span class="org-comment">boundaries.</span><span class="org-whitespace-space"> </span><span class="org-comment">(Bug#41761)</span>
+<span class="linenr"> 7: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>inhibit-field-text-motion<span class="org-whitespace-space"> </span>t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr"> 8: </span><span class="org-whitespace-space">        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">save-excursion</span>
+<span class="linenr"> 9: </span><span class="org-whitespace-space">          </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">save-restriction</span>
+<span class="linenr">10: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>narrow-to-region<span class="org-whitespace-space"> </span>start<span class="org-whitespace-space"> </span>end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span class="linenr">11: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>goto-char<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>point-min<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span id="coderef-find-char" class="coderef-off"><span class="linenr">12: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">while</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>forward-word-strictly<span class="org-whitespace-space"> </span>1<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span></span>
+<span class="linenr">13: </span><span class="org-whitespace-space">              </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">setq</span><span class="org-whitespace-space"> </span>words<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>1+<span class="org-whitespace-space"> </span>words<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">14: </span><span class="org-whitespace-space">        </span>words<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr">15: </span><span class="org-whitespace-space">    </span><span class="org-comment-delimiter">;;</span><span class="org-whitespace-space"> </span><span class="org-comment">When</span><span class="org-whitespace-space"> </span><span class="org-comment">called</span><span class="org-whitespace-space"> </span><span class="org-comment">interactively,</span><span class="org-whitespace-space"> </span><span class="org-comment">message</span><span class="org-whitespace-space"> </span><span class="org-comment">the</span><span class="org-whitespace-space"> </span><span class="org-comment">data.</span>
+<span class="linenr">16: </span><span class="org-whitespace-space">    </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">let</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>totals<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">and</span><span class="org-whitespace-space"> </span>totals
+<span class="linenr">17: </span><span class="org-whitespace-space">                           </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span><span class="org-keyword">or</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>use-region-p<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span>
+<span class="linenr">18: </span><span class="org-whitespace-space">                               </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>buffer-narrowed-p<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
+<span class="linenr">19: </span><span class="org-whitespace-space">                      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">save-restriction</span>
+<span class="linenr">20: </span><span class="org-whitespace-space">                        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>widen<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>
+<span class="linenr">21: </span><span class="org-whitespace-space">                        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>count-words--format<span class="org-whitespace-space"> </span><span class="org-string">";</span><span class="org-whitespace-space"> </span><span class="org-string">buffer</span><span class="org-whitespace-space"> </span><span class="org-string">in</span><span class="org-whitespace-space"> </span><span class="org-string">total"</span>
+<span class="linenr">22: </span><span class="org-whitespace-space">                                             </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>point-min<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>point-max<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
+<span class="linenr">23: </span><span class="org-whitespace-space">                    </span><span class="org-string">""</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">24: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>use-region-p<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">25: </span><span class="org-whitespace-space">          </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"%s%s"</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>count-words--format
+<span class="linenr">26: </span><span class="org-whitespace-space">                           </span><span class="org-string">"Region"</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>region-beginning<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>region-end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span class="linenr">27: </span><span class="org-whitespace-space">                   </span>totals<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">28: </span><span class="org-whitespace-space">        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"%s%s"</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>count-words--buffer-format<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-whitespace-space"> </span>totals<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+
+</div>
+
+
+<p>
+很明显，这段代码的核心就是第 <a href="#coderef-find-char" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-find-char');" onmouseout="CodeHighlightOff(this, 'coderef-find-char');">12</a> 行，它是利用了 <code>forward-word-strictly</code> 来遍历整个 buffer ，此函数默认采用英文的分词方式。而 <code>forward-word-strictly</code> 又不受
+<code>find-word-boundary-function-table</code><sup><label for="fnr.4" class="footref">4</label></sup><input id="fnr.4" class="footref-toggle" type="checkbox"> 的影响，所以我们不能像 <code>subword-mode</code> 那样通过修改 <code>find-word-boundary-function-table</code> 来改变 <code>forward-word</code> 的行为<sup><label for="fnr.5" class="footref">5</label></sup><input id="fnr.5" class="footref-toggle" type="checkbox">。那么如何统计中文字数呢？最简单的方法就是直接把 <code>forward-word-strictly</code> 替换为我们自己的遍历函数：
+</p>
+
+<div class="multilang">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="linenr"> 1: </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">(</span></span><span class="org-keyword">defun</span><span class="org-whitespace-space"> </span><span class="org-function-name">eli/count-words</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span>start<span class="org-whitespace-space"> </span>end<span class="org-whitespace-space"> </span><span class="org-type">&amp;optional</span><span class="org-whitespace-space"> </span>totals<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="linenr"> 2: </span><span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">interactive</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>list<span class="org-whitespace-space"> </span>nil<span class="org-whitespace-space"> </span>nil<span class="org-whitespace-space"> </span>current-prefix-arg<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span>
+<span class="linenr"> 3: </span><span class="org-whitespace-space">  </span><span class="org-comment-delimiter">;;</span><span class="org-whitespace-space"> </span><span class="org-comment">When</span><span class="org-whitespace-space"> </span><span class="org-comment">called</span><span class="org-whitespace-space"> </span><span class="org-comment">from</span><span class="org-whitespace-space"> </span><span class="org-comment">Lisp,</span><span class="org-whitespace-space"> </span><span class="org-comment">return</span><span class="org-whitespace-space"> </span><span class="org-comment">the</span><span class="org-whitespace-space"> </span><span class="org-comment">data.</span>
+<span class="linenr"> 4: </span><span class="org-whitespace-space">  </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span>not<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span>called-interactively-p<span class="org-whitespace-space"> </span>'any<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr"> 5: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">let</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>words<span class="org-whitespace-space"> </span>0<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr"> 6: </span><span class="org-whitespace-space">            </span><span class="org-comment-delimiter">;;</span><span class="org-whitespace-space"> </span><span class="org-comment">Count</span><span class="org-whitespace-space"> </span><span class="org-comment">across</span><span class="org-whitespace-space"> </span><span class="org-comment">field</span><span class="org-whitespace-space"> </span><span class="org-comment">boundaries.</span><span class="org-whitespace-space"> </span><span class="org-comment">(Bug#41761)</span>
+<span class="linenr"> 7: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>inhibit-field-text-motion<span class="org-whitespace-space"> </span>t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr"> 8: </span><span class="org-whitespace-space">        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">save-excursion</span>
+<span class="linenr"> 9: </span><span class="org-whitespace-space">          </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span><span class="org-keyword">save-restriction</span>
+<span class="linenr">10: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>narrow-to-region<span class="org-whitespace-space"> </span>start<span class="org-whitespace-space"> </span>end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span class="linenr">11: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>goto-char<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>point-min<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span id="coderef-new-func" class="coderef-off"><span class="linenr">12: </span><span class="org-whitespace-space">            </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">while</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>re-search-forward</span>
+<span class="linenr">13: </span><span class="org-whitespace-space">                    </span><span class="org-string">"\\cc</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">[A-Za-z0-9][A-Za-z0-9[:punct:]]*"</span><span class="org-whitespace-space"> </span>end<span class="org-whitespace-space"> </span>t<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
+<span class="linenr">14: </span><span class="org-whitespace-space">              </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">setq</span><span class="org-whitespace-space"> </span>words<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>1+<span class="org-whitespace-space"> </span>words<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">15: </span><span class="org-whitespace-space">        </span>words<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span>
+<span class="linenr">16: </span><span class="org-whitespace-space">    </span><span class="org-comment-delimiter">;;</span><span class="org-whitespace-space"> </span><span class="org-comment">When</span><span class="org-whitespace-space"> </span><span class="org-comment">called</span><span class="org-whitespace-space"> </span><span class="org-comment">interactively,</span><span class="org-whitespace-space"> </span><span class="org-comment">message</span><span class="org-whitespace-space"> </span><span class="org-comment">the</span><span class="org-whitespace-space"> </span><span class="org-comment">data.</span>
+<span class="linenr">17: </span><span class="org-whitespace-space">    </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">(</span></span><span class="org-keyword">let</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>totals<span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">and</span><span class="org-whitespace-space"> </span>totals
+<span class="linenr">18: </span><span class="org-whitespace-space">                           </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span><span class="org-keyword">or</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>use-region-p<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span>
+<span class="linenr">19: </span><span class="org-whitespace-space">                               </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>buffer-narrowed-p<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
+<span class="linenr">20: </span><span class="org-whitespace-space">                      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span><span class="org-keyword">save-restriction</span>
+<span class="linenr">21: </span><span class="org-whitespace-space">                        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>widen<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span>
+<span class="linenr">22: </span><span class="org-whitespace-space">                        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">(</span></span>count-words--format<span class="org-whitespace-space"> </span><span class="org-string">";</span><span class="org-whitespace-space"> </span><span class="org-string">buffer</span><span class="org-whitespace-space"> </span><span class="org-string">in</span><span class="org-whitespace-space"> </span><span class="org-string">total"</span>
+<span class="linenr">23: </span><span class="org-whitespace-space">                                             </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>point-min<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">(</span></span>point-max<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-9">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-8">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span>
+<span class="linenr">24: </span><span class="org-whitespace-space">                    </span><span class="org-string">""</span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span>
+<span class="linenr">25: </span><span class="org-whitespace-space">      </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">(</span></span><span class="org-keyword">if</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>use-region-p<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">26: </span><span class="org-whitespace-space">          </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"%s%s"</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>count-words--format
+<span class="linenr">27: </span><span class="org-whitespace-space">                           </span><span class="org-string">"Region"</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>region-beginning<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">(</span></span>region-end<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-7">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span>
+<span class="linenr">28: </span><span class="org-whitespace-space">                   </span>totals<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span>
+<span class="linenr">29: </span><span class="org-whitespace-space">        </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">(</span></span>message<span class="org-whitespace-space"> </span><span class="org-string">"%s%s"</span><span class="org-whitespace-space"> </span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">(</span></span>count-words--buffer-format<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-6">)</span></span><span class="org-whitespace-space"> </span>totals<span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-5">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-4">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-3">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-2">)</span></span><span class="org-mindre-paren"><span class="org-rainbow-delimiters-depth-1">)</span></span>
+</pre>
+</div>
+
+</div>
+
+
+<dl class="org-dl">
+<dt>第 <a href="#coderef-new-func" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-new-func');" onmouseout="CodeHighlightOff(this, 'coderef-new-func');">12</a> 行</dt><dd>这里简单替换了一下正则，现在的 <code>word</code> 计量单位是一个 CJK 字符或一个英文单词。</dd>
+</dl>
+
+<p>
+这样就可以正确统计中文字数了。
+</p>
+</div>
+</div>
+<div id="outline-container-org-mode-中的字数统计" class="outline-3">
+<h3 id="org-mode-中的字数统计">org-mode 中的字数统计</h3>
+<div class="outline-text-3" id="text-org-mode-中的字数统计">
+<p>
+在 org-mode 中，情况又复杂很多。由<a href="#org-synctax-intro">第一节</a>我们可以知道，一个 org 文件包含了各种各样的元素，其中有很多是我们不想在字数统计中算进去的<sup><label for="fnr.6" class="footref">6</label></sup><input id="fnr.6" class="footref-toggle" type="checkbox">，如各种 <code>drawer</code> 、代码块和一些 org 特有的语法。因此在 org-mode 中精确统计字数是一件非常困难的事（更不用说每个人对此的标准还不一样）。但话又说回来，我们在绝大多数情况下也不需要精确到个位数的字数统计，精确到百位就足够了。
+</p>
+
+<p>
+那么如何在 org-mode 中只统计我们需要的部分呢？这就需要用到<a href="#org-synctax-api">上文</a>提到的 org syntax
+API 了。下面说一下大致的实现思路<sup><label for="fnr.7" class="footref">7</label></sup><input id="fnr.7" class="footref-toggle" type="checkbox">：
+</p>
+
+<ol class="org-ol">
+<li>利用 <code>org-element-parse-buffer</code> 获取整个 buffer 的语法结构。</li>
+<li>利用 <code>org-element-map</code> 来遍历步骤 1 中返回的结果，可以用 <code>types</code>参数来指定需要遍历的 elements 或 objects 。</li>
+<li>对于不同的 element 或 object ，我们采用不同的计量方式。如处理 <code>Regular links</code>
+时，只统计其<code>description</code>部分。</li>
+</ol>
+
+
+<p>
+这样我们就可以比 <code>count-words</code> 更精确得统计字数了， 具体实现可以看
+<a href="https://github.com/Elilif/org-count-words">Elilif/org-count-words: Count word in org-mode.</a>
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+本节内容只是对 org syntax 术语和约定的简要概括，详细内容可以移步：<a href="https://orgmode.org/worg/org-syntax.html">Org
+Syntax</a> 。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<code>headings</code>  和 <code>greater elements</code> 都可以包含自己类型或更低类型的元素。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+具体可以查看变量 <code>org-element-all-objects</code> 和 <a href="https://orgmode.org/worg/org-syntax.html#Objects">Org Syntax</a> 的 Objects 一节。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+此变量用于查找 <code>word</code> 边界。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<code>forward-word-strictly</code> 的代码显示可以通过修改 <code>word-move-empty-char-table</code>
+来影响其行为，但是我这里偷了一下懒，脑测觉得实现起来可能更复杂，就没有尝试。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+至少对于我而言。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7" role="doc-backlink">7</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+各函数的具体用法可以查阅相应文档。
+</p></div></div>
+
+
+</div>
+</div></div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+<div class="info">
+  <span class="author">Author: Eli Qian</span>
+  <span class="author">Email: <a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a></span>
+  <span class="date">Create Date: 2024-03-15</span>
+  <span class="date">Last modified: 2024-03-15</span>
+  <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
+</div>
+</div>
+</body>
+</html>

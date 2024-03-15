@@ -1,0 +1,207 @@
+#+TITLE: org syntax 与 org-mode 字数统计
+#+DATE: 2024-03-15
+#+FILETAGS: :org:emacs:
+
+#+begin_abstract
+本文简要介绍了 org 语法的组成和架构，并利用其 API 初步实现了一个比 =count-words=更
+精确的 org-mode 字数统计插件。
+#+end_abstract
+
+
+* org syntax 简介[fn:1]
+:PROPERTIES:
+:CUSTOM_ID: org-synctax-intro
+:END:
+Org syntax , 顾名思义，即 Org 的语法。不像 Markdown 那样有各种各样的方言，Org 的
+语法只有一个，有着良好的一致性。
+
+** org syntax 的组成
+org 组成部件按作用域（scope）大小可以分成 =elements= 和 =objects= 两种，以段落
+（paragraph）为基准，作用域比段落大（或者相同）的是 =elements= ，反之则是=objects=
+。通俗地讲就是在日常写作中，能在段落里用的标记（如 =*=、=== 等记号）就是=object= ，必
+须要新起一行才能使用的（如代码块等）就是 =element= 。
+
+*** elements
+变量 =org-element-all-elements= 提供了完整的 =elements= 列表，其中的元素按作用范围可
+分为四个层级，从大到小分别是 ：=headings=、=sections=、=greater elements= 和
+=less-elements= ，它们的关系如图 [[fig-eltstraf]] 所示[fn:2]：
+
+#+begin_src latex :headers '("\\usepackage{tikz}")
+  \begin{tikzpicture}
+    \def \firstellipse{(.3, 0) ellipse (1.4 and .5)}
+    \def \secondellipse{(.7, .3) ellipse (2 and 1)}
+    \def \thirdellipse{(1, .6) ellipse (2.5 and 1.5)}
+    \def \forthdellipse{(1.3, .9) ellipse (3 and 2)}  
+    \filldraw[fill=red!15] \forthdellipse;
+    \filldraw[fill=blue!15] \thirdellipse;
+    \filldraw[fill=cyan!15] \secondellipse;
+    \filldraw[fill=magenta!15] \firstellipse;
+
+    \node at (.3,0) {less elements};
+    \node at (.7,.75) {greater elements};
+    \node at (1.2, 1.6) {sections};
+    \node at (1.5, 2.5) {headings};
+  \end{tikzpicture}
+#+end_src
+
+#+CAPTION: element-strafication
+#+NAME: fig-eltstraf
+#+RESULTS: element-strafication
+[[file:../static/post-img/2024-03-12-org-syntax-and-word-count/element-strafication.svg]]
+**** headings
+即 org 中的标题及其内容。
+**** sections
+sections 有如下两类：
+1. normal sections
+   一般来说，位于两个标题之间的内容都属于同一个 section
+2. the zeroth section
+   这是一个特殊的 section ，位于第一个标题前的所有元素都属于 zeroth section 。
+**** greater elements
+greater elements 指那些能包含 less elements 或 greater elements 的元素，常见的
+greater elements 如下：
+
+Greater Blocks、Drawers and Property Drawers、Dynamic Blocks、Footnote
+Definitions、Inlinetasks、Items、Plain Lists、Property Drawers、Tables
+**** lesser elements
+lesser elements 是最小的元素，常见的 lesser elements 如下：
+
+Blocks 、Clock、Diary Sexp、Planning、Comments、Fixed Width Areas、Horizontal
+Rules、Keywords、LaTeX Environments、Node Properties、*Paragraphs*、Table Rows
+*** objects
+大多数 =objects= 不能包含其他的 =objects= ，所以基本上可以认为是单独的一个元素。
+常见的 =objects= 如下[fn:3]：
+
+Entities、LaTeX Fragments、Export Snippets、Footnote References、Citations、
+Citation references、Inline Babel Calls、Inline Source Blocks、Line Breaks、
+Links、Macros、Targets and Radio Targets、Statistics Cookies、Subscript and
+Superscript、Table Cells、Timestamps、Text Markup、Plain Text
+** org syntax API
+:PROPERTIES:
+:CUSTOM_ID: org-synctax-api
+:END:
+=org-element.el= 用于解析 org 语法，提供了一系列有用的函数。下面列举几个常用的函数：
+- org-element-parse-buffer :: Recursively parse the buffer and return structure.
+- org-element-at-point :: Determine closest element around point.
+- org-element-context :: Return smallest element or object around point.
+- org-element-map :: Map a function on selected elements or objects.
+- org-element-property :: Extract the value from the PROPERTY of an ELEMENT.
+* 字数统计
+** 中文字数统计
+Emacs 自带的 =count-words= 是不适用于 CJK 字符的，它不知道 CJK 中的一个 =word= 是如
+何定义的，所以会像英文那样，把一段连续的 CJK 字符统计为一个单词 ，导致最终得出的
+结果误差非常大。因此我们首先需要明确一下 =word= 的概念：在字数统计这方面，我们采用
+和 Word(或 WPS) 一样的方式：即一个 CJK 字符和一个英文单词一样都是一个 =word= 。
+
+有了这个共识后我们来看一下 =count-words= 的代码：
+
+#+begin_src emacs-lisp
+  (defun count-words (start end &optional totals)
+    (interactive (list nil nil current-prefix-arg))
+    ;; When called from Lisp, return the data.
+    (if (not (called-interactively-p 'any))
+        (let ((words 0)
+              ;; Count across field boundaries. (Bug#41761)
+              (inhibit-field-text-motion t))
+          (save-excursion
+            (save-restriction
+              (narrow-to-region start end)
+              (goto-char (point-min))
+              (while (forward-word-strictly 1)                 ;; (ref:find-char)
+                (setq words (1+ words)))))
+          words)
+      ;; When called interactively, message the data.
+      (let ((totals (if (and totals
+                             (or (use-region-p)
+                                 (buffer-narrowed-p)))
+                        (save-restriction
+                          (widen)
+                          (count-words--format "; buffer in total"
+                                               (point-min) (point-max)))
+                      "")))
+        (if (use-region-p)
+            (message "%s%s" (count-words--format
+                             "Region" (region-beginning) (region-end))
+                     totals)
+          (message "%s%s" (count-words--buffer-format) totals)))))
+#+end_src
+
+很明显，这段代码的核心就是第 [[(find-char)][(find-char)]] 行，它是利用了 =forward-word-strictly= 来
+遍历整个 buffer ，此函数默认采用英文的分词方式。而 =forward-word-strictly= 又不受
+=find-word-boundary-function-table=[fn:4] 的影响，所以我们不能像 =subword-mode= 那样通过修
+改 =find-word-boundary-function-table= 来改变 =forward-word= 的行为[fn:5]。那么如何
+统计中文字数呢？最简单的方法就是直接把 =forward-word-strictly= 替换为我们自己的遍
+历函数：
+
+#+begin_src emacs-lisp
+  (defun eli/count-words (start end &optional totals)
+    (interactive (list nil nil current-prefix-arg))
+    ;; When called from Lisp, return the data.
+    (if (not (called-interactively-p 'any))
+        (let ((words 0)
+              ;; Count across field boundaries. (Bug#41761)
+              (inhibit-field-text-motion t))
+          (save-excursion
+            (save-restriction
+              (narrow-to-region start end)
+              (goto-char (point-min))
+              (while (re-search-forward ;; (ref:new-func)
+                      "\\cc\\|[A-Za-z0-9][A-Za-z0-9[:punct:]]*" end t)
+                (setq words (1+ words)))))
+          words)
+      ;; When called interactively, message the data.
+      (let ((totals (if (and totals
+                             (or (use-region-p)
+                                 (buffer-narrowed-p)))
+                        (save-restriction
+                          (widen)
+                          (count-words--format "; buffer in total"
+                                               (point-min) (point-max)))
+                      "")))
+        (if (use-region-p)
+            (message "%s%s" (count-words--format
+                             "Region" (region-beginning) (region-end))
+                     totals)
+          (message "%s%s" (count-words--buffer-format) totals)))))
+#+end_src
+
+- 第 [[(new-func)]] 行 :: 这里简单替换了一下正则，现在的 =word= 计量单位是一个 CJK 字
+  符或一个英文单词。
+
+这样就可以正确统计中文字数了。
+** org-mode 中的字数统计
+在 org-mode 中，情况又复杂很多。由[[#org-synctax-intro][第一节]]我们可以知道，一个 org 文件包含了各种各
+样的元素，其中有很多是我们不想在字数统计中算进去的[fn:6]，如各种 =drawer= 、代码块
+和一些 org 特有的语法。因此在 org-mode 中精确统计字数是一件非常困难的事（更不用
+说每个人对此的标准还不一样）。但话又说回来，我们在绝大多数情况下也不需要精确到个
+位数的字数统计，精确到百位就足够了。
+
+那么如何在 org-mode 中只统计我们需要的部分呢？这就需要用到[[#org-synctax-api][上文]]提到的 org syntax
+API 了。下面说一下大致的实现思路[fn:7]：
+
+1. 利用 =org-element-parse-buffer= 获取整个 buffer 的语法结构。
+2. 利用 =org-element-map= 来遍历步骤 1 中返回的结果，可以用 =types=参数来指定需要遍
+   历的 elements 或 objects 。
+3. 对于不同的 element 或 object ，我们采用不同的计量方式。如处理 =Regular links=
+   时，只统计其=description=部分。
+
+
+这样我们就可以比 =count-words= 更精确得统计字数了， 具体实现可以看
+[[https://github.com/Elilif/org-count-words][Elilif/org-count-words: Count word in org-mode.]]
+
+* Footnotes
+
+[fn:1] 本节内容只是对 org syntax 术语和约定的简要概括，详细内容可以移步：[[https://orgmode.org/worg/org-syntax.html][Org
+Syntax]] 。
+
+[fn:2] =headings=  和 =greater elements= 都可以包含自己类型或更低类型的元素。
+
+[fn:3] 具体可以查看变量 =org-element-all-objects= 和 [[https://orgmode.org/worg/org-syntax.html#Objects][Org Syntax]] 的 Objects 一节。
+
+[fn:4] 此变量用于查找 =word= 边界。
+
+[fn:5] =forward-word-strictly= 的代码显示可以通过修改 =word-move-empty-char-table=
+来影响其行为，但是我这里偷了一下懒，脑测觉得实现起来可能更复杂，就没有尝试。
+
+[fn:6] 至少对于我而言。
+
+[fn:7] 各函数的具体用法可以查阅相应文档。
