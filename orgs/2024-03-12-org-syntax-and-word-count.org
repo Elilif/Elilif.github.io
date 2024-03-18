@@ -187,7 +187,7 @@ API 了。下面说一下大致的实现思路[fn:7]：
 
 
 这样我们就可以比 =count-words= 更精确地统计字数了， 具体实现可以看
-[[https://github.com/Elilif/org-count-words][Elilif/org-count-words: Count word in org-mode.]]
+[[https://github.com/Elilif/org-count-words][Elilif/org-count-words: Count words in org-mode.]]
 
 * Footnotes
 
