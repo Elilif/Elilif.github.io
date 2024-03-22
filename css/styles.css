@@ -437,7 +437,6 @@ kbd {
   color: #333;
   display: inline-block;
   font-size: 0.85em;
-  font-weight: 700;
   line-height: 1;
   padding: 2px 4px;
   white-space: nowrap;
@@ -612,10 +611,28 @@ code {
 }
 
 
-img {
+img, video {
   max-width: 100%;
   border-radius: 0.8em;
-  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+details {
+  border: 2px lightgray solid;
+  border-radius: 0.8em;
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  cursor: pointer;
+  .detail {
+    margin: 1em;
+  }
+  summary {
+    font-weight: bold;
+    p {
+      display: inline;
+    }
+  }
 }
 
 ul .tags {
