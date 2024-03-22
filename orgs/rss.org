@@ -1,5 +1,14 @@
 #+TITLE: Eli's Blog
 
+* 在 org-mode 中快速插入交叉引用
+:properties:
+:rss_permalink: articles/2024-03-22-insert-references-in-org-mode.html
+:pubdate: 2024-03-22
+:END:
+本文主要介绍了 org-mode 中的各种内部链接和如何快速插入内部链接，并通过 consult
+和 embark 来扩展其功能。
+
+[[https://elilif.github.io/articles/2024-03-22-insert-references-in-org-mode.html][Read More]]
 * org syntax 与 org-mode 字数统计
 :properties:
 :rss_permalink: articles/2024-03-12-org-syntax-and-word-count.html

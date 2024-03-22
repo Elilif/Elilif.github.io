@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-03-22 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>在 org-mode 中快速插入交叉引用</title>
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+  <a href="/index.html" class="button">Home</a>
+  <a href="/config.html" class="button">Literate Emacs Config</a>
+  <a href="/rss.xml" class="button">RSS</a>
+</nav>
+<hr>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">在 org-mode 中快速插入交叉引用</h1>
+</header><div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2024-03-22</span></span>
+<span><i class='bx bx-edit'></i><span>2024-03-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-22-insert-references-in-org-mode.org">History</a></span></span><span><i class='bx bxs-hourglass'></i>1537 字</span></div><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org-mode-内部链接简介">org-mode 内部链接简介</a>
+<ul>
+<li><a href="#常见的内部链接对象[fn:1]">常见的内部链接对象</a>
+<ul>
+<li><a href="#Headlines">Headlines</a></li>
+<li><a href="#Dedicated-targets">Dedicated targets</a></li>
+<li><a href="#Radio-targets">Radio targets</a></li>
+<li><a href="#Images-and-source-blocks">Images and source blocks</a></li>
+<li><a href="#Coderef">Coderef</a></li>
+<li><a href="#Noweb-references">Noweb references</a></li>
+</ul>
+</li>
+<li><a href="#内部链接跳转的优先级">内部链接跳转的优先级</a></li>
+</ul>
+</li>
+<li><a href="#快速插入内部链接">快速插入内部链接</a>
+<ul>
+<li><a href="#现有插件的情况">现有插件的情况</a></li>
+<li><a href="#org-simple-ref">org-simple-ref</a>
+<ul>
+<li><a href="#选择并插入引用">选择并插入引用</a></li>
+<li><a href="#快速跳转">快速跳转</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#总结">总结</a></li>
+</ul>
+</div>
+</nav>
+<div class="abstract">
+<p>
+本文主要介绍了 org-mode 中的各种内部链接和如何快速插入内部链接，并通过 consult
+和 embark 来扩展其功能。
+</p>
+
+</div>
+
+<div id="outline-container-org-mode-内部链接简介" class="outline-2">
+<h2 id="org-mode-内部链接简介">org-mode 内部链接简介</h2>
+<div class="outline-text-2" id="text-org-mode-内部链接简介">
+<p>
+内部链接（Interanl Links）类似于交叉引用，是对同一文档中其他内容的引用。在
+org-mode 中，内部链接的使用方法和常规链接一样，都可以通过 <kbd>C-c C-c</kbd> 来跳转到目标位置。
+</p>
+</div>
+<div id="outline-container-常见的内部链接对象[fn:1]" class="outline-3">
+<h3 id="常见的内部链接对象[fn:1]">常见的内部链接对象<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"></h3>
+<div class="outline-text-3" id="text-常见的内部链接对象[fn:1]">
+</div>
+<div id="outline-container-Headlines" class="outline-4">
+<h4 id="Headlines">Headlines</h4>
+<div class="outline-text-4" id="text-Headlines">
+<p>
+有三种链接方式可以指向一个标题：
+</p>
+<dl class="org-dl">
+<dt>CUSTOM_ID</dt><dd>通过设置 <code>CUSTOM_ID</code> 属性<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"> ，可以创建形如 <code>[[#my-custom-id]]</code> 的链接。</dd>
+<dt>ID</dt><dd>通过设置 <code>ID</code> 属性，可以创建形如 <code>[[id:xxxx-xxxx]]</code> 的链接。</dd>
+<dt>fuzzy</dt><dd>可以直接在链接中使用目标标题作为链接内容，如 <code>[[*Some section]]</code> 或
+<code>[[Some section]]</code> 。</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-Dedicated-targets" class="outline-4">
+<h4 id="Dedicated-targets">Dedicated targets</h4>
+<div class="outline-text-4" id="text-Dedicated-targets">
+<p>
+形如 <code>&lt;&lt;some target&gt;&gt;</code> 的文本在 org syntax 中被称为 <code>dedicated target</code> ，可以使用
+<code>[[some target]]</code> 的链接来指向该文本。
+</p>
+</div>
+</div>
+<div id="outline-container-Radio-targets" class="outline-4">
+<h4 id="Radio-targets">Radio targets</h4>
+<div class="outline-text-4" id="text-Radio-targets">
+<p>
+形如 <code>&lt;&lt;&lt;some target&gt;&gt;&gt;</code> 的文本在 org syntax 中被称为 <code>radio target</code> ，在常规的 org
+文本中，任何与 <code>radio target</code> 的内容相同的文本都会自动转为 <code>radio link</code> 。
+</p>
+</div>
+</div>
+<div id="outline-container-Images-and-source-blocks" class="outline-4">
+<h4 id="Images-and-source-blocks">Images and source blocks</h4>
+<div class="outline-text-4" id="text-Images-and-source-blocks">
+<p>
+图片和代码块（或者其他元素）如果带有 <code>NAME</code> 关键字，则可以通过内部链接来跳转。比如说有如下代码块：
+</p>
+
+<pre class="example">
+#+CAPTION: example src block
+#+NAME: src-1
+#+begin_src emacs-lisp
+  (message "test")
+#+end_src
+</pre>
+
+<p>
+则可以用 <code>[[src-1]]</code> 来引用。
+</p>
+</div>
+</div>
+<div id="outline-container-Coderef" class="outline-4">
+<h4 id="Coderef">Coderef</h4>
+<div class="outline-text-4" id="text-Coderef">
+<p>
+在 org 代码块中，可以使用形如 <code>(ref:name)</code> 的文本来标记当前行的代码（在使用
+<code>org-edit-src-code</code> 编辑时，可以使用 <kbd>C-c l</kbd>(org-store-link) 来快速创建），然后在常规文本中使用形如 <code>[[(name)]]</code> 的链接来引用<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">。
+</p>
+</div>
+</div>
+<div id="outline-container-Noweb-references" class="outline-4">
+<h4 id="Noweb-references">Noweb references</h4>
+<div class="outline-text-4" id="text-Noweb-references">
+<p>
+这个严格来说不是内部链接的一部分，但是我经常用它，就一起说一下吧。在 org 代码块中，可以使用形如 <code>&lt;&lt;CODE-BLOCK-ID&gt;&gt;</code> 的文本来引用其他代码块<sup><label for="fnr.4" class="footref">4</label></sup><input id="fnr.4" class="footref-toggle" type="checkbox">，
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-内部链接跳转的优先级" class="outline-3">
+<h3 id="内部链接跳转的优先级">内部链接跳转的优先级</h3>
+<div class="outline-text-3" id="text-内部链接跳转的优先级">
+<p>
+从上一节我们可以看到，多个对象可以有相同的链接格式，比如说 Headlines 、Dedicated
+targets 、图片和代码块都可以用 <code>[[xxx]]</code> 来链接。那么当这种情况真的发生时，点击
+<code>[[xxx]]</code> 会跳转到哪里呢？这就涉及到内部链接的优先级问题了，一般来说，org-mode 会首先查找 Dedicated  targets ；如果没找到，则继续找对应的 <code>NAME</code> 关键字；如果还没找到，则会在 Headlines 中查找。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-快速插入内部链接" class="outline-2">
+<h2 id="快速插入内部链接">快速插入内部链接</h2>
+<div class="outline-text-2" id="text-快速插入内部链接">
+<p>
+针对这么多的内部链接格式，org-mode 提供了一系列快捷键来帮助我们设置相关标记，但是在输入链接方面，默认好像没有什么简易的方式，基本上只能手动输入。<del>但手动是不可能手动的，这辈子都不可能手动</del>。我理想中的方式应该有如下效果：
+</p>
+
+<ol class="org-ol">
+<li>提供一个包含所有内部链接对象的界面让我选择，选中后插入相应的内部链接。</li>
+<li>每个内部链接对象要有一定的上下文（如所在标题等信息）。</li>
+<li>能够对所有对象按照其类别进行分组，并可以 narrow 。</li>
+<li>支持 embark 相关操作，如可以跳转到对应对象的位置等。</li>
+</ol>
+</div>
+<div id="outline-container-现有插件的情况" class="outline-3">
+<h3 id="现有插件的情况">现有插件的情况</h3>
+<div class="outline-text-3" id="text-现有插件的情况">
+<p>
+于是基于上述标准，我大致调研了一下我找到的两个相关插件：<a href="https://github.com/jkitchin/org-ref">org-ref</a> 和 <a href="https://github.com/bdarcus/oxr">oxr</a> 。但是发现它们各有各的不足<sup><label for="fnr.5" class="footref">5</label></sup><input id="fnr.5" class="footref-toggle" type="checkbox">：
+</p>
+
+<dl class="org-dl">
+<dt>org-ref</dt><dd>org-ref 非常成熟，提供了一站式服务，但是对于我的需求来说，我只用得上 <a href="https://github.com/jkitchin/org-ref/blob/master/org-ref-ref-links.el">org-ref-ref-links.el</a> 中的部分内容。另外它好像自己定义了一套链接格式，我希望使用 org-mode 默认的格式，而且它目前还不支持 consult ，所以 narrow 这一功能可能比较难实现。</dd>
+<dt>oxr</dt><dd>oxr 的 UI 我非常喜欢（如图 <a href="#oxr-demo">1</a> 所示），基本上就是我需要的样子。但是他支持的对象类型有点少，另外同样不支持 consult 。</dd>
+</dl>
+
+
+<figure id="oxr-demo">
+<img src="../static/post-img/2024-03-22-insert-references-in-org-mode/oxr-insert.png" alt="oxr-insert.png">
+
+<figcaption><span class="figure-number">Figure 1: </span>oxr ui</figcaption>
+</figure>
+
+<p>
+所以我最终还是决定基于前人的基础上自己动手实现。
+</p>
+</div>
+</div>
+<div id="outline-container-org-simple-ref" class="outline-3">
+<h3 id="org-simple-ref">org-simple-ref</h3>
+<div class="outline-text-3" id="text-org-simple-ref">
+<p>
+<a href="https://github.com/Elilif/.elemacs/blob/devel/lib/lib-org-simple-ref.el">org-simple-ref</a> 的代码的代码逻辑很简单，主要可以分为两个部分：收集当前 buffer 所有的引用<sup><label for="fnr.6" class="footref">6</label></sup><input id="fnr.6" class="footref-toggle" type="checkbox">、选择引用并插入链接。另外 org-simple-ref 还集成了 consult 和
+embark ，方便过滤和跳转。
+</p>
+</div>
+<div id="outline-container-选择并插入引用" class="outline-4">
+<h4 id="选择并插入引用">选择并插入引用</h4>
+<div class="outline-text-4" id="text-选择并插入引用">
+<p>
+<video preload='metadata' controls='controls'>
+<source type='video/mp4' src='../static/post-img/2024-03-22-insert-references-in-org-mode/Peek 2024-03-22 22-42.mp4' />
+<a href='../static/post-img/2024-03-22-insert-references-in-org-mode/Peek 2024-03-22 22-42.mp4'>[VIDEO: Peek 2024-03-22 22-42]</a>
+</video>
+</p>
+
+<details>
+<summary>
+<p>
+Play by play
+</p>
+</summary>
+<div class="detail">
+<ol class="org-ol">
+<li><kbd>M-x org-simple-ref-insert-ref-link RET</kbd></li>
+<li>通过以下 narrow key 来缩小范围：
+<dl class="org-dl">
+<dt>c</dt><dd>coderef</dd>
+<dt>s</dt><dd>代码块</dd>
+<dt>i</dt><dd>ID 或 CUSTOM_ID</dd>
+<dt>t</dt><dd>radio target 或 dedicated target</dd>
+<dt>p</dt><dd>图片或其他元素</dd>
+<dt>h</dt><dd>当前标题中的引用</dd>
+</dl></li>
+</ol>
+
+</div>
+</details>
+<p>
+org-simple-ref 只有一个命令： <code>org-simple-ref-insert-ref-link</code> 。其界面如下图所示：
+</p>
+
+
+<figure id="fig-ui">
+<img src="../static/post-img/2024-03-22-insert-references-in-org-mode/2024-03-22_22-56.png" alt="2024-03-22_22-56.png">
+
+<figcaption><span class="figure-number">Figure 2: </span>界面组成</figcaption>
+</figure>
+
+<p>
+这个命令是我最近用着最爽的一个命令，也是我写这篇文章的动力。
+</p>
+</div>
+</div>
+<div id="outline-container-快速跳转" class="outline-4">
+<h4 id="快速跳转">快速跳转</h4>
+<div class="outline-text-4" id="text-快速跳转">
+<p>
+插入的问题解决了，还剩下最后一个问题：如何快速跳转到目标引用上面。这在引用和其他内容非常多的事很有用。我的方案是使用embark 来实现，这样可以维持一个统一的操作入口，减少心智负担。
+</p>
+
+<p>
+<video preload='metadata' controls='controls'>
+<source type='video/mp4' src='../static/post-img/2024-03-22-insert-references-in-org-mode/Peek 2024-03-22 23-33.mp4' />
+<a href='../static/post-img/2024-03-22-insert-references-in-org-mode/Peek 2024-03-22 23-33.mp4'>[VIDEO: Peek 2024-03-22 23-33]</a>
+</video>
+</p>
+
+<details>
+<summary>
+<p>
+Play by play
+</p>
+</summary>
+<div class="detail">
+<ol class="org-ol">
+<li><kbd>M-x org-simple-ref-insert-ref-link RET</kbd></li>
+<li><code>embark-act</code> -&gt; <code>embark-org-simple-ref-goto-location</code></li>
+</ol>
+
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-总结" class="outline-2">
+<h2 id="总结">总结</h2>
+<div class="outline-text-2" id="text-总结">
+<p>
+以上就是我个人在 org-mode 中插入交叉引用的大致流程，基本上满足了我所有的需求。如果您有更好的实现方案或相关心得，欢迎在评论区中分享。
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+具体可以看 org manual 的 <a href="https://orgmode.org/manual/Internal-Links.html">Internal Links</a> 一节。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+默认快捷键： <kbd>C-c C-x p</kbd>(org-set-property) 。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+具体可以看 org manual 的 <a href="https://orgmode.org/manual/Literal-Examples.html">Literal Examples</a> 一节。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+详见 org manual 的 <a href="https://orgmode.org/manual/Noweb-Reference-Syntax.html">Noweb Reference Syntax</a> 一节。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+这两个插件我并没有深入使用过，所以如果我有说错的地方，欢迎在评论区中指出。
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+此部分的代码主要来自 org-ref-ref-links.el
+</p></div></div>
+
+
+</div>
+</div></div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+<div class="info">
+  <span class="author">Author: </span>
+  <span class="author">Email: <a href="mailto:eli@eli">eli@eli</a></span>
+  <span class="date">Create Date: 2024-03-22</span>
+  <span class="date">Last modified: 2024-03-22</span>
+  <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
+</div>
+</div>
+</body>
+</html>

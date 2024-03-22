@@ -14,10 +14,10 @@
   <link>https://elilif.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Fri, 15 Mar 2024 23:30:12 +0800</pubDate>
-  <lastBuildDate>Fri, 15 Mar 2024 23:30:12 +0800</lastBuildDate>
+  <pubDate>Fri, 22 Mar 2024 23:46:56 +0800</pubDate>
+  <lastBuildDate>Fri, 22 Mar 2024 23:46:56 +0800</lastBuildDate>
   <generator>Emacs 29.2 Org-mode 9.6.15</generator>
-  <webMaster>eli.q.qian@gmail.com (Eli Qian)</webMaster>
+  <webMaster>eli@eli (nil)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
     <title>Eli's Blog</title>
@@ -26,9 +26,26 @@
 
 
   <item>
+    <title>在 org-mode 中快速插入交叉引用</title>
+    <link>https://elilif.github.io/articles/2024-03-22-insert-references-in-org-mode.html</link>
+    <author>eli@eli (nil)</author>
+    <guid isPermaLink="false">https://elilif.github.io/articles/2024-03-22-insert-references-in-org-mode.html</guid>
+    <pubDate>Fri, 22 Mar 2024 00:00:00 +0800</pubDate>
+
+    <description><![CDATA[<p>
+    本文主要介绍了 org-mode 中的各种内部链接和如何快速插入内部链接，并通过 consult
+    和 embark 来扩展其功能。
+    </p>
+
+    <p>
+    <a href="https://elilif.github.io/articles/2024-03-22-insert-references-in-org-mode.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
     <title>org syntax 与 org-mode 字数统计</title>
     <link>https://elilif.github.io/articles/2024-03-12-org-syntax-and-word-count.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <author>eli@eli (nil)</author>
     <guid isPermaLink="false">https://elilif.github.io/articles/2024-03-12-org-syntax-and-word-count.html</guid>
     <pubDate>Fri, 15 Mar 2024 00:00:00 +0800</pubDate>
 
@@ -44,7 +61,7 @@
   <item>
     <title>给博客添加评论和标签过滤功能</title>
     <link>https://elilif.github.io/articles/2024-03-09-blog-comments-and-tag-filtering.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <author>eli@eli (nil)</author>
     <guid isPermaLink="false">https://elilif.github.io/articles/2024-03-09-blog-comments-and-tag-filtering.html</guid>
     <pubDate>Sat, 09 Mar 2024 00:00:00 +0800</pubDate>
 
@@ -60,7 +77,7 @@
   <item>
     <title>浅析 org babel switches</title>
     <link>https://elilif.github.io/articles/2024-03-01-org-babel-switches.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <author>eli@eli (nil)</author>
     <guid isPermaLink="false">https://elilif.github.io/articles/2024-03-01-org-babel-switches.html</guid>
     <pubDate>Fri, 01 Mar 2024 00:00:00 +0800</pubDate>
 
@@ -77,7 +94,7 @@
   <item>
     <title>CSS for Org-exported HTML(WIP)</title>
     <link>https://elilif.github.io/articles/2024-02-29-org-CSS.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <author>eli@eli (nil)</author>
     <guid isPermaLink="false">https://elilif.github.io/articles/2024-02-29-org-CSS.html</guid>
     <pubDate>Thu, 29 Feb 2024 00:00:00 +0800</pubDate>
 
@@ -89,7 +106,7 @@
   <item>
     <title>百般武艺，此乃 Emacs （一）：用 Emacs 写博客</title>
     <link>https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <author>eli@eli (nil)</author>
     <guid isPermaLink="false">https://elilif.github.io/articles/2024-02-21-all-in-emacs-blog.html</guid>
     <pubDate>Wed, 21 Feb 2024 00:00:00 +0800</pubDate>
 
@@ -115,7 +132,7 @@
   <item>
     <title>百般武艺，此乃 Emacs （序）</title>
     <link>https://elilif.github.io/articles/2024-02-20-all-in-emacs-preface.html</link>
-    <author>eli.q.qian@gmail.com (Eli Qian)</author>
+    <author>eli@eli (nil)</author>
     <guid isPermaLink="false">https://elilif.github.io/articles/2024-02-20-all-in-emacs-preface.html</guid>
     <pubDate>Tue, 20 Feb 2024 00:00:00 +0800</pubDate>
 

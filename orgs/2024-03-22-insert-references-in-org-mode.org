@@ -1,0 +1,129 @@
+#+TITLE: 在 org-mode 中快速插入交叉引用
+#+DATE: 2024-03-22
+#+FILETAGS: :org:
+
+#+begin_abstract
+本文主要介绍了 org-mode 中的各种内部链接和如何快速插入内部链接，并通过 consult
+和 embark 来扩展其功能。
+#+end_abstract
+
+* org-mode 内部链接简介
+内部链接（Interanl Links）类似于交叉引用，是对同一文档中其他内容的引用。在
+org-mode 中，内部链接的使用方法和常规链接一样，都可以通过 {{{kbd(C-c C-c)}}} 来
+跳转到目标位置。
+** 常见的内部链接对象[fn:1]
+*** Headlines
+有三种链接方式可以指向一个标题：
+- CUSTOM_ID :: 通过设置 =CUSTOM_ID= 属性[fn:2] ，可以创建形如 =[[#my-custom-id]]= 的链接。
+- ID :: 通过设置 =ID= 属性，可以创建形如 =[[id:xxxx-xxxx]]= 的链接。
+- fuzzy :: 可以直接在链接中使用目标标题作为链接内容，如 =[[*Some section]]= 或
+  =[[Some section]]= 。
+*** Dedicated targets
+形如 =<<some target>>= 的文本在 org syntax 中被称为 =dedicated target= ，可以使用
+=[[some target]]= 的链接来指向该文本。
+*** Radio targets
+形如 =<<<some target>>>= 的文本在 org syntax 中被称为 =radio target= ，在常规的 org
+文本中，任何与 =radio target= 的内容相同的文本都会自动转为 =radio link= 。
+*** Images and source blocks
+图片和代码块（或者其他元素）如果带有 =NAME= 关键字，则可以通过内部链接来跳转。比如
+说有如下代码块：
+
+#+begin_example
+#+CAPTION: example src block
+#+NAME: src-1
+#+begin_src emacs-lisp
+  (message "test")
+#+end_src
+#+end_example
+
+则可以用 =[[src-1]]= 来引用。
+*** Coderef
+在 org 代码块中，可以使用形如 =(ref:name)= 的文本来标记当前行的代码（在使用
+=org-edit-src-code= 编辑时，可以使用 {{{kbd(C-c l)}}}(org-store-link) 来快速创建），
+然后在常规文本中使用形如 =[[(name)]]= 的链接来引用[fn:3]。
+*** Noweb references
+这个严格来说不是内部链接的一部分，但是我经常用它，就一起说一下吧。在 org 代码块中，
+可以使用形如 =<<CODE-BLOCK-ID>>= 的文本来引用其他代码块[fn:4]，
+** 内部链接跳转的优先级
+从上一节我们可以看到，多个对象可以有相同的链接格式，比如说 Headlines 、Dedicated
+targets 、图片和代码块都可以用 =[[xxx]]= 来链接。那么当这种情况真的发生时，点击
+=[[xxx]]= 会跳转到哪里呢？这就涉及到内部链接的优先级问题了，一般来说，org-mode 会
+首先查找 Dedicated  targets ；如果没找到，则继续找对应的 =NAME= 关键字；如果还没找
+到，则会在 Headlines 中查找。
+* 快速插入内部链接
+针对这么多的内部链接格式，org-mode 提供了一系列快捷键来帮助我们设置相关标记，但
+是在输入链接方面，默认好像没有什么简易的方式，基本上只能手动输入。+但手动是不可能
+手动的，这辈子都不可能手动+。我理想中的方式应该有如下效果：
+
+1. 提供一个包含所有内部链接对象的界面让我选择，选中后插入相应的内部链接。
+2. 每个内部链接对象要有一定的上下文（如所在标题等信息）。
+3. 能够对所有对象按照其类别进行分组，并可以 narrow 。
+4. 支持 embark 相关操作，如可以跳转到对应对象的位置等。
+** 现有插件的情况
+于是基于上述标准，我大致调研了一下我找到的两个相关插件：[[https://github.com/jkitchin/org-ref][org-ref]] 和 [[https://github.com/bdarcus/oxr][oxr]] 。但是发
+现它们各有各的不足[fn:5]：
+
+- org-ref :: org-ref 非常成熟，提供了一站式服务，但是对于我的需求来说，我只用得
+  上 [[https://github.com/jkitchin/org-ref/blob/master/org-ref-ref-links.el][org-ref-ref-links.el]] 中的部分内容。另外它好像自己定义了一套链接格式，我希望
+  使用 org-mode 默认的格式，而且它目前还不支持 consult ，所以 narrow 这一功能可
+  能比较难实现。
+- oxr :: oxr 的 UI 我非常喜欢（如图 [[oxr-demo]] 所示），基本上就是我需要的样子。但
+  是他支持的对象类型有点少，另外同样不支持 consult 。
+
+#+CAPTION: oxr ui
+#+NAME: oxr-demo
+[[../static/post-img/2024-03-22-insert-references-in-org-mode/oxr-insert.png]]
+
+所以我最终还是决定基于前人的基础上自己动手实现。
+** org-simple-ref
+[[https://github.com/Elilif/.elemacs/blob/devel/lib/lib-org-simple-ref.el][org-simple-ref]] 的代码的代码逻辑很简单，主要可以分为两个部分：收集当前 buffer 所
+有的引用[fn:6]、选择引用并插入链接。另外 org-simple-ref 还集成了 consult 和
+embark ，方便过滤和跳转。
+*** 选择并插入引用
+[[video:../static/post-img/2024-03-22-insert-references-in-org-mode/Peek 2024-03-22 22-42.mp4]]
+
+#+SUMMARY_BEG: Play by play
+1. {{{kbd(M-x org-simple-ref-insert-ref-link RET)}}}
+2. 通过以下 narrow key 来缩小范围：
+   - c :: coderef
+   - s :: 代码块
+   - i :: ID 或 CUSTOM_ID
+   - t :: radio target 或 dedicated target
+   - p :: 图片或其他元素
+   - h :: 当前标题中的引用
+#+SUMMARY_END: Play by play
+
+org-simple-ref 只有一个命令： =org-simple-ref-insert-ref-link= 。其界面如下图所示：
+
+#+CAPTION: 界面组成
+#+NAME: fig-ui
+[[../static/post-img/2024-03-22-insert-references-in-org-mode/2024-03-22_22-56.png]]
+
+这个命令是我最近用着最爽的一个命令，也是我写这篇文章的动力。
+*** 快速跳转
+插入的问题解决了，还剩下最后一个问题：如何快速跳转到目标引用上面。这在引用和其他
+内容非常多的事很有用。我的方案是使用embark 来实现，这样可以维持一个统一的操作入
+口，减少心智负担。
+
+[[video:../static/post-img/2024-03-22-insert-references-in-org-mode/Peek 2024-03-22 23-33.mp4]]
+
+#+SUMMARY_BEG: Play by play
+1. {{{kbd(M-x org-simple-ref-insert-ref-link RET)}}}
+2. =embark-act= -> =embark-org-simple-ref-goto-location=
+#+SUMMARY_END: Play by play
+* 总结
+以上就是我个人在 org-mode 中插入交叉引用的大致流程，基本上满足了我所有的需求。如
+果您有更好的实现方案或相关心得，欢迎在评论区中分享。
+* Footnotes
+
+[fn:1] 具体可以看 org manual 的 [[https://orgmode.org/manual/Internal-Links.html][Internal Links]] 一节。
+
+[fn:2] 默认快捷键： {{{kbd(C-c C-x p)}}}(org-set-property) 。
+
+[fn:3] 具体可以看 org manual 的 [[https://orgmode.org/manual/Literal-Examples.html][Literal Examples]] 一节。
+
+[fn:4] 详见 org manual 的 [[https://orgmode.org/manual/Noweb-Reference-Syntax.html][Noweb Reference Syntax]] 一节。
+
+[fn:5] 这两个插件我并没有深入使用过，所以如果我有说错的地方，欢迎在评论区中指出。
+
+[fn:6] 此部分的代码主要来自 org-ref-ref-links.el
