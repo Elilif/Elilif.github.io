@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-22 -->
+<!-- 2024-03-24 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>在 org-mode 中快速插入交叉引用</title>
+<meta name="author" content="Eli Qian" />
 <meta name="generator" content="Org Mode" />
 <link rel="icon" href="/static/favion.png">
 <link rel="stylesheet" type="text/css" href="/css/styles.css"/>
@@ -12,6 +13,18 @@
                   <script src="/scripts/script.js"></script>
                   <script src="/scripts/toc.js"></script>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="CSS"]:checked)
+ li:has([data-tags~="#CSS"]){display: list-item;}
+.content:has([value="blog"]:checked)
+ li:has([data-tags~="#blog"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+.content:has([value="org"]:checked)
+ li:has([data-tags~="#org"]){display: list-item;}
+</style>
 <script>
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
      function CodeHighlightOn(elem, id)
@@ -108,7 +121,7 @@ org-mode 中，内部链接的使用方法和常规链接一样，都可以通�
 有三种链接方式可以指向一个标题：
 </p>
 <dl class="org-dl">
-<dt>CUSTOM_ID</dt><dd>通过设置 <code>CUSTOM_ID</code> 属性<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"> ，可以创建形如 <code>[[#my-custom-id]]</code> 的链接。</dd>
+<dt>CUSTOM<sub>ID</sub></dt><dd>通过设置 <code>CUSTOM_ID</code> 属性<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"> ，可以创建形如 <code>[[#my-custom-id]]</code> 的链接。</dd>
 <dt>ID</dt><dd>通过设置 <code>ID</code> 属性，可以创建形如 <code>[[id:xxxx-xxxx]]</code> 的链接。</dd>
 <dt>fuzzy</dt><dd>可以直接在链接中使用目标标题作为链接内容，如 <code>[[*Some section]]</code> 或
 <code>[[Some section]]</code> 。</dd>
@@ -251,7 +264,7 @@ Play by play
 <dl class="org-dl">
 <dt>c</dt><dd>coderef</dd>
 <dt>s</dt><dd>代码块</dd>
-<dt>i</dt><dd>ID 或 CUSTOM_ID</dd>
+<dt>i</dt><dd>ID 或 CUSTOM<sub>ID</sub></dd>
 <dt>t</dt><dd>radio target 或 dedicated target</dd>
 <dt>p</dt><dd>图片或其他元素</dd>
 <dt>h</dt><dd>当前标题中的引用</dd>
@@ -364,8 +377,8 @@ Play by play
   </script><div id="postamble" class="status">
 <hr class="Solid">
 <div class="info">
-  <span class="author">Author: </span>
-  <span class="author">Email: <a href="mailto:eli@eli">eli@eli</a></span>
+  <span class="author">Author: Eli Qian</span>
+  <span class="author">Email: <a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a></span>
   <span class="date">Create Date: 2024-03-22</span>
   <span class="date">Last modified: 2024-03-22</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
