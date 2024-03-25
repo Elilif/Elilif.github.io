@@ -12,38 +12,34 @@
 org-mode 中，内部链接的使用方法和常规链接一样，都可以通过 {{{kbd(C-c C-c)}}} 来
 跳转到目标位置。
 ** 常见的内部链接对象[fn:1]
-*** Headlines
-有三种链接方式可以指向一个标题：
-- CUSTOM_ID :: 通过设置 =CUSTOM_ID= 属性[fn:2] ，可以创建形如 =[[#my-custom-id]]= 的链接。
-- ID :: 通过设置 =ID= 属性，可以创建形如 =[[id:xxxx-xxxx]]= 的链接。
-- fuzzy :: 可以直接在链接中使用目标标题作为链接内容，如 =[[*Some section]]= 或
-  =[[Some section]]= 。
-*** Dedicated targets
-形如 =<<some target>>= 的文本在 org syntax 中被称为 =dedicated target= ，可以使用
-=[[some target]]= 的链接来指向该文本。
-*** Radio targets
-形如 =<<<some target>>>= 的文本在 org syntax 中被称为 =radio target= ，在常规的 org
-文本中，任何与 =radio target= 的内容相同的文本都会自动转为 =radio link= 。
-*** Images and source blocks
-图片和代码块（或者其他元素）如果带有 =NAME= 关键字，则可以通过内部链接来跳转。比如
-说有如下代码块：
-
-#+begin_example
-#+CAPTION: example src block
-#+NAME: src-1
-#+begin_src emacs-lisp
+- Headines :: 有三种链接方式可以指向一个标题：
+  - CUSTOM_ID :: 通过设置 =CUSTOM_ID= 属性[fn:2] ，可以创建形如 =[[#my-custom-id]]= 的链接。
+  - ID :: 通过设置 =ID= 属性，可以创建形如 =[[id:xxxx-xxxx]]= 的链接。
+  - fuzzy :: 可以直接在链接中使用目标标题作为链接内容，如 =[[*Some section]]= 或
+    =[[Some section]]= 。
+- Dedicated targets :: 形如 =<<some target>>= 的文本在 org syntax 中被称为
+  =dedicated target= ，可以使用 =[[some target]]= 的链接来指向该文本。
+- Radio targets :: 形如 =<<<some target>>>= 的文本在 org syntax 中被称为 =radio
+  target= ，在常规的 org 文本中，任何与 =radio target= 的内容相同的文本都会自动转为
+  =radio link= 。
+- Images and source blocks :: 图片和代码块（或者其他元素）如果带有 =NAME= 关键字，
+  则可以通过内部链接来跳转。比如说有如下代码块：
+  #+begin_example
+  #+CAPTION: example src block
+  #+NAME: src-1
+  #+begin_src emacs-lisp
   (message "test")
-#+end_src
-#+end_example
+  #+end_src
+  #+end_example
+  
+  则可以用 =[[src-1]]= 来引用。
+- Coderef :: 在 org 代码块中，可以使用形如 =(ref:name)= 的文本来标记当前行的代码
+  （在使用 =org-edit-src-code= 编辑时，可以使用 {{{kbd(C-c l)}}}(org-store-link)
+  来快速创建），然后在常规文本中使用形如 =[[(name)]]= 的链接来引用[fn:3]。
+- Noweb references :: 这个严格来说不是内部链接的一部分，但是我经常用它，就一起说
+  一下吧。在 org 代码块中，可以使用形如 =<<CODE-BLOCK-ID>>= 的文本来引用其他代码
+  块[fn:4]。
 
-则可以用 =[[src-1]]= 来引用。
-*** Coderef
-在 org 代码块中，可以使用形如 =(ref:name)= 的文本来标记当前行的代码（在使用
-=org-edit-src-code= 编辑时，可以使用 {{{kbd(C-c l)}}}(org-store-link) 来快速创建），
-然后在常规文本中使用形如 =[[(name)]]= 的链接来引用[fn:3]。
-*** Noweb references
-这个严格来说不是内部链接的一部分，但是我经常用它，就一起说一下吧。在 org 代码块中，
-可以使用形如 =<<CODE-BLOCK-ID>>= 的文本来引用其他代码块[fn:4]，
 ** 内部链接跳转的优先级
 从上一节我们可以看到，多个对象可以有相同的链接格式，比如说 Headlines 、Dedicated
 targets 、图片和代码块都可以用 =[[xxx]]= 来链接。那么当这种情况真的发生时，点击

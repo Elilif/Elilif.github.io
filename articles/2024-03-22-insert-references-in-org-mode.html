@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-03-24 -->
+<!-- 2024-03-25 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>在 org-mode 中快速插入交叉引用</title>
@@ -60,22 +60,13 @@
 <h1 class="title">在 org-mode 中快速插入交叉引用</h1>
 </header><div class="post-status"><span><i class='bx bx-calendar'></i>
 <span>2024-03-22</span></span>
-<span><i class='bx bx-edit'></i><span>2024-03-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-22-insert-references-in-org-mode.org">History</a></span></span><span><i class='bx bxs-hourglass'></i>1537 字</span></div><nav id="table-of-contents" role="doc-toc">
+<span><i class='bx bx-edit'></i><span>2024-03-25</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/Elilif/Elilif.github.io/commits/master/orgs/2024-03-22-insert-references-in-org-mode.org">History</a></span></span><span><i class='bx bxs-hourglass'></i>1537 字</span></div><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org-mode-内部链接简介">org-mode 内部链接简介</a>
 <ul>
-<li><a href="#常见的内部链接对象[fn:1]">常见的内部链接对象</a>
-<ul>
-<li><a href="#Headlines">Headlines</a></li>
-<li><a href="#Dedicated-targets">Dedicated targets</a></li>
-<li><a href="#Radio-targets">Radio targets</a></li>
-<li><a href="#Images-and-source-blocks">Images and source blocks</a></li>
-<li><a href="#Coderef">Coderef</a></li>
-<li><a href="#Noweb-references">Noweb references</a></li>
-</ul>
-</li>
+<li><a href="#常见的内部链接对象[fn:1]">常见的内部链接对象</a></li>
 <li><a href="#内部链接跳转的优先级">内部链接跳转的优先级</a></li>
 </ul>
 </li>
@@ -113,77 +104,40 @@ org-mode 中，内部链接的使用方法和常规链接一样，都可以通�
 <div id="outline-container-常见的内部链接对象[fn:1]" class="outline-3">
 <h3 id="常见的内部链接对象[fn:1]">常见的内部链接对象<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"></h3>
 <div class="outline-text-3" id="text-常见的内部链接对象[fn:1]">
-</div>
-<div id="outline-container-Headlines" class="outline-4">
-<h4 id="Headlines">Headlines</h4>
-<div class="outline-text-4" id="text-Headlines">
-<p>
-有三种链接方式可以指向一个标题：
-</p>
 <dl class="org-dl">
-<dt>CUSTOM<sub>ID</sub></dt><dd>通过设置 <code>CUSTOM_ID</code> 属性<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"> ，可以创建形如 <code>[[#my-custom-id]]</code> 的链接。</dd>
+<dt>Headines</dt><dd>有三种链接方式可以指向一个标题：
+<dl class="org-dl">
+<dt>CUSTOM_ID</dt><dd>通过设置 <code>CUSTOM_ID</code> 属性<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"> ，可以创建形如 <code>[[#my-custom-id]]</code> 的链接。</dd>
 <dt>ID</dt><dd>通过设置 <code>ID</code> 属性，可以创建形如 <code>[[id:xxxx-xxxx]]</code> 的链接。</dd>
 <dt>fuzzy</dt><dd>可以直接在链接中使用目标标题作为链接内容，如 <code>[[*Some section]]</code> 或
 <code>[[Some section]]</code> 。</dd>
-</dl>
-</div>
-</div>
-<div id="outline-container-Dedicated-targets" class="outline-4">
-<h4 id="Dedicated-targets">Dedicated targets</h4>
-<div class="outline-text-4" id="text-Dedicated-targets">
-<p>
-形如 <code>&lt;&lt;some target&gt;&gt;</code> 的文本在 org syntax 中被称为 <code>dedicated target</code> ，可以使用
-<code>[[some target]]</code> 的链接来指向该文本。
-</p>
-</div>
-</div>
-<div id="outline-container-Radio-targets" class="outline-4">
-<h4 id="Radio-targets">Radio targets</h4>
-<div class="outline-text-4" id="text-Radio-targets">
-<p>
-形如 <code>&lt;&lt;&lt;some target&gt;&gt;&gt;</code> 的文本在 org syntax 中被称为 <code>radio target</code> ，在常规的 org
-文本中，任何与 <code>radio target</code> 的内容相同的文本都会自动转为 <code>radio link</code> 。
-</p>
-</div>
-</div>
-<div id="outline-container-Images-and-source-blocks" class="outline-4">
-<h4 id="Images-and-source-blocks">Images and source blocks</h4>
-<div class="outline-text-4" id="text-Images-and-source-blocks">
-<p>
+</dl></dd>
+<dt>Dedicated targets</dt><dd>形如 <code>&lt;&lt;some target&gt;&gt;</code> 的文本在 org syntax 中被称为
+<code>dedicated target</code> ，可以使用 <code>[[some target]]</code> 的链接来指向该文本。</dd>
+<dt>Radio targets</dt><dd>形如 <code>&lt;&lt;&lt;some target&gt;&gt;&gt;</code> 的文本在 org syntax 中被称为 <code>radio
+  target</code> ，在常规的 org 文本中，任何与 <code>radio target</code> 的内容相同的文本都会自动转为
+<code>radio link</code> 。</dd>
+<dt>Images and source blocks</dt><dd><p>
 图片和代码块（或者其他元素）如果带有 <code>NAME</code> 关键字，则可以通过内部链接来跳转。比如说有如下代码块：
 </p>
-
 <pre class="example">
 #+CAPTION: example src block
 #+NAME: src-1
 #+begin_src emacs-lisp
-  (message "test")
+(message "test")
 #+end_src
 </pre>
 
 <p>
 则可以用 <code>[[src-1]]</code> 来引用。
-</p>
+</p></dd>
+<dt>Coderef</dt><dd>在 org 代码块中，可以使用形如 <code>(ref:name)</code> 的文本来标记当前行的代码（在使用 <code>org-edit-src-code</code> 编辑时，可以使用 <kbd>C-c l</kbd>(org-store-link)
+来快速创建），然后在常规文本中使用形如 <code>[[(name)]]</code> 的链接来引用<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">。</dd>
+<dt>Noweb references</dt><dd>这个严格来说不是内部链接的一部分，但是我经常用它，就一起说一下吧。在 org 代码块中，可以使用形如 <code>&lt;&lt;CODE-BLOCK-ID&gt;&gt;</code> 的文本来引用其他代码块<sup><label for="fnr.4" class="footref">4</label></sup><input id="fnr.4" class="footref-toggle" type="checkbox">。</dd>
+</dl>
 </div>
 </div>
-<div id="outline-container-Coderef" class="outline-4">
-<h4 id="Coderef">Coderef</h4>
-<div class="outline-text-4" id="text-Coderef">
-<p>
-在 org 代码块中，可以使用形如 <code>(ref:name)</code> 的文本来标记当前行的代码（在使用
-<code>org-edit-src-code</code> 编辑时，可以使用 <kbd>C-c l</kbd>(org-store-link) 来快速创建），然后在常规文本中使用形如 <code>[[(name)]]</code> 的链接来引用<sup><label for="fnr.3" class="footref">3</label></sup><input id="fnr.3" class="footref-toggle" type="checkbox">。
-</p>
-</div>
-</div>
-<div id="outline-container-Noweb-references" class="outline-4">
-<h4 id="Noweb-references">Noweb references</h4>
-<div class="outline-text-4" id="text-Noweb-references">
-<p>
-这个严格来说不是内部链接的一部分，但是我经常用它，就一起说一下吧。在 org 代码块中，可以使用形如 <code>&lt;&lt;CODE-BLOCK-ID&gt;&gt;</code> 的文本来引用其他代码块<sup><label for="fnr.4" class="footref">4</label></sup><input id="fnr.4" class="footref-toggle" type="checkbox">，
-</p>
-</div>
-</div>
-</div>
+
 <div id="outline-container-内部链接跳转的优先级" class="outline-3">
 <h3 id="内部链接跳转的优先级">内部链接跳转的优先级</h3>
 <div class="outline-text-3" id="text-内部链接跳转的优先级">
@@ -264,7 +218,7 @@ Play by play
 <dl class="org-dl">
 <dt>c</dt><dd>coderef</dd>
 <dt>s</dt><dd>代码块</dd>
-<dt>i</dt><dd>ID 或 CUSTOM<sub>ID</sub></dd>
+<dt>i</dt><dd>ID 或 CUSTOM_ID</dd>
 <dt>t</dt><dd>radio target 或 dedicated target</dd>
 <dt>p</dt><dd>图片或其他元素</dd>
 <dt>h</dt><dd>当前标题中的引用</dd>
@@ -380,7 +334,7 @@ Play by play
   <span class="author">Author: Eli Qian</span>
   <span class="author">Email: <a href="mailto:eli.q.qian@gmail.com">eli.q.qian@gmail.com</a></span>
   <span class="date">Create Date: 2024-03-22</span>
-  <span class="date">Last modified: 2024-03-22</span>
+  <span class="date">Last modified: 2024-03-25</span>
   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</span>
 </div>
 </div>
